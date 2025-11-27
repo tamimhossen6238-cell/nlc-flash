@@ -1,836 +1,601 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; frame-src 'self' blob:;"><link rel="preconnect" href="https://cdnjs.cloudflare.com"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://www.gstatic.com"><title>NLC | Pro Cloud</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" defer="defer"></script><script>let initialSettings = { dark: false, viewMode: 'grid', size: 'medium' };
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>NLC | Pro Cloud Secure</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+<script>
+    // Initial Settings
+    let initialSettings = { dark: false, viewMode: 'grid', size: 'medium' };
     try { const stored = localStorage.getItem('ls_settings'); if (stored) initialSettings = JSON.parse(stored); } catch (e) {}
     const docEl = document.documentElement;
     if (initialSettings.dark) docEl.classList.add('dark-mode');
-    docEl.classList.add('view-' + initialSettings.viewMode, 'size-' + initialSettings.size);</script><style>:root{--bg-body:#f2f4f6;--bg-card:#ffffff;--text-main:#111827;--text-sub:#6b7280;--border:#e5e7eb;--input-bg:#f9fafb;--input-border:#e5e7eb;--primary:#2563eb;--primary-hover:#1d4ed8;--success:#10b981;--error:#ef4444;--loader-bg:var(--bg-body);--logo-n:#111827;--logo-l:#2563eb;--logo-c:#f59e0b;--card-h:130px;--card-w-min:150px;--font-title:14px;--icon-size:24px;--shadow-soft:0 4px 20px -2px rgba(0, 0, 0, 0.05);--modal-radius:28px;--ease-out-expo:cubic-bezier(0.16, 1, 0.3, 1);--ease-out-back:cubic-bezier(0.34, 1.3, 0.64, 1)}html.dark-mode{--bg-body:#000000;--bg-card:#1c1c1e;--text-main:#ffffff;--text-sub:#a1a1aa;--border:#2c2c2e;--input-bg:#2c2c2e;--input-border:#3a3a3c;--primary:#0a84ff;--logo-n:#ffffff}html.dark-mode code,html.dark-mode pre{color:#f8f8f2;text-shadow:0 1px rgba(0,0,0,.3)}body,html{width:100%;height:100%;margin:0;padding:0;background-color:var(--bg-body);overflow-x:hidden;font-family:Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none;overscroll-behavior-y:none}[contenteditable=true],code,input,pre,textarea{-webkit-user-select:text;user-select:text}*{box-sizing:border-box;outline:0;-webkit-tap-highlight-color:transparent}#menuDropdown,.card,.toast{will-change:transform,opacity;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}#toast-container{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none;width:90%;max-width:350px}.toast{background:rgba(255,255,255,.9);color:#000;padding:14px 24px;border-radius:50px;font-size:14px;font-weight:600;box-shadow:0 15px 40px rgba(0,0,0,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;transform:translate3d(0,-20px,0);transition:all .4s var(--ease-out-expo);display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid rgba(0,0,0,.05)}html.dark-mode .toast{background:rgba(30,30,30,.9);color:#fff;border-color:rgba(255,255,255,.1)}.toast.show{opacity:1;transform:translate3d(0,0,0)}#appLoader{position:fixed;inset:0;background:var(--loader-bg);z-index:5000;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:opacity .4s ease}.spinner-ring{width:45px;height:45px;border-radius:50%;border:4px solid transparent;border-top-color:var(--logo-n);border-right-color:var(--logo-l);border-bottom-color:var(--logo-c);animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}html.size-small body{--card-h:100px;--card-w-min:110px;--font-title:12px;--icon-size:18px}html.size-medium body{--card-h:130px;--card-w-min:150px;--font-title:14px;--icon-size:24px}html.size-large body{--card-h:170px;--card-w-min:190px;--font-title:18px;--icon-size:32px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--card-w-min),1fr));gap:12px;padding-bottom:env(safe-area-inset-bottom);content-visibility:auto;contain-intrinsic-size:1px 500px}.card{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;height:var(--card-h);padding:15px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;transition:transform .3s ease,box-shadow .3s ease;box-shadow:var(--shadow-soft);position:relative;overflow:hidden;contain:content}.card:active{transform:scale3d(.96,.96,1)}.card-icon{font-size:var(--icon-size);margin-bottom:10px;color:var(--text-main);opacity:.8;pointer-events:none}.card-title{font-size:var(--font-title);font-weight:600;color:var(--text-main);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.3;pointer-events:none}html.view-list .grid{grid-template-columns:1fr!important;gap:10px}html.view-list .card{height:auto;flex-direction:row;justify-content:flex-start;align-items:center;text-align:left}html.view-list .card-icon{margin-bottom:0}html.view-list .card-title{-webkit-line-clamp:1}html.view-list.size-small .card{padding:12px 16px}html.view-list.size-small .card-icon{font-size:18px;margin-right:14px}html.view-list.size-medium .card{padding:16px 20px}html.view-list.size-medium .card-icon{font-size:24px;margin-right:20px}html.view-list.size-large .card{padding:22px 26px}html.view-list.size-large .card-icon{font-size:32px;margin-right:26px}.modal{position:fixed;inset:0;z-index:1000;display:flex;justify-content:center;align-items:flex-end;background:rgba(0,0,0,0);transition:background .4s cubic-bezier(.25,.8,.25,1);pointer-events:none;transform:translateZ(0);will-change:background;opacity:0;visibility:hidden}.modal.active{pointer-events:auto;background:rgba(0,0,0,.5);opacity:1;visibility:visible}.modal-box{background:var(--bg-card);width:100%;max-width:500px;padding:24px;padding-bottom:max(24px,env(safe-area-inset-bottom));border-radius:var(--modal-radius) var(--modal-radius) 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.15);transform:translate3d(0,100%,0);will-change:transform;backface-visibility:hidden;transition:transform .45s var(--ease-out-back);max-height:92dvh;display:flex;flex-direction:column;position:relative;overscroll-behavior-y:contain;min-height:0;cursor:default;contain:paint layout}.modal.active .modal-box{transform:translate3d(0,0,0)}@media (min-width:600px){.modal{align-items:center}.modal-box{width:90%;border-radius:var(--modal-radius);transform:translate3d(0,30px,0) scale(.97);transition:transform .45s var(--ease-out-back),opacity .4s ease;padding-bottom:24px;opacity:0}.modal.active .modal-box{transform:translate3d(0,0,0) scale(1);opacity:1}}.modal.active~#mainApp,.modal.active~#vaultView{pointer-events:none;user-select:none}.modal-box,.modal-box *{pointer-events:auto;user-select:auto}.modal-box.fullscreen{max-width:100%;height:100%;border-radius:0;transform:translate3d(100%,0,0);max-height:100dvh}.modal.active .modal-box.fullscreen{transform:translate3d(0,0,0)}.modal-box.size-code{max-width:700px;height:75dvh}.modal-box.size-note{max-width:100%;height:100%!important;border-radius:0;max-height:100dvh}.modal-box.size-code form,.modal-box.size-note form{display:flex;flex-direction:column;height:100%}.modal-box.size-code textarea,.modal-box.size-note textarea{flex:1;height:auto!important}.drag-handle{width:44px;height:5px;background:var(--border);border-radius:100px;margin:-10px auto 24px auto;opacity:.8;cursor:grab;flex-shrink:0;padding:15px 0;background-clip:content-box;pointer-events:auto;touch-action:none}#fileList,.rich-editor,pre,textarea{touch-action:pan-y;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch}#fileList{margin-bottom:15px;padding-right:5px;min-height:150px}.rich-editor{padding:20px;border:none;background:0 0;font-size:18px;line-height:1.6;color:var(--text-main);outline:0;white-space:pre-wrap;-webkit-user-select:text;user-select:text;font-family:'Fira Code',monospace}.rich-editor:empty:before{content:attr(placeholder);color:var(--text-sub);display:block}.token.comment{color:#90a4ae}.token.punctuation{color:#9e9e9e}.token.namespace{opacity:.7}.token.number,.token.tag{color:#e91e63}.token.string{color:#4caf50}.token.keyword{color:#3f51b5}.token.class-name,.token.function{color:#f44336}.fs-large{font-size:24px;line-height:1.5}.fs-small{font-size:14px;line-height:1.4}.editor-toolbar{display:flex;gap:5px;margin-left:15px;padding-left:15px;border-left:2px solid var(--border);position:relative}.toolbar-btn{background:0 0;border:none;cursor:pointer;width:34px;height:34px;border-radius:8px;color:var(--text-sub);display:flex;align-items:center;justify-content:center;transition:.2s}.toolbar-btn:active,.toolbar-btn:hover{background:var(--input-bg);color:var(--primary)}#colorPalettePopup{position:absolute;top:45px;left:0;width:140px;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:10px;display:none;grid-template-columns:repeat(4,1fr);gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.15);z-index:200}#colorPalettePopup.active{display:grid;animation:scaleIn .2s var(--ease-out-expo)}.color-swatch{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .2s ease}.color-swatch:active{transform:scale(.9)}#floatingToolbar{position:fixed;background:var(--text-main);color:var(--bg-card);padding:6px 10px;border-radius:10px;display:none;gap:5px;z-index:2000;box-shadow:0 10px 30px rgba(0,0,0,.2);transform:translate3d(-50%,-45px,0)}#floatingToolbar.visible{display:flex;animation:popIn .25s var(--ease-out-expo)}@keyframes popIn{from{opacity:0;transform:translate3d(-50%,-35px,0) scale(.8)}to{opacity:1;transform:translate3d(-50%,-45px,0) scale(1)}}#fileTypeSelection{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:24px}.type-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 10px;border:1px solid var(--border);border-radius:16px;background:var(--bg-card);color:var(--text-sub);cursor:pointer;transition:all .3s ease;font-weight:600;font-size:12px}.type-btn.active{border-color:var(--primary);background:rgba(37,99,235,.08);color:var(--primary);box-shadow:0 4px 12px rgba(37,99,235,.15);transform:translateY(-2px)}.btn-primary{width:100%;padding:16px;background:var(--primary);color:#fff;border:none;border-radius:16px;font-weight:600;font-size:16px;cursor:pointer;transition:transform .2s ease,opacity .2s;display:flex;justify-content:center;align-items:center;gap:8px;margin-top:10px}.btn-primary:active{transform:scale(.96);opacity:.9}input,select,textarea{width:100%;padding:16px;border-radius:14px;background:var(--input-bg);border:1px solid var(--input-border);color:var(--text-main);font-size:16px;margin-bottom:14px;transition:border-color .2s,background .2s}input:focus,textarea:focus{border-color:var(--primary);background:var(--bg-card)}#authScreen{position:fixed;inset:0;background:var(--bg-body);z-index:6000;display:flex;justify-content:center;align-items:center}.auth-box{background:var(--bg-card);padding:40px 30px;border-radius:32px;width:90%;max-width:380px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.1)}header{background:rgba(255,255,255,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 15px;padding-top:max(12px,env(safe-area-inset-top));position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:12px}html.dark-mode header{background:rgba(0,0,0,.8)}.menu-dropdown{position:absolute;top:60px;right:15px;width:220px;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:8px;display:none;flex-direction:column;box-shadow:0 20px 50px rgba(0,0,0,.2);z-index:200;transform-origin:top right;animation:scaleIn .25s cubic-bezier(.16,1,.3,1)}.menu-dropdown.active{display:flex}.menu-item{padding:14px 16px;border-radius:12px;font-weight:500;font-size:14px;color:var(--text-main);display:flex;justify-content:space-between;align-items:center;transition:background .2s}.menu-item:active{background:var(--input-bg);transform:scale(.98)}@keyframes scaleIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}.file-list-item{display:flex;align-items:center;justify-content:space-between;background:var(--bg-card);border:1px solid var(--border);padding:12px 16px;margin-bottom:10px;border-radius:16px;transition:transform .2s ease}.file-list-item:active{transform:scale(.97)}.file-info{display:flex;flex-direction:column;gap:4px;overflow:hidden;flex:1;padding-right:15px}.file-name{font-size:15px;font-weight:600;color:var(--text-main);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.file-date{font-size:12px;color:var(--text-sub)}.file-actions{display:flex;gap:8px}.action-btn{width:38px;height:38px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;font-size:14px}.action-btn.edit{background:rgba(37,99,235,.1);color:var(--primary)}.action-btn.move{background:rgba(16,185,129,.1);color:var(--success)}.action-btn.delete{background:rgba(239,68,68,.1);color:var(--error)}.action-btn:active{transform:scale(.85)}pre{border-radius:8px;margin:0;height:100%;overflow:auto}.hidden{display:none!important}.vault-header{background:#000;color:#fff;border:none}html:not(.dark-mode) .vault-header{background:#111827}.password-wrapper{position:relative;width:100%}.toggle-password{position:absolute;right:15px;top:16px;cursor:pointer;color:var(--text-sub);padding:5px}.guide-footer{margin-top:25px;padding:12px;border-radius:14px;background:linear-gradient(135deg,var(--logo-n),var(--logo-l));color:#fff;font-weight:700;text-align:center;font-size:14px;box-shadow:0 4px 15px rgba(0,0,0,.2)}html.dark-mode .guide-footer{color:#000;background:linear-gradient(135deg,#fff,var(--logo-c))}#loadMoreSentinel{height:1px;width:100%}#deepSearchToggle.active i{color:var(--primary)!important}#deepSearchToggle:hover i{color:var(--text-main)}.quick-copy-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);background:var(--bg-card);border-radius:20px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.3);z-index:2000;max-width:90%;width:300px;text-align:center;opacity:0;visibility:hidden;transition:all .3s var(--ease-out-back)}.quick-copy-modal.active{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}.quick-copy-options{display:flex;flex-direction:column;gap:12px;margin:20px 0}.quick-copy-btn{padding:14px;border-radius:14px;border:none;background:var(--input-bg);color:var(--text-main);font-weight:600;cursor:pointer;transition:all .2s ease;display:flex;align-items:center;justify-content:center;gap:10px}.quick-copy-btn:active{transform:scale(.96);background:var(--primary);color:#fff}.quick-copy-btn.copy{background:rgba(37,99,235,.1);color:var(--primary)}.quick-copy-btn.cancel{background:rgba(107,114,128,.1);color:var(--text-sub)}.copy-content-protected{-webkit-user-select:none!important;-moz-user-select:none!important;-ms-user-select:none!important;user-select:none!important}.copy-modal-content{-webkit-user-select:text!important;-moz-user-select:text!important;-ms-user-select:text!important;user-select:text!important}.card.long-press{transform:scale(.95);box-shadow:0 0 0 3px var(--primary)}</style></head><body><div id="toast-container"></div><div id="floatingToolbar"><button class="toolbar-btn" onclick='formatText("bold")'><i class="fas fa-bold"></i></button><button class="toolbar-btn" onclick='formatText("undo")'><i class="fas fa-undo"></i></button></div><div class="quick-copy-modal" id="quickCopyModal"><h3 style="margin:0 0 10px 0;color:var(--text-main);font-size:18px">Copy Content</h3><p style="margin:0 0 20px 0;color:var(--text-sub);font-size:14px">Select an option to copy</p><div class="quick-copy-options"><button class="quick-copy-btn copy" onclick="window.quickCopyContent()"><i class="fas fa-copy"></i>Copy Content</button><button class="quick-copy-btn cancel" onclick="window.closeQuickCopyModal()"><i class="fas fa-times"></i>Cancel</button></div></div><div id="authScreen" class="hidden"><div class="auth-box"><h1 style="margin:0;font-size:48px;letter-spacing:-2px;line-height:1"><span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></h1><p style="color:var(--text-sub);margin-bottom:30px">Pro Cloud Storage</p><input type="email" id="authEmail" placeholder="Email address" autocomplete="username"><div class="password-wrapper"><input type="password" id="authPassword" placeholder="Password" autocomplete="current-password"><i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("authPassword",this)'></i></div><div id="confirmPasswordWrapper" class="password-wrapper hidden"><input type="password" id="authConfirmPassword" placeholder="Confirm Password" autocomplete="new-password"><i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("authConfirmPassword",this)'></i></div><button id="mainAuthBtn" class="btn-primary" onclick="window.handleAuthAction()">Continue</button><div style="margin-top:20px;font-size:13px;color:var(--text-sub)"><span id="authSwitchText">New here?</span><b onclick="window.toggleAuthMode()" style="color:var(--primary);cursor:pointer">Create Account</b></div><div style="margin-top:15px;font-size:12px"><span onclick="window.openForgotPasswordModal()" style="color:var(--text-sub);cursor:pointer">Forgot Password?</span></div></div></div><div id="appLoader"><div style="display:flex;align-items:center;gap:20px"><div style="font-weight:900;font-size:40px;letter-spacing:-2px"><span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></div><div class="spinner-ring"></div></div></div><div id="mainApp" class="hidden"><header><div class="brand" style="font-weight:900;font-size:20px;letter-spacing:-1px"><span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></div><div onclick="window.openAuthModal()" style="padding:10px;cursor:pointer;color:var(--text-main)"><i class="fas fa-shield-alt"></i></div><div style="flex:1;position:relative"><input type="text" class="search-input" id="searchInput" placeholder="Search" autocomplete="off" style="margin:0;padding:10px 15px 10px 15px;font-size:14px;padding-right:45px"><div id="deepSearchToggle" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;padding:5px;color:var(--text-sub);transition:color .2s"><i class="fas fa-search" title="Deep Search"></i></div></div><div onclick='window.openEditor(null,"main")' style="padding:10px;cursor:pointer"><i class="fas fa-plus-circle" style="font-size:24px;color:var(--primary)"></i></div><div id="menuBtn" style="padding:10px;cursor:pointer"><i class="fas fa-bars" style="font-size:22px;color:var(--text-main)"></i></div><div class="menu-dropdown" id="menuDropdown"><div class="menu-item" onclick='window.openManager("main")'>File Manager<i class="fas fa-folder"></i></div><div class="menu-item" onclick="window.toggleTheme()">Theme<i class="fas fa-adjust"></i></div><div class="menu-item" onclick="window.cycleCardSize()">Card Size<i class="fas fa-vector-square"></i></div><div class="menu-item" onclick="window.openChangePasswordModal()">Change Password<i class="fas fa-unlock-alt"></i></div><div style="height:1px;background:var(--border);margin:5px 0"></div><div style="font-size:10px;color:var(--text-sub);padding:4px 10px;font-weight:700;letter-spacing:1px">SORT</div><div class="menu-item" onclick='window.setSort("date")'>Newest First<i class="fas fa-clock"></i></div><div class="menu-item" onclick='window.setSort("oldest")'>Oldest First<i class="fas fa-history"></i></div><div class="menu-item" onclick='window.setSort("name")'>Name (A-Z)<i class="fas fa-font"></i></div><div style="height:1px;background:var(--border);margin:5px 0"></div><div class="menu-item" onclick='window.setView("grid")'>Grid<i class="fas fa-th-large"></i></div><div class="menu-item" onclick='window.setView("list")'>List<i class="fas fa-list"></i></div><div class="menu-item" onclick="window.logout()" style="color:var(--error)">Logout<i class="fas fa-power-off"></i></div></div></header><div class="container" style="padding:15px;max-width:1200px;margin:0 auto"><div class="grid" id="fileGrid"></div><div id="loadMoreSentinel"></div></div></div><div id="vaultView" class="hidden"><header class="vault-header"><div class="brand" style="font-weight:900">VAULT</div><div style="margin-left:auto;display:flex;gap:15px"><i class="fas fa-key" onclick="window.changeVaultPin()" style="color:#fbbf24;cursor:pointer;font-size:18px"></i><i class="fas fa-plus" onclick='window.openEditor(null,"vault")' style="cursor:pointer;font-size:18px"></i><i class="fas fa-cog" onclick='window.openManager("vault")' style="cursor:pointer;font-size:18px"></i><i class="fas fa-sign-out-alt" onclick="window.exitVault()" style="color:#ef4444;cursor:pointer;font-size:18px"></i></div></header><div class="container" style="padding:15px"><div class="grid" id="vaultGrid"></div></div></div><div class="modal" id="editorModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="margin:0 0 20px 0;font-size:20px;color:var(--text-main)">New Item</h3><form id="fileForm" autocomplete="off"><input type="hidden" id="editId"> <input type="text" id="fileName" placeholder="File Name" required> <input type="hidden" id="fileType" value="link"><div id="fileTypeSelection"><div class="type-btn active" data-type="link" onclick='window.setType("link")'><i class="fas fa-link"></i>Link</div><div class="type-btn" data-type="note" onclick='window.setType("note")'><i class="fas fa-align-left"></i>Note</div><div class="type-btn" data-type="code" onclick='window.setType("code")'><i class="fas fa-code"></i>Code</div></div><input type="url" id="fileUrl" placeholder="https://example.com"><textarea id="fileContent" placeholder="Type something..." style="display:none;height:120px;font-family:monospace"></textarea><button type="submit" class="btn-primary">Save Item</button></form></div></div><div class="modal" id="managerModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="margin:0 0 15px 0;color:var(--text-main)">Manage Files</h3><div id="fileList"></div><button onclick="window.closeManager()" class="btn-primary" style="background:var(--input-bg);color:var(--text-main)">Close</button></div></div><div class="modal" id="confirmModal"><div class="modal-box" style="text-align:center"><p id="confirmText" style="margin-bottom:25px;font-weight:500;font-size:18px;color:var(--text-main)">Are you sure?</p><div style="display:flex;gap:10px"><button onclick="window.closeConfirmModal()" class="btn-primary" style="background:var(--input-bg);color:var(--text-main);flex:1">Cancel</button><button id="confirmYesBtn" class="btn-primary" style="flex:1">Yes</button></div></div></div><div class="modal" id="noteModal"><div class="modal-box fullscreen" style="background:var(--bg-body);padding:0"><div style="padding:10px 15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg-card)"><div style="flex:1;display:flex;flex-direction:column;justify-content:center;overflow:hidden;margin-right:10px"><input type="text" id="noteViewTitle" style="border:none;background:0 0;font-inherit:true;font-size:24px;font-weight:800;padding:0;margin:0;width:100%;color:var(--text-main);letter-spacing:-.5px" placeholder="Untitled"><span id="noteViewDate" style="font-size:11px;color:var(--text-sub);margin-top:2px;font-weight:500"></span></div><div style="display:flex;align-items:center"><div class="editor-toolbar"><button class="toolbar-btn" onclick='formatText("bold")'><i class="fas fa-bold"></i></button><button class="toolbar-btn" onclick="window.cycleFontSize()"><i class="fas fa-text-height"></i></button><button class="toolbar-btn" onclick='formatText("undo")'><i class="fas fa-undo"></i></button><div style="position:relative"><button class="toolbar-btn" onclick="toggleColorPalette()"><i class="fas fa-palette"></i></button><div id="colorPalettePopup"></div></div></div><div style="display:flex;gap:12px;margin-left:15px;border-left:1px solid var(--border);padding-left:10px"><i class="fas fa-check" onclick="window.manualSaveNote()" style="font-size:20px;color:var(--primary);cursor:pointer;padding:5px"></i><i class="fas fa-times" onclick="window.discardAndClose()" style="font-size:20px;color:var(--text-sub);cursor:pointer;padding:5px"></i></div></div></div><div id="noteViewContent" class="rich-editor" contenteditable="true" placeholder="Start writing..."></div><input type="hidden" id="noteViewId"></div></div><div class="modal" id="runnerModal"><div class="modal-box fullscreen" style="background:#fff;padding:0"><iframe id="codeFrame" style="width:100%;height:100%;border:none;display:block"></iframe></div></div><div class="modal" id="authModal"><div class="modal-box" style="text-align:center"><div class="drag-handle"></div><div style="width:60px;height:60px;background:rgba(59,130,246,.1);border-radius:50%;display:flex;justify-content:center;align-items:center;margin:0 auto 15px auto"><i class="fas fa-fingerprint" style="font-size:30px;color:var(--primary)"></i></div><div id="setupView" class="hidden"><h3 style="margin-bottom:5px;color:var(--text-main)">Set PIN</h3><p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">Secure your Vault</p><div style="background:#fee2e2;color:#b91c1c;padding:10px;border-radius:8px;font-size:11px;text-align:left;margin-bottom:15px"><b>WARNING:</b>If you forget this PIN, data will be lost forever.</div><p style="margin:0 0 8px 0;font-size:14px;color:var(--text-main);font-weight:500">What is your favourite fruit?</p><input type="text" id="setupAnswer" placeholder="Answer" style="margin-bottom:10px"> <input type="tel" id="setupPin" maxlength="4" placeholder="••••" style="text-align:center;letter-spacing:8px;font-size:24px;font-weight:700"><button onclick="window.setupVault()" class="btn-primary">Save & Enable</button></div><div id="loginView" class="hidden"><h3 style="margin-bottom:5px;color:var(--text-main)">Enter PIN</h3><p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">Access your private files</p><input type="tel" id="loginPin" maxlength="4" placeholder="••••" style="text-align:center;letter-spacing:8px;font-size:24px;font-weight:700" oninput="4==this.value.length&&window.loginVault()"><button onclick="window.loginVault()" class="btn-primary">Unlock</button></div></div></div><div class="modal" id="copyModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="color:var(--text-main)">Copy Content</h3><div id="copyContentArea" contenteditable="true" class="rich-editor copy-modal-content" style="height:100px;border:1px solid var(--border);border-radius:8px;margin-top:10px;font-size:14px"></div><div style="display:flex;gap:10px;margin-top:10px"><button onclick="window.goBack()" class="btn-primary" style="background:var(--input-bg);color:var(--text-main)">Close</button><button onclick="window.performCopy()" class="btn-primary">Copy</button></div></div></div><div class="modal" id="changePasswordModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="color:var(--text-main)">Change Password</h3><input type="password" id="cpOldPass" placeholder="Current Password"> <input type="password" id="cpNewPass" placeholder="New Password"> <input type="password" id="cpConfirmPass" placeholder="Confirm New Password"><button onclick="window.performChangePassword()" class="btn-primary">Update Password</button><button onclick="window.goBack()" class="btn-primary" style="margin-top:10px;background:0 0;color:var(--text-sub);border:1px solid var(--border)">Cancel</button></div></div><div class="modal" id="forgotPasswordModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="color:var(--text-main)">Reset Password</h3><p style="color:var(--text-sub);font-size:13px;margin-bottom:15px">We'll send a link to your email.</p><input type="email" id="resetEmail" placeholder="Enter Email"><button id="sendResetBtn" class="btn-primary" onclick="window.sendPasswordResetEmail()">Send Link</button><button onclick="window.goBack()" class="btn-primary" style="margin-top:10px;background:0 0;color:var(--text-sub);border:1px solid var(--border)">Cancel</button></div></div><div class="modal" id="guideModal"><div class="modal-box" style="max-height:80vh;overflow:auto"><div class="drag-handle"></div><h3 style="color:var(--text-main);margin-bottom:15px">Welcome to<span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></h3><div style="font-size:14px;line-height:1.6;color:var(--text-sub)"><p><b>Cloud Storage:</b>Save links, notes, and code snippets securely in the cloud.</p><p><b>Secure Vault:</b>Protect sensitive data with a PIN. Includes a "Fake Vault" feature if the wrong PIN is entered.</p><p><b>Code Editor:</b>Built-in syntax highlighting and runner for quick coding.</p></div><div class="guide-footer">Created by Tamim</div></div></div><script type="module">import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    docEl.classList.add('view-' + initialSettings.viewMode, 'size-' + initialSettings.size);
+    const vibrate = (ms = 5) => { if(navigator.vibrate) navigator.vibrate(ms); }
+</script>
+
+<style>
+    :root { 
+        --bg-body: #f2f4f6; --bg-card: #ffffff; --text-main: #111827; --text-sub: #6b7280; --border: #e5e7eb; --input-bg: #f9fafb; --input-border: #e5e7eb; --primary: #2563eb; --primary-hover: #1d4ed8; --success: #10b981; --error: #ef4444; --loader-bg: var(--bg-body); --logo-n: #111827; --logo-l: #2563eb; --logo-c: #f59e0b; 
+        --card-h: 130px; --card-w-min: 150px; --font-title: 14px; --icon-size: 24px; 
+        --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05); --modal-radius: 28px; 
+        --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1); 
+        --ease-modern: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    
+    html.dark-mode { 
+        --bg-body: #050505; --bg-card: #151515; --text-main: #e5e5e5; --text-sub: #a3a3a3; --border: #262626; --input-bg: #1f1f1f; --input-border: #333333; --primary: #3b82f6; --logo-n: #ffffff; --shadow-soft: none;
+    }
+    html.dark-mode code, html.dark-mode pre { color: #f8f8f2; text-shadow: 0 1px rgba(0,0,0,.3); }
+    
+    /* Dark Mode Fixes for Quill and Modals */
+    html.dark-mode .ql-toolbar { background: var(--bg-card) !important; border-color: var(--border) !important; }
+    html.dark-mode .ql-container { background: var(--bg-card) !important; color: var(--text-main) !important; }
+    
+    /* Specific Fix for Quill Toolbar Icons in Dark Mode */
+    html.dark-mode .ql-snow .ql-stroke { stroke: #e5e5e5 !important; }
+    html.dark-mode .ql-snow .ql-fill { fill: #e5e5e5 !important; }
+    html.dark-mode .ql-snow .ql-picker { color: #e5e5e5 !important; }
+    html.dark-mode .ql-snow .ql-picker-options { background-color: var(--bg-card) !important; border-color: var(--border) !important; }
+    
+    body, html, .card, header, input, select, textarea, .modal-box, 
+    .menu-dropdown, .file-list-item, .btn-primary, .action-btn, 
+    .ql-toolbar, .ql-container, .type-btn, .quick-copy-box, .guide-footer,
+    .drag-handle, .auth-box, .card-title, .card-icon, i {
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, fill 0.3s ease, stroke 0.3s ease !important;
+    }
+
+    body, html { width: 100%; height: 100%; margin: 0; padding: 0; background-color: var(--bg-body); overflow-x: hidden; font-family: Inter, system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; -webkit-user-select: none; user-select: none; overscroll-behavior-y: none; }
+    [contenteditable=true], code, input, pre, textarea, .ql-editor { -webkit-user-select: text; user-select: text; }
+    * { box-sizing: border-box; outline: 0; -webkit-tap-highlight-color: transparent; }
+    
+    .card, .toast, #menuDropdown, .btn-primary, .action-btn { will-change: transform, opacity; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+    
+    #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; width: 90%; max-width: 350px; }
+    .toast { background: rgba(255, 255, 255, .9); color: #000; padding: 14px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; box-shadow: 0 15px 40px rgba(0, 0, 0, .12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); opacity: 0; transform: translate3d(0, -20px, 0) scale(0.95); transition: all .5s var(--ease-spring); display: flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid rgba(0, 0, 0, .05); }
+    html.dark-mode .toast { background: rgba(30, 30, 30, .9); color: #fff; border-color: rgba(255, 255, 255, .1); }
+    .toast.show { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+    
+    #appLoader { position: fixed; inset: 0; background: var(--loader-bg); z-index: 5000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity .4s ease-out; pointer-events: none; }
+    #appLoader.hidden { opacity: 0; }
+    .spinner-ring { width: 45px; height: 45px; border-radius: 50%; border: 4px solid transparent; border-top-color: var(--logo-n); border-right-color: var(--logo-l); border-bottom-color: var(--logo-c); animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    html.size-small body { --card-h: 100px; --card-w-min: 110px; --font-title: 12px; --icon-size: 18px; }
+    html.size-medium body { --card-h: 130px; --card-w-min: 150px; --font-title: 14px; --icon-size: 24px; }
+    html.size-large body { --card-h: 170px; --card-w-min: 190px; --font-title: 18px; --icon-size: 32px; }
+    
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card-w-min), 1fr)); gap: 12px; padding-bottom: env(safe-area-inset-bottom); content-visibility: auto; contain-intrinsic-size: 1px 500px; }
+    
+    @keyframes fadeInUp { from { opacity: 0; transform: translate3d(0, 15px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+    
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; height: var(--card-h); padding: 15px; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; transition: transform .2s var(--ease-modern), box-shadow .2s ease, border-color .3s; box-shadow: var(--shadow-soft); position: relative; overflow: hidden; contain: content; animation: fadeInUp 0.4s var(--ease-modern) backwards; }
+    .card:active, .card.long-press { transform: scale3d(.96, .96, 1); box-shadow: 0 0 0 0 transparent; }
+    .card-icon { font-size: var(--icon-size); margin-bottom: 10px; color: var(--text-main); opacity: .8; pointer-events: none; }
+    .card:hover .card-icon { transform: scale(1.1); }
+    .card-title { font-size: var(--font-title); font-weight: 600; color: var(--text-main); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; pointer-events: none; }
+    
+    html.view-list .grid { grid-template-columns: 1fr !important; gap: 10px; }
+    html.view-list .card { height: auto; flex-direction: row; justify-content: flex-start; align-items: center; text-align: left; }
+    html.view-list .card-icon { margin-bottom: 0; }
+    html.view-list .card-title { -webkit-line-clamp: 1; }
+    
+    /* MODAL SYSTEM - ROBUST FIX */
+    .modal { 
+        position: fixed; inset: 0; z-index: 1000; 
+        display: flex; justify-content: center; align-items: flex-end; 
+        background: rgba(0, 0, 0, 0); 
+        backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);
+        transition: background 0.35s ease, backdrop-filter 0.35s ease, visibility 0.35s ease; 
+        pointer-events: none; visibility: hidden; 
+    }
+    
+    .modal.active { 
+        pointer-events: auto; 
+        background: rgba(0, 0, 0, 0.4); 
+        backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+        visibility: visible; 
+    }
+    
+    .modal-box { 
+        background: var(--bg-card); width: 100%; max-width: 500px; 
+        padding: 24px; padding-bottom: max(24px, env(safe-area-inset-bottom)); 
+        border-radius: var(--modal-radius) var(--modal-radius) 0 0; 
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, .15); 
+        transform: translate3d(0, 100%, 0) scale(0.96); 
+        opacity: 0.8;
+        will-change: transform, opacity; 
+        backface-visibility: hidden; 
+        transition: transform 0.45s var(--ease-modern), opacity 0.35s ease; 
+        max-height: 92dvh; display: flex; flex-direction: column; 
+        position: relative; overscroll-behavior-y: contain; min-height: 0; cursor: default; 
+    }
+    
+    .modal.active .modal-box { 
+        transform: translate3d(0, 0, 0) scale(1); 
+        opacity: 1;
+    }
+    
+    @media (min-width:600px) {
+        .modal { align-items: center; }
+        .modal-box { 
+            width: 90%; border-radius: var(--modal-radius); 
+            transform: translate3d(0, 40px, 0) scale(0.95); opacity: 0; 
+            padding-bottom: 24px; 
+        }
+        .modal.active .modal-box { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+    }
+    
+    .modal-box.fullscreen { max-width: 100%; height: 100%; border-radius: 0; transform: translate3d(100%, 0, 0) scale(1); max-height: 100dvh; background: var(--bg-body) !important; }
+    .modal.active .modal-box.fullscreen { transform: translate3d(0, 0, 0) scale(1); transition: transform 0.4s var(--ease-modern); }
+    .modal-box.size-code { max-width: 700px; height: 75dvh; }
+    
+    /* Drag Handle - Bigger Touch Area & No Action */
+    .drag-handle { width: 40px; height: 5px; background: var(--border); border-radius: 100px; margin: -10px auto 24px auto; opacity: .8; cursor: grab; flex-shrink: 0; padding: 20px 0; background-clip: content-box; pointer-events: auto; touch-action: none; position: relative; z-index: 10; }
+    .drag-handle:active { opacity: 0.5; }
+    
+    #fileList, .rich-editor, textarea, pre { touch-action: pan-y; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
+    #fileList { margin-bottom: 15px; padding-right: 5px; min-height: 150px; }
+    
+    #editor-container { height: 100%; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .ql-toolbar { border-top: none !important; border-left: none !important; border-right: none !important; border-bottom: 1px solid var(--border) !important; background: var(--bg-card) !important; z-index: 10; }
+    .ql-container { border: none !important; font-family: Inter, sans-serif !important; font-size: 16px !important; background: var(--bg-card); flex: 1; overflow-y: hidden; }
+    .ql-editor { color: var(--text-main); font-family: 'Fira Code', monospace; line-height: 1.6; padding: 20px; height: 100%; overflow-y: auto; }
+    
+    #fileTypeSelection { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+    .type-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px 10px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-card); color: var(--text-sub); cursor: pointer; transition: all .2s var(--ease-modern); font-weight: 600; font-size: 12px; }
+    .type-btn.active { border-color: var(--primary); background: rgba(37, 99, 235, .08); color: var(--primary); box-shadow: 0 4px 12px rgba(37, 99, 235, .15); transform: translateY(-2px); }
+    
+    .btn-primary { width: 100%; padding: 16px; background: var(--primary); color: #fff; border: none; border-radius: 16px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all .2s var(--ease-modern); display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 10px; }
+    .btn-primary:active { transform: scale(.97); opacity: .9; }
+    
+    input, select, textarea { width: 100%; padding: 16px; border-radius: 14px; background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-main); font-size: 16px; margin-bottom: 14px; transition: border-color .3s, background .3s, box-shadow .3s; }
+    input:focus, textarea:focus { border-color: var(--primary); background: var(--bg-card); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+    
+    #authScreen { position: fixed; inset: 0; background: var(--bg-body); z-index: 6000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+    .auth-box { background: var(--bg-card); padding: 40px 30px; border-radius: 32px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 20px 60px rgba(0, 0, 0, .1); transform: scale(1); transition: transform 0.5s var(--ease-spring); }
+    #authScreen.hidden .auth-box { transform: scale(0.9); }
+
+    header { background: rgba(255, 255, 255, .8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 12px 15px; padding-top: max(12px, env(safe-area-inset-top)); position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 12px; transition: background 0.3s; }
+    html.dark-mode header { background: rgba(0, 0, 0, .8); }
+    
+    .menu-dropdown { position: absolute; top: 60px; right: 15px; width: 220px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 8px; display: none; flex-direction: column; box-shadow: 0 20px 50px rgba(0, 0, 0, .2); z-index: 200; transform-origin: top right; animation: scaleIn 0.3s var(--ease-spring); }
+    .menu-dropdown.active { display: flex; }
+    .menu-item { padding: 14px 16px; border-radius: 12px; font-weight: 500; font-size: 14px; color: var(--text-main); display: flex; justify-content: space-between; align-items: center; transition: background .2s, transform 0.2s; }
+    .menu-item:active { background: var(--input-bg); transform: scale(.96); }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(.8) translate(-10px, -10px); } to { opacity: 1; transform: scale(1) translate(0,0); } }
+    
+    .file-list-item { display: flex; align-items: center; justify-content: space-between; background: var(--bg-card); border: 1px solid var(--border); padding: 12px 16px; margin-bottom: 10px; border-radius: 16px; transition: transform .2s var(--ease-modern); animation: fadeInUp 0.3s var(--ease-modern) backwards; }
+    .file-list-item:active { transform: scale(.98); }
+    .file-info { display: flex; flex-direction: column; gap: 4px; overflow: hidden; flex: 1; padding-right: 15px; }
+    .file-name { font-size: 15px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .file-date { font-size: 12px; color: var(--text-sub); }
+    .file-actions { display: flex; gap: 8px; }
+    .action-btn { width: 38px; height: 38px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .2s var(--ease-modern); font-size: 14px; }
+    .action-btn.edit { background: rgba(37, 99, 235, .1); color: var(--primary); }
+    .action-btn.move { background: rgba(16, 185, 129, .1); color: var(--success); }
+    .action-btn.delete { background: rgba(239, 68, 68, .1); color: var(--error); }
+    .action-btn:active { transform: scale(.85); }
+    
+    pre { border-radius: 8px; margin: 0; height: 100%; overflow: auto; }
+    .hidden { display: none !important; }
+    .vault-header { background: #000; color: #fff; border: none; }
+    html:not(.dark-mode) .vault-header { background: #111827; }
+    .password-wrapper { position: relative; width: 100%; }
+    .toggle-password { position: absolute; right: 15px; top: 16px; cursor: pointer; color: var(--text-sub); padding: 5px; transition: transform 0.2s; }
+    .toggle-password:active { transform: scale(0.9); }
+    
+    .guide-footer { margin-top: 25px; padding: 12px; border-radius: 14px; background: linear-gradient(135deg, var(--logo-n), var(--logo-l)); color: #fff; font-weight: 700; text-align: center; font-size: 14px; box-shadow: 0 4px 15px rgba(0, 0, 0, .2); }
+    html.dark-mode .guide-footer { color: #000; background: linear-gradient(135deg, #fff, var(--logo-c)); }
+    #loadMoreSentinel { height: 1px; width: 100%; }
+    
+    #deepSearchToggle.active i { color: var(--primary) !important; transform: scale(1.1); }
+    #deepSearchToggle i { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    #deepSearchToggle:hover i { color: var(--text-main); }
+    
+    .quick-copy-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.3); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0.2s ease; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+    .quick-copy-modal.active { opacity: 1; visibility: visible; }
+    .quick-copy-box { background: var(--bg-card); border-radius: 20px; padding: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); max-width: 90%; width: 300px; text-align: center; transform: scale(0.9) translateY(20px); transition: transform 0.3s var(--ease-spring); }
+    .quick-copy-modal.active .quick-copy-box { transform: scale(1) translateY(0); }
+    .quick-copy-options { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
+    .quick-copy-btn { padding: 14px; border-radius: 14px; border: none; background: var(--input-bg); color: var(--text-main); font-weight: 600; cursor: pointer; transition: all 0.2s var(--ease-modern); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .quick-copy-btn:active { transform: scale(0.96); background: var(--primary); color: white; }
+    .quick-copy-btn.copy { background: rgba(37, 99, 235, 0.1); color: var(--primary); }
+    .quick-copy-btn.cancel { background: rgba(107, 114, 128, 0.1); color: var(--text-sub); }
+    
+    .copy-content-protected { -webkit-user-select: none !important; user-select: none !important; }
+    .copy-modal-content { -webkit-user-select: text !important; user-select: text !important; }
+    .card.long-press { transform: scale(0.95); box-shadow: 0 0 0 3px var(--primary); }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(150,150,150,0.3); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(150,150,150,0.5); }
+</style>
+</head>
+<body>
+<div id="toast-container"></div>
+
+<div class="quick-copy-modal" id="quickCopyModal">
+    <div class="quick-copy-box">
+        <h3 style="margin:0 0 10px 0;color:var(--text-main);font-size:18px;">Copy Content</h3>
+        <p style="margin:0 0 20px 0;color:var(--text-sub);font-size:14px;">Select an option to copy</p>
+        <div class="quick-copy-options">
+            <button class="quick-copy-btn copy" onclick="window.quickCopyContent()">
+                <i class="fas fa-copy"></i> Copy Content
+            </button>
+            <button class="quick-copy-btn cancel" onclick="window.closeQuickCopyModal()">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="authScreen" class="hidden"><div class="auth-box"><h1 style="margin:0;font-size:48px;letter-spacing:-2px;line-height:1"><span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></h1><p style="color:var(--text-sub);margin-bottom:30px">Pro Cloud Storage</p><input type="email" id="authEmail" placeholder="Email address" autocomplete="username"><div class="password-wrapper"><input type="password" id="authPassword" placeholder="Password" autocomplete="current-password"><i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("authPassword",this)'></i></div><div id="confirmPasswordWrapper" class="password-wrapper hidden"><input type="password" id="authConfirmPassword" placeholder="Confirm Password" autocomplete="new-password"><i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("authConfirmPassword",this)'></i></div><button id="mainAuthBtn" class="btn-primary" onclick="window.handleAuthAction()">Continue</button><div style="margin-top:20px;font-size:13px;color:var(--text-sub)"><span id="authSwitchText">New here?</span><b onclick="window.toggleAuthMode()" style="color:var(--primary);cursor:pointer">Create Account</b></div><div style="margin-top:15px;font-size:12px"><span onclick="window.openForgotPasswordModal()" style="color:var(--text-sub);cursor:pointer">Forgot Password?</span></div></div></div>
+<div id="appLoader"><div style="display:flex;align-items:center;gap:20px"><div style="font-weight:900;font-size:40px;letter-spacing:-2px"><span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></div><div class="spinner-ring"></div></div></div>
+<div id="mainApp" class="hidden"><header><div class="brand" style="font-weight:900;font-size:20px;letter-spacing:-1px"><span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></div><div onclick="window.openAuthModal()" style="padding:10px;cursor:pointer;color:var(--text-main);transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'"><i class="fas fa-shield-alt"></i></div><div style="flex:1;position:relative"><input type="text" class="search-input" id="searchInput" placeholder="Search" autocomplete="off" style="margin:0;padding:10px 15px 10px 15px;font-size:14px;padding-right:45px"><div id="deepSearchToggle" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;padding:5px;color:var(--text-sub);transition:color 0.2s"><i class="fas fa-search" title="Deep Search"></i></div></div><div onclick='window.openEditor(null,"main")' style="padding:10px;cursor:pointer;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'"><i class="fas fa-plus-circle" style="font-size:24px;color:var(--primary)"></i></div><div id="menuBtn" style="padding:10px;cursor:pointer;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'"><i class="fas fa-bars" style="font-size:22px;color:var(--text-main)"></i></div><div class="menu-dropdown" id="menuDropdown"><div class="menu-item" onclick='window.openManager("main")'>File Manager<i class="fas fa-folder"></i></div><div class="menu-item" onclick="window.toggleTheme()">Theme<i class="fas fa-adjust"></i></div><div class="menu-item" onclick="window.cycleCardSize()">Card Size<i class="fas fa-vector-square"></i></div><div class="menu-item" onclick="window.openChangePasswordModal()">Change Password<i class="fas fa-unlock-alt"></i></div><div style="height:1px;background:var(--border);margin:5px 0"></div><div style="font-size:10px;color:var(--text-sub);padding:4px 10px;font-weight:700;letter-spacing:1px">SORT</div><div class="menu-item" onclick='window.setSort("date")'>Newest First<i class="fas fa-clock"></i></div><div class="menu-item" onclick='window.setSort("oldest")'>Oldest First<i class="fas fa-history"></i></div><div class="menu-item" onclick='window.setSort("name")'>Name (A-Z)<i class="fas fa-font"></i></div><div style="height:1px;background:var(--border);margin:5px 0"></div><div class="menu-item" onclick='window.setView("grid")'>Grid<i class="fas fa-th-large"></i></div><div class="menu-item" onclick='window.setView("list")'>List<i class="fas fa-list"></i></div><div class="menu-item" onclick="window.logout()" style="color:var(--error)">Logout<i class="fas fa-power-off"></i></div></div></header><div class="container" style="padding:15px;max-width:1200px;margin:0 auto"><div class="grid" id="fileGrid"></div><div id="loadMoreSentinel"></div></div></div>
+<div id="vaultView" class="hidden"><header class="vault-header"><div class="brand" style="font-weight:900">VAULT</div><div style="margin-left:auto;display:flex;gap:15px"><i class="fas fa-key" onclick="window.changeVaultPin()" style="color:#fbbf24;cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i><i class="fas fa-plus" onclick='window.openEditor(null,"vault")' style="cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i><i class="fas fa-cog" onclick='window.openManager("vault")' style="cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i><i class="fas fa-sign-out-alt" onclick="window.exitVault()" style="color:#ef4444;cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i></div></header><div class="container" style="padding:15px"><div class="grid" id="vaultGrid"></div></div></div>
+
+<div class="modal" id="editorModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="margin:0 0 20px 0;font-size:20px;color:var(--text-main)">New Item</h3><form id="fileForm" autocomplete="off"><input type="hidden" id="editId"> <input type="text" id="fileName" placeholder="File Name" required> <input type="hidden" id="fileType" value="link">
+<!-- CHANGED ORDER: Note first, Link second, Code third -->
+<div id="fileTypeSelection"><div class="type-btn active" data-type="note" onclick='window.setType("note")'><i class="fas fa-align-left"></i>Note</div><div class="type-btn" data-type="link" onclick='window.setType("link")'><i class="fas fa-link"></i>Link</div><div class="type-btn" data-type="code" onclick='window.setType("code")'><i class="fas fa-code"></i>Code</div></div>
+<input type="url" id="fileUrl" placeholder="https://example.com"><textarea id="fileContent" placeholder="Type something..." style="display:none;height:120px;font-family:monospace"></textarea><button type="submit" class="btn-primary">Save Item</button></form></div></div>
+<div class="modal" id="managerModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="margin:0 0 15px 0;color:var(--text-main)">Manage Files</h3><div id="fileList"></div><button onclick="window.closeManager()" class="btn-primary" style="background:var(--input-bg);color:var(--text-main)">Close</button></div></div>
+<div class="modal" id="confirmModal"><div class="modal-box" style="text-align:center"><p id="confirmText" style="margin-bottom:25px;font-weight:500;font-size:18px;color:var(--text-main)">Are you sure?</p><div style="display:flex;gap:10px"><button onclick="window.closeConfirmModal()" class="btn-primary" style="background:var(--input-bg);color:var(--text-main);flex:1">Cancel</button><button id="confirmYesBtn" class="btn-primary" style="flex:1">Yes</button></div></div></div>
+<div class="modal" id="noteModal"><div class="modal-box fullscreen" style="background:var(--bg-body);padding:0"><div style="padding:10px 15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg-card)"><div style="flex:1;display:flex;flex-direction:column;justify-content:center;overflow:hidden;margin-right:10px"><input type="text" id="noteViewTitle" style="border:none;background:0 0;font-inherit:true;font-size:24px;font-weight:800;padding:0;margin:0;width:100%;color:var(--text-main);letter-spacing:-.5px" placeholder="Untitled"><span id="noteViewDate" style="font-size:11px;color:var(--text-sub);margin-top:2px;font-weight:500"></span></div><div style="display:flex;align-items:center"><div style="display:flex;gap:12px;margin-left:15px;padding-left:10px"><i class="fas fa-check" onclick="window.saveAndExit()" style="font-size:20px;color:var(--primary);cursor:pointer;padding:5px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i><i class="fas fa-times" onclick="window.discardAndClose()" style="font-size:20px;color:var(--text-sub);cursor:pointer;padding:5px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i></div></div></div><div id="editor-container"></div> <input type="hidden" id="noteViewId"></div></div>
+<div class="modal" id="runnerModal"><div class="modal-box fullscreen" style="background:var(--bg-card);padding:0"><iframe id="codeFrame" sandbox="allow-scripts allow-modals" style="width:100%;height:100%;border:none;display:block"></iframe></div></div>
+<div class="modal" id="authModal"><div class="modal-box" style="text-align:center"><div class="drag-handle"></div><div style="width:60px;height:60px;background:rgba(59,130,246,.1);border-radius:50%;display:flex;justify-content:center;align-items:center;margin:0 auto 15px auto"><i class="fas fa-fingerprint" style="font-size:30px;color:var(--primary)"></i></div><div id="setupView" class="hidden"><h3 style="margin-bottom:5px;color:var(--text-main)">Set PIN</h3><p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">Secure your Vault</p><div style="background:#fee2e2;color:#b91c1c;padding:10px;border-radius:8px;font-size:11px;text-align:left;margin-bottom:15px"><b>WARNING:</b>If you forget this PIN, data will be lost forever.</div><p style="margin:0 0 8px 0;font-size:14px;color:var(--text-main);font-weight:500">What is your favourite fruit?</p><input type="text" id="setupAnswer" placeholder="Answer" style="margin-bottom:10px"> <input type="tel" id="setupPin" maxlength="4" placeholder="••••" style="text-align:center;letter-spacing:8px;font-size:24px;font-weight:700"><button onclick="window.setupVault()" class="btn-primary">Save & Enable</button></div><div id="loginView" class="hidden"><h3 style="margin-bottom:5px;color:var(--text-main)">Enter PIN</h3><p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">Access your private files</p><input type="tel" id="loginPin" maxlength="4" placeholder="••••" style="text-align:center;letter-spacing:8px;font-size:24px;font-weight:700" oninput="4==this.value.length&&window.loginVault()"><button onclick="window.loginVault()" class="btn-primary">Unlock</button></div></div></div>
+<div class="modal" id="copyModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="color:var(--text-main)">Copy Content</h3><div id="copyContentArea" contenteditable="true" class="rich-editor copy-modal-content" style="height:100px;border:1px solid var(--border);border-radius:8px;margin-top:10px;font-size:14px"></div><div style="display:flex;gap:10px;margin-top:10px"><button onclick="window.goBack()" class="btn-primary" style="background:var(--input-bg);color:var(--text-main)">Close</button><button onclick="window.performCopy()" class="btn-primary">Copy</button></div></div></div>
+<div class="modal" id="changePasswordModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="color:var(--text-main)">Change Password</h3><input type="password" id="cpOldPass" placeholder="Current Password"> <input type="password" id="cpNewPass" placeholder="New Password"> <input type="password" id="cpConfirmPass" placeholder="Confirm New Password"><button onclick="window.performChangePassword()" class="btn-primary">Update Password</button><button onclick="window.goBack()" class="btn-primary" style="margin-top:10px;background:0 0;color:var(--text-sub);border:1px solid var(--border)">Cancel</button></div></div>
+<div class="modal" id="forgotPasswordModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="color:var(--text-main)">Reset Password</h3><p style="color:var(--text-sub);font-size:13px;margin-bottom:15px">We'll send a link to your email.</p><input type="email" id="resetEmail" placeholder="Enter Email"><button id="sendResetBtn" class="btn-primary" onclick="window.sendPasswordResetEmail()">Send Link</button><button onclick="window.goBack()" class="btn-primary" style="margin-top:10px;background:0 0;color:var(--text-sub);border:1px solid var(--border)">Cancel</button></div></div>
+<div class="modal" id="guideModal"><div class="modal-box" style="max-height:80vh;overflow:auto"><div class="drag-handle"></div><h3 style="color:var(--text-main);margin-bottom:15px">Welcome to<span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></h3><div style="font-size:14px;line-height:1.6;color:var(--text-sub)"><p><b>Cloud Storage:</b>Save links, notes, and code snippets securely in the cloud.</p><p><b>Secure Vault:</b>Protect sensitive data with a PIN. Includes a "Fake Vault" feature if the wrong PIN is entered.</p><p><b>Code Editor:</b>Built-in syntax highlighting and runner for quick coding.</p></div><div class="guide-footer">Created by Tamim</div></div></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, writeBatch, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = { apiKey: "AIzaSyCaxYd2TgiNhus3w676wgFzYwnHeYMHVCs", authDomain: "nlc-44777.firebaseapp.com", projectId: "nlc-44777", storageBucket: "nlc-44777.firebasestorage.app", messagingSenderId: "143310032996", appId: "1:143310032996:web:eed0e533f31c98a8becf71" };
 
-const escapeHtml = (unsafe) => {
-    return String(unsafe || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+// --- WORKER & RENDERER ---
+const workerCode = `self.cachedKey=null;self.onmessage=async(e)=>{const{id,type,payload}=e.data;try{let result;const enc=new TextEncoder();const dec=new TextDecoder();const deriveKey=async(p)=>{const km=await crypto.subtle.importKey("raw",enc.encode(p),{name:"PBKDF2"},false,["deriveKey"]);return crypto.subtle.deriveKey({name:"PBKDF2",salt:enc.encode("NLC_SALT_FAST"),iterations:100000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])};if(type==='setKey'){self.cachedKey=await deriveKey(payload.pin);const iv=new Uint8Array(12);const t=await crypto.subtle.encrypt({name:"AES-GCM",iv},self.cachedKey,enc.encode("VERIFY"));const b=new Uint8Array(t);result=btoa(String.fromCharCode(...b))}else if(type==='processList'){let list=payload.list||[];const filter=(payload.filter||"").toLowerCase();const sortBy=payload.sortBy||"date";const deep=payload.deep||false;if(filter){list=list.filter(item=>{const nameMatch=(item.name||"").toLowerCase().includes(filter);if(nameMatch)return true;if(deep)return(item.content||"").toLowerCase().includes(filter);return false})}list.sort((a,b)=>{if(sortBy==='name')return(a.name||"").localeCompare(b.name||"");if(sortBy==='oldest')return a.id-b.id;return b.id-a.id});result=list}else if(type==='crypto'){const{op,data}=payload;let k=self.cachedKey;if(payload.tempPin)k=await deriveKey(payload.tempPin);if(!k)throw new Error("Vault Locked");if(op==='encrypt'){const iv=crypto.getRandomValues(new Uint8Array(12));const c=await crypto.subtle.encrypt({name:"AES-GCM",iv},k,enc.encode(data));const b=new Uint8Array(iv.length+c.byteLength);b.set(iv);b.set(new Uint8Array(c),iv.length);result=btoa(String.fromCharCode(...b))}else{const b=Uint8Array.from(atob(data),c=>c.charCodeAt(0));result=dec.decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(0,12)},k,b.slice(12)))}}self.postMessage({id,result})}catch(err){self.postMessage({id,error:err.message})}};`;
+const workerBlob = new Blob([workerCode], {type:'application/javascript'});
+const worker = new Worker(URL.createObjectURL(workerBlob));
+const workerTasks = new Map();
+const postWorker = (type, payload) => new Promise((resolve, reject) => {
+    const id = Math.random().toString(36);
+    workerTasks.set(id, { resolve, reject });
+    worker.postMessage({ id, type, payload });
+});
+worker.onmessage = e => { const task = workerTasks.get(e.data.id); if(task) { if(e.data.error) task.reject(e.data.error); else task.resolve(e.data.result); workerTasks.delete(e.data.id); }};
+
+class SurgeRenderer {
+    constructor(id) { this.el = document.getElementById(id); this.pending = null; }
+    render(items, ctx) {
+        if(this.pending) cancelAnimationFrame(this.pending);
+        this.pending = requestAnimationFrame(() => {
+            const frag = document.createDocumentFragment();
+            const oldNodes = new Map();
+            Array.from(this.el.children).forEach(n => oldNodes.set(n.dataset.id, n));
+            if(items.length === 0) { this.el.innerHTML = `<div style='grid-column:1/-1;text-align:center;padding:40px;color:var(--text-sub)'>Empty</div>`; return; }
+            items.forEach((item, i) => {
+                let node = oldNodes.get(String(item.id));
+                const safeName = (item.name||"").replace(/</g,"&lt;");
+                if(node) { const t = node.querySelector('.card-title'); if(t.innerHTML !== safeName) t.innerHTML = safeName; oldNodes.delete(String(item.id)); } 
+                else { node = document.createElement('div'); node.className = 'card copy-content-protected'; node.dataset.id = item.id; node.dataset.ctx = ctx; node.style.contain = 'content'; const ic = item.type==='note'?'fa-sticky-note':(item.type==='code'?'fa-code':'fa-link'); const cl = item.type==='note'?'#f59e0b':(item.type==='code'?'#10b981':'#3b82f6'); node.innerHTML = `<i class="fas ${ic} card-icon" style="color:${cl}"></i><div class="card-title">${safeName}</div>`; }
+                frag.appendChild(node);
+            });
+            this.el.replaceChildren(frag);
+            this.pending = null;
+        });
+    }
 }
 
-class NLCManager {
+// --- KERNEL ---
+class Kernel {
     constructor() {
-        this.currentUser = null;
-        this.files = [];
-        this.vaultFiles = [];
-        this.fakeVaultFiles = [];
-        this.vaultSettings = { pinHash: null, answer: null };
-        this.settings = initialSettings;
-        this.editContext = 'main';
-        this.activeNoteContext = 'main';
-        this.displayLimit = 50;
-        this.currentFilter = "";
-        this.sortBy = 'date';
-        this.isLoginMode = true;
-        this.sessionPin = null;
-        this.vaultMode = 'real';
-        this.isNoteDirty = false;
-        this.shouldSaveOnExit = true;
-        this.renderTimeout = null;
-        this.unsubscribers = { files: null, vault: null, fakeVault: null, settings: null };
-        this.observer = null;
-        this.deepSearchMode = false;
-        this.longPressTimer = null;
-        this.isLongPress = false;
-        this.currentCopyContent = "";
-        
-        this.ui = {
-             loader: document.getElementById('appLoader'),
-             auth: document.getElementById('authScreen'),
-             app: document.getElementById('mainApp'),
-             grid: document.getElementById('fileGrid'),
-             vaultGrid: document.getElementById('vaultGrid'),
-             sentinel: document.getElementById('loadMoreSentinel')
-        };
-
-        try {
-            this.app = initializeApp(firebaseConfig);
-            this.auth = getAuth(this.app);
-            this.db = getFirestore(this.app);
-            enableIndexedDbPersistence(this.db).catch(() => {});
-            this.initAuthListener();
-            this.initEventDelegation();
-            this.initContentProtection();
-        } catch (e) { console.error(e); }
+        this.app = initializeApp(firebaseConfig);
+        this.auth = getAuth(this.app);
+        this.db = getFirestore(this.app);
+        try { enableIndexedDbPersistence(this.db).catch(()=>{}); } catch(e){}
+        this.state = { user: null, files: [], vault: [], fake: [], filter: "", sortBy: "date", vaultMode: "real", security: {}, deep: false };
+        this.ui = { main: new SurgeRenderer('fileGrid'), vault: new SurgeRenderer('vaultGrid') };
+        this.quill = new Quill('#editor-container', { theme: 'snow', placeholder: 'Start writing...', modules: { toolbar: [[{ 'header': [1, 2, false] }], ['bold', 'italic', 'underline', 'strike'], [{ 'list': 'ordered'}, { 'list': 'bullet' }], [{ 'color': [] }, { 'background': [] }], ['code-block', 'blockquote'], ['clean']] } });
+        this.isFirstLoad = true;
+        this.asTimer = null;
+        this.init();
     }
 
-    initContentProtection() {
-        // Prevent text selection and editing on long press
-        document.addEventListener('contextmenu', (e) => {
-            const card = e.target.closest('.card');
-            if (card) {
-                e.preventDefault();
-                this.handleLongPress(parseInt(card.dataset.id), card.dataset.ctx);
+    init() {
+        onAuthStateChanged(this.auth, u => {
+            if(u) { 
+                this.state.user = u; 
+                document.getElementById('authScreen').classList.add('hidden'); 
+                document.getElementById('mainApp').classList.remove('hidden'); 
+                this.sync(u.uid); 
+                if(!localStorage.getItem('intro')) { setTimeout(()=>this.mod('guide'),500); localStorage.setItem('intro','1'); } 
+            } 
+            else { 
+                document.getElementById('appLoader').classList.add('hidden');
+                document.getElementById('authScreen').classList.remove('hidden'); 
+                document.getElementById('mainApp').classList.add('hidden'); 
             }
         });
-
-        // Touch events for mobile long press
-        document.addEventListener('touchstart', (e) => {
-            const card = e.target.closest('.card');
-            if (card) {
-                card.classList.add('long-press');
-                this.longPressTimer = setTimeout(() => {
-                    this.isLongPress = true;
-                    this.handleLongPress(parseInt(card.dataset.id), card.dataset.ctx);
-                }, 500); // 500ms for long press
-            }
-        }, { passive: true });
-
-        document.addEventListener('touchend', (e) => {
-            const card = e.target.closest('.card');
-            if (card) {
-                card.classList.remove('long-press');
-            }
-            clearTimeout(this.longPressTimer);
-            setTimeout(() => {
-                this.isLongPress = false;
-            }, 100);
-        });
-
-        document.addEventListener('touchmove', (e) => {
-            const card = e.target.closest('.card');
-            if (card) {
-                card.classList.remove('long-press');
-            }
-            clearTimeout(this.longPressTimer);
-        });
+        this.bind();
     }
 
-    handleLongPress(id, ctx) {
-        this.openQuickCopy(id, ctx);
-    }
-
-    initEventDelegation() {
-        const handleClick = (e, ctx) => {
-            // Skip if this was a long press
-            if (this.isLongPress) {
-                this.isLongPress = false;
-                return;
-            }
-            
-            const dropdown = document.getElementById('menuDropdown');
-            // If menu is active, close it and don't open file
-            if (dropdown.classList.contains('active')) {
-                dropdown.classList.remove('active');
-                return;
-            }
-            
-            const card = e.target.closest('.card');
-            if (card) {
-                this.openFile(Number(card.dataset.id), ctx);
-            }
-        };
-
-        this.ui.grid.addEventListener('click', e => handleClick(e, 'main'));
-        this.ui.vaultGrid.addEventListener('click', e => handleClick(e, 'vault'));
-        
-        document.getElementById('deepSearchToggle').addEventListener('click', () => {
-            this.toggleDeepSearch();
-        });
-    }
-
-    async ensureDependencies() {
-        if (window.CryptoJS) return true;
-        return new Promise(r => { const i = setInterval(() => { if (window.CryptoJS) { clearInterval(i); r(true); } }, 100); });
-    }
-
-    initAuthListener() {
-        onAuthStateChanged(this.auth, async (user) => {
-            if (user) {
-                this.currentUser = user;
-                await this.ensureDependencies();
-                this.ui.loader.style.opacity = '0'; 
-                setTimeout(() => {
-                    this.ui.loader.classList.add('hidden');
-                }, 400);
-                this.ui.auth.classList.add('hidden');
-                this.ui.app.classList.remove('hidden');
-                this.initData(user.uid);
-                this.checkIntro();
-                this.initInfiniteScroll();
-            } else {
-                this.cleanupListeners(); 
-                this.currentUser = null; 
-                this.files = [];
-                this.ui.loader.style.opacity = '0'; 
-                setTimeout(() => {
-                    this.ui.loader.classList.add('hidden');
-                }, 400);
-                this.ui.auth.classList.remove('hidden');
-                this.ui.app.classList.add('hidden');
-            }
-        });
-    }
-
-    initInfiniteScroll() {
-        if(this.observer) this.observer.disconnect();
-        this.observer = new IntersectionObserver((entries) => {
-            if(entries[0].isIntersecting && this.files.length > this.displayLimit) {
-                this.displayLimit += 20;
-                this.renderFiles(this.currentFilter);
-            }
-        }, { rootMargin: '200px' });
-        if(this.ui.sentinel) this.observer.observe(this.ui.sentinel);
-    }
-
-    cleanupListeners() { Object.values(this.unsubscribers).forEach(u => typeof u === 'function' && u()); }
-    initData(uid) {
-        this.cleanupListeners();
-        const handleSnapshot = (s, list, renderFn, ctx) => {
-            this[list] = s.docs.map(d => d.data());
-            if(renderFn) renderFn();
-            if(document.getElementById('managerModal').classList.contains('active') && this.editContext === ctx) this.renderManagerList(ctx);
-        };
-        this.unsubscribers.files = onSnapshot(collection(this.db, "users", uid, "files"), s => handleSnapshot(s, 'files', () => this.renderFiles(this.currentFilter), 'main'));
-        this.unsubscribers.vault = onSnapshot(collection(this.db, "users", uid, "vault"), s => handleSnapshot(s, 'vaultFiles', () => { if(this.vaultMode === 'real') this.renderVaultFiles(); }, 'vault'));
-        this.unsubscribers.fakeVault = onSnapshot(collection(this.db, "users", uid, "fakeVault"), s => handleSnapshot(s, 'fakeVaultFiles', () => { if(this.vaultMode === 'fake') this.renderVaultFiles(); }, 'vault'));
-        this.unsubscribers.settings = onSnapshot(doc(this.db, "users", uid, "settings", "security"), s => {
-            const d = s.data();
-            this.vaultSettings = d ? { pinHash: d.pinHash || (d.pin ? this.hashPin(d.pin) : null), answer: d.answer } : { pinHash: null, answer: null };
-        });
-    }
-
-    encryptData(t, p) { try { return CryptoJS.AES.encrypt(t, String(p)).toString(); } catch (e) { return t; } }
-    decryptData(t, p) { try { const b = CryptoJS.AES.decrypt(t, String(p)); const s = b.toString(CryptoJS.enc.Utf8); if (!s) throw new Error(); return s; } catch (e) { return null; } }
-    hashPin(p) { return window.CryptoJS ? CryptoJS.SHA256(String(p)).toString() : p; }
-
-    checkIntro() { if (!localStorage.getItem('nlc_intro_seen')) setTimeout(() => { this.pushModal('guide'); this.activateModal('guideModal'); localStorage.setItem('nlc_intro_seen', 'true'); }, 500); }
-    
-    showToast(m, type = 'info') {
-        const c = document.getElementById('toast-container'), e = document.createElement('div');
-        e.className = `toast ${type}`;
-        e.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : (type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle')}"></i> ${m}`;
-        c.appendChild(e); 
-        requestAnimationFrame(() => {
-            e.classList.add('show');
-        });
-        setTimeout(() => { 
-            e.classList.remove('show'); 
-            setTimeout(() => e.remove(), 300); 
-        }, 3000);
-    }
-    
-    pushModal(n) { history.pushState({ modal: n }, null, ""); }
-
-    // Improved modal activation with smooth animation
-    activateModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (!modal) return;
-        
-        // Show modal
-        modal.style.display = 'flex';
-        
-        // Use requestAnimationFrame for smooth animation
-        requestAnimationFrame(() => {
-            modal.classList.add('active');
-        });
-    }
-
-    // Improved modal deactivation with smooth closing
-    deactivateModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (!modal) return;
-        
-        modal.classList.remove('active');
-        
-        // Wait for animation to complete before hiding
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 450); // Match the transition duration
-    }
-
-    // Quick Copy Modal functions
-    openQuickCopy(id, ctx) {
-        let list = ctx === 'vault' ? (this.vaultMode === 'real' ? this.vaultFiles : this.fakeVaultFiles) : this.files;
-        const f = list.find(x => x.id === id);
-        if(!f) return;
-
-        let c = f.content;
-        if (ctx === 'vault' && this.vaultMode === 'real' && this.sessionPin) { 
-            c = this.decryptData(c, this.sessionPin); 
-            if (c === null) return this.showToast("Decryption Error", "error"); 
-        }
-        
-        this.currentCopyContent = c;
-        this.activateQuickCopyModal();
-    }
-
-    activateQuickCopyModal() {
-        const modal = document.getElementById('quickCopyModal');
-        modal.classList.add('active');
-    }
-
-    closeQuickCopyModal() {
-        const modal = document.getElementById('quickCopyModal');
-        modal.classList.remove('active');
-    }
-
-    quickCopyContent() {
-        if (!this.currentCopyContent) return;
-        
-        // Create a temporary textarea to copy from
-        const textarea = document.createElement('textarea');
-        textarea.value = this.currentCopyContent;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        
-        this.showToast("Content copied to clipboard", "success");
-        this.closeQuickCopyModal();
-    }
-
-    renderFiles(filter = "") {
-        this.currentFilter = filter;
-        
-        requestAnimationFrame(() => {
-            let list = this.files.filter(f => {
-                if (!filter) return true;
-                
-                const nameMatch = (f.name || "").toLowerCase().includes(filter.toLowerCase());
-                
-                if (this.deepSearchMode && !nameMatch) {
-                    try {
-                        let content = f.content || "";
-                        const contentMatch = content.toLowerCase().includes(filter.toLowerCase());
-                        return contentMatch;
-                    } catch (e) {
-                        return false;
-                    }
+    sync(uid) {
+        const sub = (c, k, r) => onSnapshot(collection(this.db,"users",uid,c), s => { 
+            this.state[k] = s.docs.map(d=>d.data()); 
+            this.refresh(r).then(() => {
+                if (r === 'main' && this.isFirstLoad) {
+                    this.isFirstLoad = false;
+                    setTimeout(() => { document.getElementById('appLoader').classList.add('hidden'); }, 50);
                 }
-                
-                return nameMatch;
-            });
-            
-            list.sort((a, b) => this.sortBy === 'name' ? (a.name||"").localeCompare(b.name||"") : (this.sortBy === 'oldest' ? a.id - b.id : b.id - a.id));
-            
-            if (list.length === 0) { 
-                this.ui.grid.innerHTML = `<div style='grid-column:1/-1;text-align:center;padding:40px;color:var(--text-sub)'>
-                    ${this.deepSearchMode ? 'No files found in name or content' : 'No files found'}
-                </div>`; 
-                return; 
-            }
-            
-            const frag = document.createDocumentFragment();
-            list.slice(0, this.displayLimit).forEach(f => {
-                const card = this.createCard(f, 'main');
-                // Add content protection to prevent editing
-                card.classList.add('copy-content-protected');
-                frag.appendChild(card);
-            });
-            this.ui.grid.innerHTML = ""; 
-            this.ui.grid.appendChild(frag);
+            }); 
         });
+        sub("files","files","main"); sub("vault","vault","vault"); sub("fakeVault","fake","vault");
+        onSnapshot(doc(this.db,"users",uid,"settings","security"), s=>this.state.security=s.data()||{});
     }
 
-    createCard(f, ctx) {
-        const el = document.createElement('div'); 
-        el.className = 'card';
-        el.dataset.id = f.id;
-        el.dataset.ctx = ctx;
-        let icon = 'fa-link', color = '#3b82f6';
-        if (f.type === 'note') { icon = 'fa-sticky-note'; color = '#f59e0b'; } 
-        else if (f.type === 'code') { icon = 'fa-code'; color = '#10b981'; }
-        el.innerHTML = `<i class="fas ${icon} card-icon" style="color:${color}"></i><div class="card-title">${escapeHtml(f.name || "Untitled")}</div>`;
-        return el;
-    }
-
-    openFile(id, ctx) {
-        let list = ctx === 'vault' ? (this.vaultMode === 'real' ? this.vaultFiles : this.fakeVaultFiles) : this.files;
-        const f = list.find(x => x.id === id);
-        if(!f) return;
-
-        let c = f.content;
-        if (ctx === 'vault' && this.vaultMode === 'real' && this.sessionPin) { c = this.decryptData(c, this.sessionPin); if (c === null) return this.showToast("Decryption Failed", "error"); }
-        
-        if (f.type === 'link') {
-            window.open(c, '_blank');
-        } else if (f.type === 'note') {
-            this.activeNoteContext = ctx; this.isNoteDirty = false; this.shouldSaveOnExit = true;
-            document.getElementById('noteViewId').value = f.id; document.getElementById('noteViewTitle').value = f.name;
-            document.getElementById('noteViewDate').innerText = f.date || 'No Date';
-            
-            document.getElementById('noteViewContent').innerText = c; 
-
-            this.pushModal('note');
-            this.activateModal('noteModal');
-
-        } else { 
-            document.getElementById('codeFrame').srcdoc = c; 
-            this.pushModal('code');
-            this.activateModal('runnerModal');
+    async refresh(view) {
+        let list = view === 'main' ? this.state.files : (this.state.vaultMode==='real' ? this.state.vault : this.state.fake);
+        let result = [...list];
+        const filter = (this.state.filter||"").toLowerCase();
+        const sortBy = this.state.sortBy||"date";
+        const deep = this.state.deep||false;
+        if(filter){
+            result = result.filter(item=>{
+                const nameMatch=(item.name||"").toLowerCase().includes(filter);
+                if(nameMatch)return true;
+                if(deep)return(item.content||"").toLowerCase().includes(filter);
+                return false
+            })
         }
-    }
-
-    openEditor(id, ctx) {
-        this.editContext = ctx; document.getElementById('fileForm').reset();
-        document.getElementById('managerModal').classList.remove('active'); 
-        this.pushModal('editor');
-        if (id) {
-            let list = ctx === 'vault' ? (this.vaultMode === 'real' ? this.vaultFiles : this.fakeVaultFiles) : this.files;
-            const f = list.find(x => x.id === id);
-            document.getElementById('editId').value = id; document.getElementById('fileName').value = f.name; this.setType(f.type);
-            let c = f.content;
-            if (ctx === 'vault' && this.vaultMode === 'real' && this.sessionPin) { c = this.decryptData(c, this.sessionPin); if (c === null) { window.goBack(); return this.showToast("Decryption Failed", "error"); } }
-            if (f.type === 'link') document.getElementById('fileUrl').value = c; else document.getElementById('fileContent').value = c;
-        } else { document.getElementById('editId').value = ""; this.setType('link'); }
-        
-        this.activateModal('editorModal');
-    }
-    
-    setType(t) {
-        document.getElementById('fileType').value = t;
-        document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === t));
-        const c = document.getElementById('fileContent'), u = document.getElementById('fileUrl'), m = document.querySelector('#editorModal .modal-box');
-        m.classList.remove('size-note', 'size-code');
-        if (t === 'note') m.classList.add('size-note'); else if (t === 'code') { m.classList.add('size-code'); c.style.fontFamily = 'monospace'; } else c.style.fontFamily = 'inherit';
-        if (t === 'link') { u.style.display = 'block'; u.required = true; c.style.display = 'none'; c.required = false; } else { u.style.display = 'none'; u.required = false; c.style.display = 'block'; c.required = true; }
-    }
-    
-    async handleSubmit(e) {
-        e.preventDefault(); const btn = e.target.querySelector('button'), txt = btn.innerText;
-        btn.disabled = true; btn.innerText = "Saving...";
-        const id = document.getElementById('editId').value ? Number(document.getElementById('editId').value) : Date.now();
-        const name = document.getElementById('fileName').value, type = document.getElementById('fileType').value;
-        let content = type === 'link' ? document.getElementById('fileUrl').value : document.getElementById('fileContent').value;
-        if (type === 'link' && !content.startsWith('http')) content = 'https://' + content;
-        const now = new Date(), dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' • ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-        let col = this.editContext === 'vault' ? (this.vaultMode === 'real' ? 'vault' : 'fakeVault') : 'files';
-        if (this.editContext === 'vault' && this.vaultMode === 'real' && this.sessionPin) content = this.encryptData(content, this.sessionPin);
-        try { await setDoc(doc(this.db, "users", this.currentUser.uid, col, String(id)), { id, name, type, content, date: dateStr }); this.showToast("Saved", "success"); window.goBack(); } catch (err) { this.showToast(err.message, "error"); } finally { btn.disabled = false; btn.innerText = txt; }
-    }
-    
-    async saveNoteInternal() {
-        const id = document.getElementById('noteViewId').value, name = document.getElementById('noteViewTitle').value;
-        let content = document.getElementById('noteViewContent').innerText; 
-        const now = new Date(), dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' • ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-        document.getElementById('noteViewDate').innerText = dateStr;
-        let col = this.activeNoteContext === 'vault' ? (this.vaultMode === 'real' ? 'vault' : 'fakeVault') : 'files';
-        if (this.activeNoteContext === 'vault' && this.vaultMode === 'real' && this.sessionPin) content = this.encryptData(content, this.sessionPin);
-        await setDoc(doc(this.db, "users", this.currentUser.uid, col, String(id)), { id: Number(id), name, type: 'note', content, date: dateStr }, { merge: true });
-        this.isNoteDirty = false;
-    }
-    
-    async manualSaveNote() { await this.saveNoteInternal(); this.showToast("Saved", "success"); }
-    discardAndClose() { this.shouldSaveOnExit = false; window.goBack(); }
-
-    openManager(ctx) {
-        this.editContext = ctx; 
-        this.renderManagerList(ctx);
-        this.pushModal('manager');
-        document.getElementById('menuDropdown').classList.remove('active');
-
-        this.activateModal('managerModal');
-    }
-
-    // Close manager without going back
-    closeManager() {
-        this.deactivateModal('managerModal');
-    }
-
-    renderManagerList(ctx) {
-        const list = document.getElementById('fileList'); list.innerHTML = "";
-        let data = ctx === 'main' ? this.files : (this.vaultMode === 'real' ? this.vaultFiles : this.fakeVaultFiles);
-        if (data.length === 0) { list.innerHTML = "<div style='text-align:center; padding:20px; color:var(--text-sub)'>Empty</div>"; return; }
-        const frag = document.createDocumentFragment();
-        data.forEach(f => {
-            const i = document.createElement('div'); i.className = 'file-list-item';
-            i.innerHTML = `<div class="file-info"><div class="file-name">${escapeHtml(f.name || "Untitled")}</div><div class="file-date">${f.date || 'Just now'}</div></div><div class="file-actions"><button class="action-btn edit" onclick="window.openEditor(${f.id}, '${ctx}')"><i class="fas fa-pen"></i></button><button class="action-btn move" onclick="window.moveFile(${f.id}, '${ctx}')"><i class="fas ${ctx === 'main' ? 'fa-lock' : 'fa-unlock'}"></i></button><button class="action-btn delete" onclick="window.deleteFile(${f.id}, '${ctx}')"><i class="fas fa-trash"></i></button></div>`;
-            frag.appendChild(i);
+        result.sort((a,b)=>{
+            if(sortBy==='name')return(a.name||"").localeCompare(b.name||"");
+            if(sortBy==='oldest')return a.id-b.id;
+            return b.id-a.id
         });
-        list.appendChild(frag);
+        this.ui[view].render(result, view==='main'?'main':'vault');
+        if(document.getElementById('managerModal').classList.contains('active')) this.renderManager(view==='main'?'main':'vault');
     }
 
-    deleteFile(id, ctx) {
-        document.getElementById('confirmText').innerText = "Delete this file?";
-        this.activateModal('confirmModal'); 
-        document.getElementById('confirmYesBtn').onclick = async () => {
-            this.closeConfirmModal();
-            if (!this.currentUser) return;
-            let col = ctx === 'vault' ? (this.vaultMode === 'real' ? 'vault' : 'fakeVault') : 'files';
-            try { 
-                await deleteDoc(doc(this.db, "users", this.currentUser.uid, col, String(id))); 
-                this.showToast("Deleted", "success"); 
-                // Refresh the manager list to reflect the deletion
-                this.renderManagerList(ctx);
-            } catch (e) { this.showToast("Error", "error"); }
-        };
-    }
-    
-    moveFile(id, ctx) {
-        document.getElementById('confirmText').innerText = ctx === 'main' ? "Move to Vault?" : "Move to Cloud?";
-        this.activateModal('confirmModal'); 
-        document.getElementById('confirmYesBtn').onclick = async () => {
-            this.closeConfirmModal();
-            if (!this.currentUser) return;
-            let srcList, srcCol, dstCol;
-            if (ctx === 'main') { srcList = this.files; srcCol = 'files'; dstCol = this.vaultMode === 'real' ? 'vault' : 'fakeVault'; } else { srcList = this.vaultMode === 'real' ? this.vaultFiles : this.fakeVaultFiles; srcCol = this.vaultMode === 'real' ? 'vault' : 'fakeVault'; dstCol = 'files'; }
-            const file = srcList.find(f => f.id === id); if (!file) return;
-            let content = file.content;
-            if (this.vaultMode === 'real' && ctx === 'vault' && this.sessionPin) { content = this.decryptData(content, this.sessionPin); if (content === null) return this.showToast("Move Failed", "error"); }
-            if (this.vaultMode === 'real' && ctx === 'main' && this.sessionPin) content = this.encryptData(content, this.sessionPin);
-            try { 
-                await setDoc(doc(this.db, "users", this.currentUser.uid, dstCol, String(id)), { ...file, content }); 
-                await deleteDoc(doc(this.db, "users", this.currentUser.uid, srcCol, String(id))); 
-                this.showToast("Moved", "success"); 
-                // Refresh the manager list to reflect the move
-                this.renderManagerList(ctx);
-            } catch (e) { this.showToast("Failed", "error"); }
-        };
-    }
+    async save(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector('button'); 
+        const type = document.getElementById('fileType').value;
+        const id = document.getElementById('editId').value || Date.now();
+        const name = document.getElementById('fileName').value;
+        const ctx = this.editCtx || 'main';
 
-    // Close confirm modal without going back
-    closeConfirmModal() {
-        this.deactivateModal('confirmModal');
-    }
-    
-    openCopy(id, ctx) {
-        let list = ctx === 'vault' ? (this.vaultMode === 'real' ? this.vaultFiles : this.fakeVaultFiles) : this.files;
-        const f = list.find(x => x.id === id); if(!f) return;
-
-        let c = f.content;
-        if (ctx === 'vault' && this.vaultMode === 'real' && this.sessionPin) { c = this.decryptData(c, this.sessionPin); if (c === null) return this.showToast("Decryption Error", "error"); }
-        const d = document.getElementById('copyContentArea'); 
-        d.innerText = c; 
-        this.pushModal('copy');
-        this.activateModal('copyModal');
-    }
-    
-    performCopy() {
-        const d = document.getElementById('copyContentArea'), r = document.createRange(), s = window.getSelection();
-        r.selectNodeContents(d); s.removeAllRanges(); s.addRange(r); document.execCommand('copy'); this.showToast("Copied", "success"); window.goBack();
-    }
-
-    renderVaultFiles() {
-        this.ui.vaultGrid.innerHTML = "";
-        const frag = document.createDocumentFragment();
-        const list = this.vaultMode === 'real' ? this.vaultFiles : this.fakeVaultFiles;
-        
-        let filteredList = list;
-        if (this.currentFilter) {
-            filteredList = list.filter(f => {
-                const nameMatch = (f.name || "").toLowerCase().includes(this.currentFilter.toLowerCase());
-                
-                if (this.deepSearchMode && !nameMatch) {
-                    try {
-                        let content = f.content || "";
-                        
-                        if (this.vaultMode === 'real' && this.sessionPin) {
-                            content = this.decryptData(content, this.sessionPin) || "";
-                        }
-                        
-                        const contentMatch = content.toLowerCase().includes(this.currentFilter.toLowerCase());
-                        return contentMatch;
-                    } catch (e) {
-                        return false;
-                    }
-                }
-                
-                return nameMatch;
-            });
-        }
-        
-        if (filteredList.length === 0) {
-            this.ui.vaultGrid.innerHTML = `<div style='grid-column:1/-1;text-align:center;padding:40px;color:var(--text-sub)'>
-                ${this.currentFilter ? (this.deepSearchMode ? 'No files found in name or content' : 'No files found') : 'Vault is empty'}
-            </div>`;
+        if(type === 'note') {
+            document.getElementById('noteViewId').value = id;
+            document.getElementById('noteViewTitle').value = name;
+            this.quill.setText('');
+            this.updateHeaderTime();
+            this.noteCtx = ctx;
+            this.mod('note'); 
+            this.startAutoSave();
             return;
         }
-        
-        filteredList.forEach(f => {
-            const card = this.createCard(f, 'vault');
-            // Add content protection to prevent editing
-            card.classList.add('copy-content-protected');
-            frag.appendChild(card);
+
+        btn.innerText = "Processing..."; btn.disabled = true;
+        try {
+            let content = type==='link'?document.getElementById('fileUrl').value:document.getElementById('fileContent').value;
+            if(type==='link' && !content.startsWith('http')) content = 'https://'+content;
+            let col = ctx==='main'?'files':(this.state.vaultMode==='real'?'vault':'fakeVault');
+            if(ctx==='vault' && this.state.vaultMode==='real') content = await postWorker('crypto', { op:'encrypt', data:content });
+            const date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+            await setDoc(doc(this.db,"users",this.state.user.uid,col,String(id)), { id:Number(id), name, type, content, date });
+            this.toast("Saved","success"); 
+            this.close();
+        } catch(e) { this.toast("Error: " + e,"error"); }
+        btn.innerText = "Save Item"; btn.disabled = false;
+    }
+
+    startAutoSave() {
+        this.stopAutoSave();
+        this.autoSaveHandler = () => {
+            clearTimeout(this.asTimer);
+            this.asTimer = setTimeout(() => { window.manualSaveNote(true); }, 2000);
+        };
+        this.quill.on('text-change', this.autoSaveHandler);
+    }
+    
+    stopAutoSave() {
+        if(this.autoSaveHandler) this.quill.off('text-change', this.autoSaveHandler);
+        clearTimeout(this.asTimer);
+    }
+
+    updateHeaderTime() {
+        document.getElementById('noteViewDate').innerText = new Date().toLocaleString('en-US', {
+            month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'numeric', hour12:true
         });
-        this.ui.vaultGrid.appendChild(frag);
+    }
+
+    bind() {
+        document.getElementById('fileForm').onsubmit = e => this.save(e);
+        let tm; document.getElementById('searchInput').oninput = e => { clearTimeout(tm); tm = setTimeout(() => { this.state.filter = e.target.value; this.refresh('main'); if(!document.getElementById('vaultView').classList.contains('hidden')) this.refresh('vault'); }, 300); };
+        
+        const click = async (e, ctx) => {
+            const c = e.target.closest('.card'); if(!c || this.lp) return; vibrate();
+            const id = Number(c.dataset.id); const list = ctx==='main'?this.state.files:(this.state.vaultMode==='real'?this.state.vault:this.state.fake); const item = list.find(x=>x.id===id); if(!item) return;
+            let content = item.content; if(ctx==='vault' && this.state.vaultMode==='real') { try { content = await postWorker('crypto', {op:'decrypt', data:content}); } catch(e) { return this.toast("Decryption Failed","error"); } }
+            if(item.type==='link') window.open(content,'_blank');
+            else if(item.type==='note') { 
+                document.getElementById('noteViewId').value=item.id; 
+                document.getElementById('noteViewTitle').value=item.name; 
+                this.quill.root.innerHTML = content; 
+                this.updateHeaderTime();
+                this.noteCtx=ctx; 
+                this.mod('note'); 
+                this.startAutoSave();
+            } 
+            else { document.getElementById('codeFrame').srcdoc=content; this.mod('runner'); }
+        };
+        document.getElementById('fileGrid').onclick = e => click(e,'main'); document.getElementById('vaultGrid').onclick = e => click(e,'vault');
+
+        // --- GLOBAL DELEGATE FOR MODAL INTERACTIONS ---
+        document.querySelectorAll('.modal').forEach(m => {
+            const box = m.querySelector('.modal-box');
+            m.addEventListener('click', (e) => { if(e.target === m && m.classList.contains('active')) this.close(); });
+            let startY = 0; let currentY = 0; let dragging = false; let isModalActive = false;
+            m.addEventListener('touchstart', (e) => {
+                isModalActive = m.classList.contains('active'); if(!isModalActive) return;
+                const target = e.target; const rect = box.getBoundingClientRect();
+                const isDragHandle = target.closest('.drag-handle');
+                const isHeaderZone = (e.touches[0].clientY >= rect.top && e.touches[0].clientY <= (rect.top + 70));
+                const isInteractive = target.closest('button, input, select, textarea, [contenteditable=true], .ql-toolbar, .file-list-item, .action-btn, i.fas');
+                if ((isDragHandle || isHeaderZone) && !isInteractive) { startY = e.touches[0].clientY; dragging = true; box.style.transition = 'none'; }
+            }, {passive: false});
+            m.addEventListener('touchmove', (e) => { if(!dragging) return; currentY = e.touches[0].clientY; const delta = currentY - startY; if(delta > 0) { if(e.cancelable) e.preventDefault(); box.style.transform = `translate3d(0, ${delta}px, 0)`; } }, {passive: false});
+            m.addEventListener('touchend', (e) => { if(!dragging) return; dragging = false; const delta = currentY - startY; box.style.transition = 'transform 0.45s var(--ease-modern), opacity 0.35s ease'; if(delta > 100) { this.close(); } else { box.style.transform = ''; } startY = 0; currentY = 0; });
+        });
+        
+        document.getElementById('quickCopyModal').onclick = (e) => { if(e.target.id === 'quickCopyModal') window.closeQuickCopyModal(); };
+        let lt; const ls=(e,c)=>{const el=e.target.closest('.card');if(el){el.classList.add('long-press');lt=setTimeout(()=>{this.lp=true;vibrate(20);this.qCopy(Number(el.dataset.id),c)},500)}};
+        const le=()=>{clearTimeout(lt);document.querySelectorAll('.card.long-press').forEach(x=>x.classList.remove('long-press'));setTimeout(()=>this.lp=false,100)};
+        ['touchstart','mousedown'].forEach(ev=>{document.getElementById('fileGrid').addEventListener(ev,e=>ls(e,'main'),{passive:true});document.getElementById('vaultGrid').addEventListener(ev,e=>ls(e,'vault'),{passive:true})});
+        ['touchend','touchmove','mouseup','scroll'].forEach(ev=>window.addEventListener(ev,le,{passive:true}));
+    }
+
+    async qCopy(id, ctx) { const list = ctx==='main'?this.state.files:(this.state.vaultMode==='real'?this.state.vault:this.state.fake); const item = list.find(x=>x.id===id); let c = item.content; if(ctx==='vault'&&this.state.vaultMode==='real') c = await postWorker('crypto',{op:'decrypt',data:c}); if(c){ this.tmp=c; document.getElementById('quickCopyModal').classList.add('active'); } }
+    renderManager(ctx) { const list = ctx==='main'?this.state.files:(this.state.vaultMode==='real'?this.state.vault:this.state.fake); document.getElementById('fileList').innerHTML = list.map(f=>`<div class="file-list-item"><div class="file-info"><div class="file-name">${(f.name||"").replace(/</g,"&lt;")}</div><div class="file-date">${f.date}</div></div><div class="file-actions"><button class="action-btn edit" onclick="window.openEditor(${f.id}, '${ctx}')"><i class="fas fa-pen"></i></button><button class="action-btn move" onclick="window.moveFile(${f.id}, '${ctx}')"><i class="fas ${ctx==='main'?'fa-lock':'fa-unlock'}"></i></button><button class="action-btn delete" onclick="window.deleteFile(${f.id}, '${ctx}')"><i class="fas fa-trash"></i></button></div></div>`).join('') || '<div style="text-align:center;padding:20px;color:var(--text-sub)">Empty</div>'; }
+    toast(m,t='info'){const c=document.getElementById('toast-container'),e=document.createElement('div');e.className=`toast ${t}`;e.innerHTML=`<i class="fas ${t==='success'?'fa-check-circle':(t==='error'?'fa-exclamation-circle':'fa-info-circle')}"></i> ${m}`;c.appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),500)},3000)}
+    
+    // --- STATE MANAGEMENT ---
+    mod(id){ 
+        vibrate(); 
+        if(!history.state || history.state.m !== id) { 
+            history.pushState({m:id}, null, ""); 
+        } 
+        document.querySelectorAll('.modal').forEach(m=>m.classList.remove('active')); 
+        document.getElementById(id+'Modal').classList.add('active'); 
     }
     
-    toggleDeepSearch() {
-        this.deepSearchMode = !this.deepSearchMode;
-        const toggleBtn = document.getElementById('deepSearchToggle');
-        
-        if (this.deepSearchMode) {
-            toggleBtn.classList.add('active');
-        } else {
-            toggleBtn.classList.remove('active');
+    close(){ 
+        vibrate();
+        if(document.getElementById('noteModal').classList.contains('active')) {
+             this.stopAutoSave();
         }
-        
-        if (this.currentFilter) {
-            this.renderFiles(this.currentFilter);
-            if (document.getElementById('vaultView').classList.contains('hidden') === false) {
-                this.renderVaultFiles();
-            }
+        const activeModal = document.querySelector('.modal.active');
+        if (activeModal) {
+            activeModal.classList.remove('active');
+            const box = activeModal.querySelector('.modal-box');
+            if(box) setTimeout(() => box.style.transform = '', 300);
         }
-    }
-
-    enterVault() {
-        this.ui.app.classList.add('hidden'); document.getElementById('vaultView').classList.remove('hidden');
-        document.querySelector('.vault-header').style.background = this.vaultMode === 'fake' ? '#333' : ''; this.renderVaultFiles();
-    }
-    
-    exitVault() { document.getElementById('vaultView').classList.add('hidden'); this.ui.app.classList.remove('hidden'); this.sessionPin = null; this.vaultMode = 'real'; }
-    
-    openAuthModal() { 
-        if (!this.currentUser) return; 
-        this.pushModal('auth'); 
-        document.getElementById('setupView').classList.add('hidden'); 
-        document.getElementById('loginView').classList.add('hidden'); 
-        if (!this.vaultSettings.pinHash) document.getElementById('setupView').classList.remove('hidden'); 
-        else document.getElementById('loginView').classList.remove('hidden'); 
-        
-        this.activateModal('authModal');
-    }
-    
-    async setupVault() {
-        const p = document.getElementById('setupPin').value, a = document.getElementById('setupAnswer').value;
-        if (p.length !== 4 || !a) { document.getElementById('setupPin').value = ''; return this.showToast("4 digit PIN required", "error"); }
-        await setDoc(doc(this.db, "users", this.currentUser.uid, "settings", "security"), { pinHash: this.hashPin(p), answer: a });
-        this.sessionPin = p; this.vaultMode = 'real'; this.showToast("Setup Complete", "success"); window.goBack(); setTimeout(() => this.enterVault(), 200);
-    }
-    
-    loginVault() {
-        const p = document.getElementById('loginPin').value;
-        if (this.hashPin(p) === this.vaultSettings.pinHash) { this.sessionPin = p; this.vaultMode = 'real'; window.goBack(); this.enterVault(); } else { this.sessionPin = null; this.vaultMode = 'fake'; window.goBack(); this.enterVault(); }
-        document.getElementById('loginPin').value = "";
-    }
-    
-    async changeVaultPin() {
-        if (this.vaultMode === 'fake') return this.showToast("Unavailable", "error");
-        const n = prompt("NEW 4-digit PIN:");
-        if (!n || n.length !== 4) return this.showToast("Invalid PIN", "error");
-        if (n === this.sessionPin) return this.showToast("Must be different", "warning");
-        this.showToast("Processing...", "info");
-        const batch = writeBatch(this.db);
-        if (this.vaultFiles.length > 0) this.vaultFiles.forEach(f => { const p = this.decryptData(f.content, this.sessionPin); if (p !== null) batch.update(doc(this.db, "users", this.currentUser.uid, "vault", String(f.id)), { content: this.encryptData(p, n) }); });
-        batch.update(doc(this.db, "users", this.currentUser.uid, "settings", "security"), { pinHash: this.hashPin(n) });
-        try { await batch.commit(); this.sessionPin = n; this.showToast("PIN Updated", "success"); } catch (e) { this.showToast("Error", "error"); }
-    }
-
-    handleAuthAction() {
-        const e = document.getElementById('authEmail').value, p = document.getElementById('authPassword').value, btn = document.getElementById('mainAuthBtn');
-        if (!e || !p) return this.showToast("Fill all fields", "error");
-        if (!this.isLoginMode && p !== document.getElementById('authConfirmPassword').value) return this.showToast("Passwords do not match", "error");
-        btn.disabled = true; btn.innerText = "Processing...";
-        (this.isLoginMode ? signInWithEmailAndPassword : createUserWithEmailAndPassword)(this.auth, e, p).catch(err => { this.showToast(err.message, "error"); btn.disabled = false; btn.innerText = this.isLoginMode ? "Login" : "Sign Up"; });
-    }
-    
-    logout() { 
-        document.getElementById('confirmText').innerText = "Log out?"; 
-        this.activateModal('confirmModal'); 
-        document.getElementById('confirmYesBtn').onclick = () => { 
-            this.closeConfirmModal();
-            this.cleanupListeners(); 
-            signOut(this.auth).then(() => window.location.reload()); 
-        }; 
-    }
-
-    toggleTheme() { 
-        this.settings.dark = !this.settings.dark; 
-        document.documentElement.classList.toggle('dark-mode'); 
-        localStorage.setItem('ls_settings', JSON.stringify(this.settings)); 
-        document.getElementById('menuDropdown').classList.remove('active'); 
-    }
-    
-    setView(v) { 
-        this.settings.viewMode = v; 
-        document.documentElement.classList.remove('view-grid', 'view-list'); 
-        document.documentElement.classList.add('view-' + v); 
-        localStorage.setItem('ls_settings', JSON.stringify(this.settings)); 
-        document.getElementById('menuDropdown').classList.remove('active'); 
-    }
-    
-    cycleCardSize() { 
-        const s = ['medium', 'large', 'small'], n = s[(s.indexOf(this.settings.size) + 1) % 3]; 
-        this.settings.size = n; 
-        document.documentElement.classList.remove('size-small', 'size-medium', 'size-large'); 
-        document.documentElement.classList.add('size-' + n); 
-        localStorage.setItem('ls_settings', JSON.stringify(this.settings)); 
-    }
-    
-    setSort(t) { 
-        this.sortBy = t; 
-        this.renderFiles(this.currentFilter); 
-        document.getElementById('menuDropdown').classList.remove('active'); 
-    }
-    
-    openChangePasswordModal() { 
-        document.getElementById('cpOldPass').value = ''; 
-        document.getElementById('cpNewPass').value = ''; 
-        document.getElementById('cpConfirmPass').value = ''; 
-        this.pushModal('changePassword'); 
-        document.getElementById('menuDropdown').classList.remove('active'); 
-        this.activateModal('changePasswordModal'); 
-    }
-    
-    async performChangePassword() {
-        const o = document.getElementById('cpOldPass').value, n = document.getElementById('cpNewPass').value, c = document.getElementById('cpConfirmPass').value;
-        if (!o || !n || !c) return this.showToast("Fill all fields", "error"); if (n !== c) return this.showToast("Mismatch", "error"); if (n.length < 6) return this.showToast("Too short", "error");
-        const btn = document.querySelector('#changePasswordModal .btn-primary'), t = btn.innerText; btn.innerText = "Updating..."; btn.disabled = true;
-        try { await reauthenticateWithCredential(this.currentUser, EmailAuthProvider.credential(this.currentUser.email, o)); await updatePassword(this.currentUser, n); this.showToast("Password Updated", "success"); window.goBack(); } catch (e) { this.showToast("Error updating", "error"); } finally { btn.innerText = t; btn.disabled = false; }
-    }
-    
-    async sendPasswordResetEmail() { const e = document.getElementById('resetEmail').value; if (e) { await sendPasswordResetEmail(this.auth, e); this.showToast("Sent", "success"); window.goBack(); } }
-    
-    openForgotPasswordModal() { 
-        document.getElementById('authScreen').classList.add('hidden'); 
-        this.activateModal('forgotPasswordModal'); 
-        this.pushModal('forgotPassword'); 
-    }
-    
-    toggleAuthMode() { 
-        this.isLoginMode = !this.isLoginMode; 
-        document.getElementById('mainAuthBtn').innerText = this.isLoginMode ? "Login" : "Sign Up"; 
-        document.getElementById('authSwitchText').innerText = this.isLoginMode ? "New here?" : "Have account?"; 
-        const w = document.getElementById('confirmPasswordWrapper'); 
-        if (this.isLoginMode) { 
-            w.classList.add('hidden'); 
-            document.getElementById('authConfirmPassword').value = ''; 
-        } else w.classList.remove('hidden'); 
+        if(history.state && history.state.m) {
+            history.back(); 
+        }
     }
 }
 
-const app = new NLCManager();
-['handleAuthAction', 'toggleAuthMode', 'openForgotPasswordModal', 'openAuthModal', 'openManager', 'toggleTheme', 'cycleCardSize', 'openChangePasswordModal', 'logout', 'changeVaultPin', 'exitVault', 'setType', 'setupVault', 'loginVault', 'performCopy', 'performChangePassword', 'sendPasswordResetEmail', 'manualSaveNote', 'discardAndClose', 'openEditor', 'setSort', 'setView', 'deleteFile', 'moveFile', 'openCopy', 'openFile', 'showToast', 'quickCopyContent', 'closeQuickCopyModal', 'closeManager', 'closeConfirmModal'].forEach(m => window[m] = (...args) => app[m](...args));
-window.togglePasswordVisibility = (id, i) => { const x = document.getElementById(id); if (x.type === 'password') { x.type = 'text'; i.classList.replace('fa-eye', 'fa-eye-slash'); } else { x.type = 'password'; i.classList.replace('fa-eye-slash', 'fa-eye'); } };
-window.goBack = () => history.back();
+const kernel = new Kernel(); window.app = kernel;
 
-document.getElementById('fileForm').onsubmit = (e) => app.handleSubmit(e);
-document.getElementById('searchInput').oninput = (e) => { clearTimeout(app.renderTimeout); app.renderTimeout = setTimeout(() => app.renderFiles(e.target.value), 300); };
-
-const initSwipe = (id) => {
-    const modal = document.getElementById(id);
-    const box = modal.querySelector('.modal-box');
-    
-    let startY = 0;
-    let isDragging = false;
-    let currentY = 0;
-
-    modal.addEventListener('mousedown', (e) => {
-        // Only close if clicking directly on modal background, not on modal box
-        if(e.target === modal) {
-            window.goBack();
-        }
-    });
-
-    modal.addEventListener('touchstart', (e) => {
-        if(e.target === modal) return;
-        
-        const scrollable = e.target.closest('.rich-editor, #fileList, textarea, pre');
-        if (scrollable && scrollable.scrollTop > 0) return;
-
-        isDragging = true;
-        startY = e.touches[0].clientY;
-        
-        box.style.transition = 'none';
-    }, { passive: true });
-
-    modal.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        
-        currentY = e.touches[0].clientY;
-        const delta = currentY - startY;
-
-        if (delta > 0) {
-            e.preventDefault();
-            box.style.transform = `translate3d(0, ${delta}px, 0)`;
-        }
-    }, { passive: false });
-
-    modal.addEventListener('touchend', (e) => {
-        if (!isDragging) return;
-        isDragging = false;
-        
-        const delta = e.changedTouches[0].clientY - startY;
-        
-        if (delta > 100) {
-            box.style.transition = 'transform 0.3s var(--ease-out-back)';
-            box.style.transform = 'translate3d(0, 100%, 0)';
-            
-            setTimeout(() => window.goBack(), 300); 
-        } else {
-            box.style.transition = 'transform 0.3s var(--ease-out-back)';
-            box.style.transform = ''; 
-        }
-    });
-
-    modal.addEventListener('touchcancel', () => {
-        if (!isDragging) return;
-        isDragging = false;
-        
-        box.style.transition = 'transform 0.3s var(--ease-out-back)';
-        box.style.transform = '';
-    });
-};
-['editorModal', 'managerModal', 'authModal', 'guideModal', 'copyModal', 'changePasswordModal', 'confirmModal'].forEach(initSwipe);
-
+// --- POPSTATE HANDLER ---
 window.addEventListener('popstate', (e) => {
-    if (document.getElementById('noteModal').classList.contains('active') && app.shouldSaveOnExit && app.isNoteDirty) app.saveNoteInternal();
-    app.shouldSaveOnExit = true;
+    // Stop autosave if note modal was active
+    if(document.getElementById('noteModal').classList.contains('active')) kernel.stopAutoSave();
     
-    if(document.activeElement) document.activeElement.blur(); 
-
-    const active = document.querySelectorAll('.modal.active');
-    active.forEach(m => {
-        m.classList.remove('active');
-        const box = m.querySelector('.modal-box');
-        if(box) { 
-            box.style.transform = ''; 
-            box.style.transition = '';
-        }
-        // Hide modal after animation completes
-        setTimeout(() => {
-            m.style.display = 'none';
-        }, 450);
+    document.querySelectorAll('.modal.active').forEach(m => { 
+        m.classList.remove('active'); 
+        const b = m.querySelector('.modal-box'); 
+        if(b) b.style.transform = ''; 
     });
-
-    if (e.state && e.state.modal) {
-        const i = e.state.modal === 'code' ? 'runnerModal' : e.state.modal + 'Modal';
-        setTimeout(() => document.getElementById(i)?.classList.add('active'), 10);
+    
+    if (e.state && e.state.m) { 
+        const m = document.getElementById(e.state.m + 'Modal'); 
+        if(m) m.classList.add('active'); 
     }
     document.getElementById('menuDropdown').classList.remove('active');
 });
 
-const palettePopup = document.getElementById('colorPalettePopup');
-const createSwatch = (c, fn) => { const s = document.createElement('div'); s.className = 'color-swatch'; s.style.background = c; s.onclick = fn; palettePopup.appendChild(s); };
-createSwatch('linear-gradient(45deg, #000 50%, #fff 50%)', () => { app.restoreSelection(); document.execCommand('removeFormat', false, null); app.toggleColorPalette(); });
-['#EF4444', '#F97316', '#FACC15', '#10B981', '#06B6D4', '#3B82F6', '#6366F1'].forEach(c => createSwatch(c, () => { app.restoreSelection(); window.formatText('foreColor', c); app.toggleColorPalette(); }));
-
-let savedSelection = null;
-app.saveSelection = () => { const s = window.getSelection(); if (s.rangeCount > 0) savedSelection = s.getRangeAt(0); };
-app.restoreSelection = () => { if (savedSelection) { const s = window.getSelection(); s.removeAllRanges(); s.addRange(savedSelection); } };
-app.toggleColorPalette = () => { if (!palettePopup.classList.contains('active')) app.saveSelection(); palettePopup.classList.toggle('active'); };
-window.toggleColorPalette = () => app.toggleColorPalette();
-
-let fontSizeState = 0;
-window.cycleFontSize = () => { const e = document.getElementById('noteViewContent'); fontSizeState = (fontSizeState + 1) % 3; e.classList.remove('fs-large', 'fs-small'); if (fontSizeState === 1) e.classList.add('fs-large'); else if (fontSizeState === 2) e.classList.add('fs-small'); };
-window.formatText = (c, v) => { document.execCommand(c, false, v); document.getElementById('floatingToolbar').classList.remove('visible'); app.isNoteDirty = true; };
-
-document.addEventListener('selectionchange', () => {
-    const s = window.getSelection(), t = document.getElementById('floatingToolbar'), e = document.getElementById('noteViewContent');
-    if (!s.rangeCount || s.isCollapsed || !e.contains(s.anchorNode)) { t.classList.remove('visible'); return; }
-    const r = s.getRangeAt(0).getBoundingClientRect(); t.style.transform = `translate3d(-50%, ${r.top - 50}px, 0)`; t.style.left = `${r.left + (r.width / 2)}px`; t.style.top = '0'; t.classList.add('visible');
-});
-['noteViewContent', 'noteViewTitle'].forEach(id => document.getElementById(id).addEventListener('input', () => app.isNoteDirty = true));
-
-app.setView(app.settings.viewMode);
-document.getElementById('menuBtn').onclick = (e) => { 
-    e.stopPropagation(); 
-    document.getElementById('menuDropdown').classList.toggle('active'); 
-};
-
-window.onclick = (e) => { 
-    const dropdown = document.getElementById('menuDropdown');
-    const menuBtn = document.getElementById('menuBtn');
+window.handleAuthAction=()=>{const e=document.getElementById('authEmail').value,p=document.getElementById('authPassword').value,l=document.getElementById('mainAuthBtn').innerText==="Login";const b=document.getElementById('mainAuthBtn');b.innerText="Processing...";b.disabled=true;(l?signInWithEmailAndPassword:createUserWithEmailAndPassword)(kernel.auth,e,p).catch(err=>{kernel.toast(err.message,"error");b.innerText=l?"Login":"Sign Up";b.disabled=false})};
+window.toggleAuthMode=()=>{const l=document.getElementById('mainAuthBtn').innerText==="Login";document.getElementById('mainAuthBtn').innerText=l?"Sign Up":"Login";document.getElementById('authSwitchText').innerText=l?"Have account?":"New here?";document.getElementById('confirmPasswordWrapper').classList.toggle('hidden',l)};
+window.openEditor=async(id,ctx)=>{vibrate();kernel.editCtx=ctx;document.getElementById('fileForm').reset();document.getElementById('managerModal').classList.remove('active');
+    if(id){ const l=ctx==='main'?kernel.state.files:(kernel.state.vaultMode==='real'?kernel.state.vault:kernel.state.fake); const f=l.find(x=>x.id===id); document.getElementById('editId').value=id;document.getElementById('fileName').value=f.name;window.setType(f.type); let c=f.content; if(ctx==='vault'&&kernel.state.vaultMode==='real') c=await postWorker('crypto',{op:'decrypt',data:c}); if(f.type==='link')document.getElementById('fileUrl').value=c;else document.getElementById('fileContent').value=c; }
+    else{document.getElementById('editId').value="";window.setType('note')} kernel.mod('editor');};
+window.setType=t=>{
+    vibrate();
+    document.getElementById('fileType').value=t;
+    document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('active',b.dataset.type===t));
     
-    // If menu is active and user clicks outside menu and menu button, close menu
-    if (dropdown.classList.contains('active') && 
-        !dropdown.contains(e.target) && 
-        !menuBtn.contains(e.target)) {
-        dropdown.classList.remove('active');
+    const m=document.querySelector('#editorModal .modal-box'),c=document.getElementById('fileContent'),u=document.getElementById('fileUrl'), b=document.querySelector('#fileForm .btn-primary');
+    m.classList.remove('size-note','size-code'); 
+    
+    if(t==='note'){
+        b.innerText = "Next"; 
+        c.style.display = 'none'; 
+        c.required = false;
+        u.style.display = 'none';
+        u.required = false;
+    } else {
+        b.innerText = "Save Item"; 
+        if(t==='code'){
+            m.classList.add('size-code');
+            c.style.fontFamily='monospace';
+            c.style.display = 'block';
+            c.required = true;
+            u.style.display = 'none';
+            u.required = false;
+        } else { 
+            c.style.fontFamily='inherit';
+            c.style.display = 'none';
+            c.required = false;
+            u.style.display = 'block';
+            u.required = true;
+        }
     }
-};</script></body></html>
+};
+window.deleteFile=(id,ctx)=>{vibrate();document.getElementById('confirmText').innerText="Delete?";kernel.mod('confirm');document.getElementById('confirmYesBtn').onclick=async()=>{kernel.close();const col=ctx==='main'?'files':(kernel.state.vaultMode==='real'?'vault':'fakeVault');await deleteDoc(doc(kernel.db,"users",kernel.state.user.uid,col,String(id)));kernel.toast("Deleted","success")}};
+window.moveFile=(id,ctx)=>{vibrate();document.getElementById('confirmText').innerText=ctx==='main'?"Move to Vault?":"Move to Cloud?";kernel.mod('confirm');document.getElementById('confirmYesBtn').onclick=async()=>{kernel.close();const sCol=ctx==='main'?'files':(kernel.state.vaultMode==='real'?'vault':'fakeVault'),dCol=ctx==='main'?(kernel.state.vaultMode==='real'?'vault':'fakeVault'):'files';const list=ctx==='main'?kernel.state.files:(kernel.state.vaultMode==='real'?kernel.state.vault:kernel.state.fake);const item=list.find(x=>x.id===id);let c=item.content; if(kernel.state.vaultMode==='real'){ if(ctx==='vault') c=await postWorker('crypto',{op:'decrypt',data:c}); else if(ctx==='main') c=await postWorker('crypto',{op:'encrypt',data:c}); } await setDoc(doc(kernel.db,"users",kernel.state.user.uid,dCol,String(id)),{...item,content:c});await deleteDoc(doc(kernel.db,"users",kernel.state.user.uid,sCol,String(id)));kernel.toast("Moved","success")}};
+window.setupVault=async()=>{ const p=document.getElementById('setupPin').value,a=document.getElementById('setupAnswer').value; if(p.length!==4)return kernel.toast("4 Digits","error"); const h=await postWorker('crypto',{op:'encrypt',data:'VERIFY',tempPin:p}); await setDoc(doc(kernel.db,"users",kernel.state.user.uid,"settings","security"),{pinHash:h,answer:a}); await postWorker('setKey', {pin: p}); kernel.state.vaultMode='real'; document.getElementById('setupPin').value = ""; kernel.close(); setTimeout(()=>{document.getElementById('mainApp').classList.add('hidden');document.getElementById('vaultView').classList.remove('hidden');kernel.refresh('vault')},200);};
+window.loginVault=async()=>{ const p=document.getElementById('loginPin').value; if(p.length!==4)return; const sessionHash = await postWorker('setKey', {pin: p}); const r = sessionHash === kernel.state.security.pinHash; kernel.state.vaultMode=r?'real':'fake'; document.getElementById('loginPin').value=""; kernel.close(); document.getElementById('mainApp').classList.add('hidden'); document.getElementById('vaultView').classList.remove('hidden'); document.querySelector('.vault-header').style.background=r?'':'#333'; kernel.refresh('vault');};
+window.manualSaveNote=async(isAuto=false)=>{
+    if(!isAuto) vibrate();
+    const id=document.getElementById('noteViewId').value,c=kernel.quill.root.innerHTML;
+    const col=kernel.noteCtx==='main'?'files':(kernel.state.vaultMode==='real'?'vault':'fakeVault');
+    let f=c;if(kernel.noteCtx!=='main'&&kernel.state.vaultMode==='real')f=await postWorker('crypto',{op:'encrypt',data:f});
+    const date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    const name = document.getElementById('noteViewTitle').value;
+    await setDoc(doc(kernel.db,"users",kernel.state.user.uid,col,String(id)),{id:Number(id), name, type:'note', content:f, date},{merge:true});
+    if(!isAuto) kernel.toast("Saved","success");
+};
+window.saveAndExit = async () => {
+    await window.manualSaveNote(false);
+    window.close();
+};
+window.discardAndClose=()=>{
+    kernel.stopAutoSave(); 
+    window.close();
+};
+window.openManager=c=>{vibrate();kernel.renderManager(c);kernel.mod('manager');document.getElementById('menuDropdown').classList.remove('active')};
+window.closeManager=()=>kernel.close();window.closeConfirmModal=()=>kernel.close();window.goBack=()=>history.back();
+window.toggleTheme=()=>{initialSettings.dark=!initialSettings.dark;document.documentElement.classList.toggle('dark-mode');localStorage.setItem('ls_settings',JSON.stringify(initialSettings));document.getElementById('menuDropdown').classList.remove('active')};
+window.cycleCardSize=()=>{const s=['medium','large','small'];initialSettings.size=s[(s.indexOf(initialSettings.size)+1)%3];document.documentElement.className=document.documentElement.className.replace(/size-\w+/,'size-'+initialSettings.size);localStorage.setItem('ls_settings',JSON.stringify(initialSettings));};
+window.setView=v=>{initialSettings.viewMode=v;document.documentElement.className=document.documentElement.className.replace(/view-\w+/,'view-'+v);localStorage.setItem('ls_settings',JSON.stringify(initialSettings));document.getElementById('menuDropdown').classList.remove('active')};
+window.setSort=s=>{kernel.state.sortBy=s;kernel.refresh('main');if(!document.getElementById('vaultView').classList.contains('hidden'))kernel.refresh('vault');document.getElementById('menuDropdown').classList.remove('active')};
+window.logout=()=>{document.getElementById('confirmText').innerText="Logout?";kernel.mod('confirm');document.getElementById('confirmYesBtn').onclick=()=>signOut(kernel.auth).then(()=>location.reload())};
+window.quickCopyContent=()=>{navigator.clipboard.writeText(kernel.tmp);kernel.toast("Copied","success");document.getElementById('quickCopyModal').classList.remove('active')};
+window.closeQuickCopyModal=()=>document.getElementById('quickCopyModal').classList.remove('active');
+window.openAuthModal=()=>{kernel.mod('auth');const s=!!kernel.state.security.pinHash;document.getElementById('setupView').classList.toggle('hidden',s);document.getElementById('loginView').classList.toggle('hidden',!s)};
+window.changeVaultPin=()=>alert("Update in V2");window.exitVault=()=>{document.getElementById('vaultView').classList.add('hidden');document.getElementById('mainApp').classList.remove('hidden')};
+window.togglePasswordVisibility=(id,el)=>{const x=document.getElementById(id);x.type=x.type==='password'?'text':'password';el.classList.toggle('fa-eye');el.classList.toggle('fa-eye-slash')};
+window.openForgotPasswordModal=()=>{kernel.mod('forgotPassword');}; window.sendPasswordResetEmail=()=>{const e=document.getElementById('resetEmail').value;sendPasswordResetEmail(kernel.auth,e).then(()=>{kernel.toast("Check Email","success");kernel.close()}).catch(e=>kernel.toast(e.message,"error"));};
+window.openChangePasswordModal=()=>{kernel.mod('changePassword');}; window.performChangePassword=()=>{const o=document.getElementById('cpOldPass').value,n=document.getElementById('cpNewPass').value,c=document.getElementById('cpConfirmPass').value;if(n!==c)return kernel.toast("Mismatch","error");const cred=EmailAuthProvider.credential(kernel.state.user.email,o);reauthenticateWithCredential(kernel.state.user,cred).then(()=>{updatePassword(kernel.state.user,n).then(()=>{kernel.toast("Updated","success");kernel.close()})}).catch(e=>kernel.toast(e.message,"error"));};
+
+document.getElementById('menuBtn').onclick=e=>{e.stopPropagation();vibrate();document.getElementById('menuDropdown').classList.toggle('active')};
+window.onclick=e=>{if(!e.target.closest('#menuDropdown')&&!e.target.closest('#menuBtn'))document.getElementById('menuDropdown').classList.remove('active')};
+document.getElementById('deepSearchToggle').onclick = function() { vibrate(); kernel.state.deep = !kernel.state.deep; this.classList.toggle('active'); kernel.refresh('main'); if(!document.getElementById('vaultView').classList.contains('hidden')) kernel.refresh('vault'); };
+</script>
+</body>
+    </html>
