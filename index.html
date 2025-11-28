@@ -7,13 +7,13 @@
 <meta name="description" content="Pro Cloud Secure Storage & Vault">
 <title>NLC | Pro Cloud Secure</title>
 
-<!-- Performance Optimization: Preconnect to CDNs -->
+<!-- Performance Optimization -->
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link rel="preconnect" href="https://cdn.quilljs.com">
 <link rel="preconnect" href="https://www.gstatic.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<!-- PWA Manifest (Inline) -->
+<!-- PWA Manifest -->
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTkxDIENsb3VkIFN0b3JhZ2UiLCJzaG9ydF9uYW1lIjoiTkxDIiwic3RhcnRfdXJsIjoiLi8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmZmZmZmIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmMmY0ZjYiLCJpY29ucyI6W3sic3JjIjoiaHR0cHM6Ly9jZG4tanRpZnkuY29tL2ltYWdlcy9pY29ucy9mb2xkZXIucG5nIiwic2l6ZXMiOiIxOTJ4MTkyIiwidHlwZSI6ImltYWdlL3BuZyJ9XX0=">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,8 +24,7 @@
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js" defer></script>
 
 <script>
-    // Initial Settings
-    let initialSettings = { dark: false, viewMode: 'grid', size: 'medium' };
+    let initialSettings = { dark: false, viewMode: 'grid', size: 'medium', editorFontSize: 'normal' };
     try { const stored = localStorage.getItem('ls_settings'); if (stored) initialSettings = JSON.parse(stored); } catch (e) {}
     const docEl = document.documentElement;
     if (initialSettings.dark) docEl.classList.add('dark-mode');
@@ -34,7 +33,7 @@
 </script>
 
 <style>
-    /* CSS Unchanged */
+    /* CSS Base */
     :root { 
         --bg-body: #f2f4f6; --bg-card: #ffffff; --text-main: #111827; --text-sub: #6b7280; --border: #e5e7eb; --input-bg: #f9fafb; --input-border: #e5e7eb; --primary: #2563eb; --primary-hover: #1d4ed8; --success: #10b981; --error: #ef4444; --loader-bg: var(--bg-body); --logo-n: #111827; --logo-l: #2563eb; --logo-c: #f59e0b; 
         --card-h: 130px; --card-w-min: 150px; --font-title: 14px; --icon-size: 24px; 
@@ -48,69 +47,178 @@
     }
     html.dark-mode code, html.dark-mode pre { color: #f8f8f2; text-shadow: 0 1px rgba(0,0,0,.3); }
     
-    /* IMPROVED GLASSMORPHISM QUILL EDITOR STYLES */
-    /* Sticky position ensures it stays on top, giving the glass effect over content */
+    /* --- ULTIMATE EDITOR FIX --- */
+    .modal-box.fullscreen {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100dvh !important;
+        max-height: 100dvh !important;
+        overflow: hidden !important;
+        background: var(--bg-body) !important;
+    }
+
+    #editor-container {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        height: 100% !important;
+        overflow: hidden !important;
+        position: relative !important;
+        background: var(--bg-card);
+        z-index: 1; 
+    }
+
+    /* --- VIEW ZOOM CLASSES (VISUAL ONLY) --- */
+    #editor-container.font-normal .ql-editor { font-size: 17px !important; line-height: 1.6; }
+    #editor-container.font-normal .ql-editor h1 { font-size: 2em; }
+    #editor-container.font-normal .ql-editor h2 { font-size: 1.5em; }
+
+    #editor-container.font-large .ql-editor { font-size: 24px !important; line-height: 1.5; }
+    #editor-container.font-large .ql-editor h1 { font-size: 2em; } 
+    #editor-container.font-large .ql-editor h2 { font-size: 1.5em; }
+
+    #editor-container.font-small .ql-editor { font-size: 13px !important; line-height: 1.6; }
+    #editor-container.font-small .ql-editor h1 { font-size: 1.8em; }
+
+    /* --- GLASSMORPHISM TOOLBAR BLOCKS --- */
     .ql-toolbar.ql-snow {
-        position: sticky !important;
-        top: 0 !important;
+        flex-shrink: 0 !important;
+        position: relative !important; 
+        z-index: 10000 !important; 
         border: none !important;
-        background: rgba(255, 255, 255, 0.75) !important; /* Slightly higher opacity for stability */
-        backdrop-filter: blur(16px) !important;
-        -webkit-backdrop-filter: blur(16px) !important;
-        margin: 0 !important;
-        padding: 12px 10px !important;
-        border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+        background: var(--bg-card) !important;
+        border-bottom: 1px solid var(--border) !important;
+        padding: 10px 5px !important;
         display: flex !important;
         flex-wrap: wrap !important;
         justify-content: center !important;
-        gap: 8px !important;
-        z-index: 500 !important; /* High Z-index to stay on top */
-    }
-    
-    .ql-container.ql-snow {
-        border: none !important;
-        padding-top: 10px !important;
+        gap: 8px !important; 
     }
 
     .ql-formats {
-        margin-right: 0 !important;
-        background: rgba(255, 255, 255, 0.5);
-        border-radius: 10px;
-        padding: 4px 6px;
-        border: 1px solid rgba(0,0,0,0.05);
-        display: flex;
-        align-items: center;
+        display: flex !important;
+        align-items: center !important;
+        background: rgba(0, 0, 0, 0.04); 
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(0,0,0,0.06);
+        border-radius: 12px;
+        padding: 4px 6px !important;
+        margin: 0 !important;
+        gap: 2px !important;
     }
-    .ql-snow .ql-toolbar button {
-        width: 28px !important; height: 28px !important; border-radius: 8px !important; transition: all 0.2s ease;
-    }
-    .ql-snow .ql-toolbar button:hover, .ql-snow .ql-toolbar button.ql-active {
-        background: var(--primary) !important; color: white !important;
-    }
-    .ql-snow .ql-toolbar button:hover .ql-stroke, .ql-snow .ql-toolbar button.ql-active .ql-stroke {
-        stroke: white !important;
-    }
-    .ql-snow .ql-toolbar button:hover .ql-fill, .ql-snow .ql-toolbar button.ql-active .ql-fill {
-        fill: white !important;
-    }
-    .ql-color-picker .ql-picker-label { padding: 0 4px; }
-    .ql-snow .ql-color-picker .ql-picker-options {
-        border-radius: 12px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: none;
-    }
-    
+
+    /* DARK MODE EDITOR TOOLBAR (GLASSY + WHITE ICONS) */
     html.dark-mode .ql-toolbar.ql-snow {
-        background: rgba(30, 30, 30, 0.75) !important; border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+        background: rgba(10, 10, 10, 0.95) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
     }
+
     html.dark-mode .ql-formats {
-        background: rgba(255, 255, 255, 0.05); border-color: rgba(255,255,255,0.05);
+        background: rgba(255, 255, 255, 0.1) !important; /* Glassy effect for buttons */
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
-    html.dark-mode .ql-container { background: var(--bg-card) !important; color: var(--text-main) !important; }
-    html.dark-mode .ql-snow .ql-stroke { stroke: #e5e5e5 !important; }
-    html.dark-mode .ql-snow .ql-fill { fill: #e5e5e5 !important; }
-    html.dark-mode .ql-snow .ql-picker { color: #e5e5e5 !important; }
-    html.dark-mode .ql-snow .ql-picker-options { background-color: var(--bg-card) !important; border-color: var(--border) !important; }
+
+    .ql-container.ql-snow {
+        flex: 1 !important;
+        height: auto !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        border: none !important;
+        position: relative !important;
+        padding: 0 !important;
+        -webkit-overflow-scrolling: touch; 
+    }
+
+    .ql-editor {
+        padding: 20px !important;
+        padding-bottom: 150px !important; 
+        min-height: 100%;
+        color: var(--text-main);
+    }
+
+    /* --- BUTTONS & CONTRAST --- */
+    .ql-snow .ql-toolbar button {
+        width: 38px !important;
+        height: 38px !important; 
+        border-radius: 8px !important;
+        background: transparent !important;
+        border: none !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
     
-    /* Remove transitions for instant dark mode */
+    .ql-snow .ql-toolbar button:active { transform: scale(0.9); }
+
+    .size-cycle-btn {
+        font-weight: 800;
+        font-family: serif;
+        font-size: 20px;
+        letter-spacing: -1px;
+        color: var(--text-main);
+    }
+
+    /* --- ICONS CONFIGURATION --- */
+    
+    /* Light Mode Default */
+    .ql-snow .ql-toolbar button .ql-stroke { stroke: #333; stroke-width: 1.5; }
+    .ql-snow .ql-toolbar button .ql-fill { fill: #333; }
+    .ql-snow .ql-toolbar .ql-picker-label { color: #333; }
+    
+    /* Dark Mode - EDITOR ICONS ARE WHITE */
+    html.dark-mode .ql-snow .ql-toolbar button .ql-stroke { 
+        stroke: #ffffff !important; 
+        stroke-width: 2px !important;
+        opacity: 1 !important;
+    }
+    html.dark-mode .ql-snow .ql-toolbar button .ql-fill { 
+        fill: #ffffff !important; 
+        opacity: 1 !important;
+    }
+    html.dark-mode .ql-snow .ql-toolbar .ql-picker-label { 
+        color: #ffffff !important; 
+        font-weight: 800 !important;
+        opacity: 1 !important;
+    }
+    html.dark-mode .ql-snow .ql-toolbar .ql-picker-label .ql-stroke { 
+        stroke: #ffffff !important; 
+        stroke-width: 2px !important;
+    }
+    html.dark-mode .size-cycle-btn { 
+        color: #ffffff !important; 
+        font-weight: 900 !important;
+        text-shadow: 0 0 5px rgba(255,255,255,0.5);
+    }
+
+    /* Dark Mode Active State for Editor Buttons */
+    html.dark-mode .ql-snow .ql-toolbar button.ql-active,
+    html.dark-mode .ql-snow .ql-toolbar .ql-picker-label.ql-active {
+        background: rgba(255, 255, 255, 0.25) !important; 
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.2); 
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    }
+
+    /* Fix Color Picker Centering */
+    .ql-snow .ql-color-picker .ql-picker-options {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 300px !important;
+        padding: 15px !important;
+        border-radius: 15px !important;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5) !important;
+        z-index: 10001 !important;
+        background: white !important;
+    }
+    html.dark-mode .ql-snow .ql-color-picker .ql-picker-options { background: #1e1e1e !important; border: 1px solid #444; }
+
+    /* General styles */
     body, html, .card, header, input, select, textarea, .modal-box, 
     .menu-dropdown, .file-list-item, .btn-primary, .action-btn, 
     .ql-toolbar, .ql-container, .type-btn, .quick-copy-box, .guide-footer,
@@ -164,11 +272,10 @@
     html.view-list .card-icon { margin-bottom: 0; font-size: 20px; }
     html.view-list .card-title { -webkit-line-clamp: 1; font-size: 15px; }
 
-    /* Improved list view card sizing */
     html.size-small.view-list .card { min-height: 60px; }
     html.size-large.view-list .card { min-height: 90px; }
     
-    /* MODAL SYSTEM - ROBUST FIX */
+    /* MODAL SYSTEM */
     .modal { 
         position: fixed; inset: 0; z-index: 1000; 
         display: flex; justify-content: center; align-items: flex-end; 
@@ -218,21 +325,13 @@
     .modal.active .modal-box.fullscreen { transform: translate3d(0, 0, 0) scale(1); transition: transform 0.4s var(--ease-modern); }
     .modal-box.size-code { max-width: 700px; height: 75dvh; }
     
-    /* Better code editor modal transitions */
-    #codeEditorModal .modal-box {
-        transition: transform 0.4s var(--ease-modern);
-    }
+    #codeEditorModal .modal-box { transition: transform 0.4s var(--ease-modern); }
     
-    /* Drag Handle - Bigger Touch Area & No Action */
     .drag-handle { width: 40px; height: 5px; background: var(--border); border-radius: 100px; margin: -10px auto 24px auto; opacity: .8; cursor: grab; flex-shrink: 0; padding: 20px 0; background-clip: content-box; pointer-events: auto; touch-action: none; position: relative; z-index: 10; }
     .drag-handle:active { opacity: 0.5; }
     
     #fileList, .rich-editor, textarea, pre { touch-action: pan-y; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
     #fileList { margin-bottom: 15px; padding-right: 5px; min-height: 150px; }
-    
-    #editor-container { height: 100%; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-    .ql-container { border: none !important; font-family: Inter, sans-serif !important; font-size: 16px !important; background: var(--bg-card); flex: 1; overflow-y: hidden; }
-    .ql-editor { color: var(--text-main); font-family: 'Fira Code', monospace; line-height: 1.6; padding: 20px; height: 100%; overflow-y: auto; }
     
     #fileTypeSelection { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 24px; }
     .type-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px 10px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-card); color: var(--text-sub); cursor: pointer; transition: all .2s var(--ease-modern); font-weight: 600; font-size: 12px; }
@@ -304,6 +403,25 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(150,150,150,0.3); border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(150,150,150,0.5); }
+
+    /* --- REQUESTED CHANGES START --- */
+    
+    /* Dark Mode Home Cards - GLASSY BACKGROUND but COLORED ICONS */
+    html.dark-mode .card {
+        background: rgba(30, 30, 30, 0.6) !important;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Keep Icons Colored in Home Screen (Reverted previous white force) */
+    html.dark-mode .card-icon {
+        opacity: 0.9 !important; 
+        /* Removed color: #fff override so they stay colored */
+    }
+
+    /* --- REQUESTED CHANGES END --- */
 </style>
 </head>
 <body>
@@ -391,7 +509,7 @@
 <div class="modal" id="noteModal">
     <div class="modal-box fullscreen" style="background:var(--bg-body);padding:0">
         <!-- Header Start -->
-        <div style="padding:10px 15px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:var(--bg-card); gap: 15px;">
+        <div style="padding:10px 15px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:var(--bg-card); gap: 15px; flex-shrink:0; position:relative; z-index:20;">
             <!-- Left Side: Cross (Cancel) Button -->
             <div style="display:flex; align-items:center;">
                 <i class="fas fa-times" onclick="window.discardAndClose()" style="font-size:22px; color:var(--text-sub); cursor:pointer; padding:5px; transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i>
@@ -582,18 +700,44 @@ class Kernel {
     initQuill() {
         if(window.Quill) {
             try {
+                // Register Custom Icon
+                var icons = Quill.import('ui/icons');
+                icons['size-cycle'] = '<span class="size-cycle-btn">Tt</span>';
+
                 this.quill = new Quill('#editor-container', { 
                     theme: 'snow', 
                     placeholder: 'Start writing...', 
                     modules: { 
-                        toolbar: [
-                            [{ 'header': [1, 2, false] }],
-                            ['bold', 'italic', 'underline', 'strike'],
-                            [{ 'color': [] }, { 'background': [] }],
-                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                            ['code-block', 'blockquote'],
-                            ['clean']
-                        ]
+                        toolbar: {
+                            container: [
+                                [{ 'header': [1, 2, false] }],
+                                ['bold', 'italic', 'underline', 'strike'],
+                                [{ 'color': [] }, { 'background': [] }],
+                                ['size-cycle'], // View Zoom Button
+                                ['clean'],
+                                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                ['code-block', 'blockquote']
+                            ],
+                            handlers: {
+                                // 3. VIEW ZOOM LOGIC (Does NOT change content, only CSS)
+                                'size-cycle': function() {
+                                    const current = initialSettings.editorFontSize || 'normal';
+                                    let next;
+                                    
+                                    // Loop: Normal -> Large -> Small -> Normal
+                                    if (current === 'normal') next = 'large';
+                                    else if (current === 'large') next = 'small';
+                                    else if (current === 'small') next = 'normal';
+                                    
+                                    // Save Preference
+                                    initialSettings.editorFontSize = next;
+                                    localStorage.setItem('ls_settings', JSON.stringify(initialSettings));
+                                    
+                                    // Apply Class
+                                    window.applyEditorFontSize(next);
+                                }
+                            }
+                        }
                     } 
                 });
             } catch(e) {
@@ -869,6 +1013,8 @@ class Kernel {
 
                 if (this.quill) {
                     this.quill.root.innerHTML = content; 
+                    // Apply saved font size preference
+                    window.applyEditorFontSize(initialSettings.editorFontSize || 'normal');
                 }
                 
                 // Show the saved date initially
@@ -1009,6 +1155,14 @@ class Kernel {
 
 const kernel = new Kernel(); 
 window.app = kernel;
+
+window.applyEditorFontSize = (size) => {
+    const el = document.getElementById('editor-container');
+    if (!el) return;
+    el.classList.remove('font-small', 'font-normal', 'font-large');
+    el.classList.add('font-' + size);
+    vibrate(10);
+};
 
 window.addEventListener('popstate', (e) => {
     if(document.getElementById('noteModal').classList.contains('active')) kernel.stopAutoSave();
@@ -1376,9 +1530,20 @@ window.manualSaveNote = async(isAuto=false) => {
     if(!isAuto) kernel.toast("Saved","success");
 };
 
+// FIX: Updated saveAndExit to ensure closing happens even if errors occur
 window.saveAndExit = async () => {
-    await window.manualSaveNote(false);
-    window.close();
+    // Prevent multiple clicks
+    const btn = document.querySelector('#noteModal .fa-check');
+    if(btn) btn.style.opacity = '0.5';
+    
+    try {
+        await window.manualSaveNote(false);
+    } catch(e) {
+        console.error(e);
+    } finally {
+        if(btn) btn.style.opacity = '1';
+        window.close();
+    }
 };
 
 window.discardAndClose=()=>{
