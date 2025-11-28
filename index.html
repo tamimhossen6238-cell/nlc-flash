@@ -3,14 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Pro Cloud Secure Storage & Vault">
 <title>NLC | Pro Cloud Secure</title>
+
+<!-- Performance Optimization: Preconnect to CDNs -->
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://cdn.quilljs.com">
+<link rel="preconnect" href="https://www.gstatic.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<!-- PWA Manifest (Inline) -->
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTkxDIENsb3VkIFN0b3JhZ2UiLCJzaG9ydF9uYW1lIjoiTkxDIiwic3RhcnRfdXJsIjoiLi8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmZmZmZmIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmMmY0ZjYiLCJpY29ucyI6W3sic3JjIjoiaHR0cHM6Ly9jZG4tanRpZnkuY29tL2ltYWdlcy9pY29ucy9mb2xkZXIucG5nIiwic2l6ZXMiOiIxOTJ4MTkyIiwidHlwZSI6ImltYWdlL3BuZyJ9XX0=">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js" defer></script>
 
 <script>
     // Initial Settings
@@ -23,6 +34,7 @@
 </script>
 
 <style>
+    /* CSS Unchanged */
     :root { 
         --bg-body: #f2f4f6; --bg-card: #ffffff; --text-main: #111827; --text-sub: #6b7280; --border: #e5e7eb; --input-bg: #f9fafb; --input-border: #e5e7eb; --primary: #2563eb; --primary-hover: #1d4ed8; --success: #10b981; --error: #ef4444; --loader-bg: var(--bg-body); --logo-n: #111827; --logo-l: #2563eb; --logo-c: #f59e0b; 
         --card-h: 130px; --card-w-min: 150px; --font-title: 14px; --icon-size: 24px; 
@@ -36,21 +48,74 @@
     }
     html.dark-mode code, html.dark-mode pre { color: #f8f8f2; text-shadow: 0 1px rgba(0,0,0,.3); }
     
-    /* Dark Mode Fixes for Quill and Modals */
-    html.dark-mode .ql-toolbar { background: var(--bg-card) !important; border-color: var(--border) !important; }
-    html.dark-mode .ql-container { background: var(--bg-card) !important; color: var(--text-main) !important; }
+    /* IMPROVED GLASSMORPHISM QUILL EDITOR STYLES */
+    /* Sticky position ensures it stays on top, giving the glass effect over content */
+    .ql-toolbar.ql-snow {
+        position: sticky !important;
+        top: 0 !important;
+        border: none !important;
+        background: rgba(255, 255, 255, 0.75) !important; /* Slightly higher opacity for stability */
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        margin: 0 !important;
+        padding: 12px 10px !important;
+        border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        z-index: 500 !important; /* High Z-index to stay on top */
+    }
     
-    /* Specific Fix for Quill Toolbar Icons in Dark Mode */
+    .ql-container.ql-snow {
+        border: none !important;
+        padding-top: 10px !important;
+    }
+
+    .ql-formats {
+        margin-right: 0 !important;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+        padding: 4px 6px;
+        border: 1px solid rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+    }
+    .ql-snow .ql-toolbar button {
+        width: 28px !important; height: 28px !important; border-radius: 8px !important; transition: all 0.2s ease;
+    }
+    .ql-snow .ql-toolbar button:hover, .ql-snow .ql-toolbar button.ql-active {
+        background: var(--primary) !important; color: white !important;
+    }
+    .ql-snow .ql-toolbar button:hover .ql-stroke, .ql-snow .ql-toolbar button.ql-active .ql-stroke {
+        stroke: white !important;
+    }
+    .ql-snow .ql-toolbar button:hover .ql-fill, .ql-snow .ql-toolbar button.ql-active .ql-fill {
+        fill: white !important;
+    }
+    .ql-color-picker .ql-picker-label { padding: 0 4px; }
+    .ql-snow .ql-color-picker .ql-picker-options {
+        border-radius: 12px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: none;
+    }
+    
+    html.dark-mode .ql-toolbar.ql-snow {
+        background: rgba(30, 30, 30, 0.75) !important; border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    }
+    html.dark-mode .ql-formats {
+        background: rgba(255, 255, 255, 0.05); border-color: rgba(255,255,255,0.05);
+    }
+    html.dark-mode .ql-container { background: var(--bg-card) !important; color: var(--text-main) !important; }
     html.dark-mode .ql-snow .ql-stroke { stroke: #e5e5e5 !important; }
     html.dark-mode .ql-snow .ql-fill { fill: #e5e5e5 !important; }
     html.dark-mode .ql-snow .ql-picker { color: #e5e5e5 !important; }
     html.dark-mode .ql-snow .ql-picker-options { background-color: var(--bg-card) !important; border-color: var(--border) !important; }
     
+    /* Remove transitions for instant dark mode */
     body, html, .card, header, input, select, textarea, .modal-box, 
     .menu-dropdown, .file-list-item, .btn-primary, .action-btn, 
     .ql-toolbar, .ql-container, .type-btn, .quick-copy-box, .guide-footer,
     .drag-handle, .auth-box, .card-title, .card-icon, i {
-        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, fill 0.3s ease, stroke 0.3s ease !important;
+        transition: none !important;
     }
 
     body, html { width: 100%; height: 100%; margin: 0; padding: 0; background-color: var(--bg-body); overflow-x: hidden; font-family: Inter, system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; -webkit-user-select: none; user-select: none; overscroll-behavior-y: none; }
@@ -73,20 +138,35 @@
     html.size-medium body { --card-h: 130px; --card-w-min: 150px; --font-title: 14px; --icon-size: 24px; }
     html.size-large body { --card-h: 170px; --card-w-min: 190px; --font-title: 18px; --icon-size: 32px; }
     
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card-w-min), 1fr)); gap: 12px; padding-bottom: env(safe-area-inset-bottom); content-visibility: auto; contain-intrinsic-size: 1px 500px; }
+    /* GRID VIEW FIX */
+    .grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(var(--card-w-min), 1fr)); 
+        gap: 12px; 
+        padding-bottom: env(safe-area-inset-bottom); 
+        content-visibility: auto; 
+        contain-intrinsic-size: 1px 500px; 
+        min-height: calc(100vh - 120px); 
+        align-content: start;
+    }
     
     @keyframes fadeInUp { from { opacity: 0; transform: translate3d(0, 15px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
     
-    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; height: var(--card-h); padding: 15px; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; transition: transform .2s var(--ease-modern), box-shadow .2s ease, border-color .3s; box-shadow: var(--shadow-soft); position: relative; overflow: hidden; contain: content; animation: fadeInUp 0.4s var(--ease-modern) backwards; }
-    .card:active, .card.long-press { transform: scale3d(.96, .96, 1); box-shadow: 0 0 0 0 transparent; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; height: var(--card-h); padding: 15px; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; transition: transform 0.2s var(--ease-modern), box-shadow 0.2s ease, border-color 0.3s; box-shadow: var(--shadow-soft); position: relative; overflow: hidden; contain: content; animation: fadeInUp 0.4s var(--ease-modern) backwards; width: 100%; }
+    .card:active:not(.long-press) { transform: scale3d(.98, .98, 1); }
+    .card.long-press { transform: scale3d(.96, .96, 1); box-shadow: 0 0 0 0 transparent; }
     .card-icon { font-size: var(--icon-size); margin-bottom: 10px; color: var(--text-main); opacity: .8; pointer-events: none; }
     .card:hover .card-icon { transform: scale(1.1); }
     .card-title { font-size: var(--font-title); font-weight: 600; color: var(--text-main); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; pointer-events: none; }
     
     html.view-list .grid { grid-template-columns: 1fr !important; gap: 10px; }
-    html.view-list .card { height: auto; flex-direction: row; justify-content: flex-start; align-items: center; text-align: left; }
-    html.view-list .card-icon { margin-bottom: 0; }
-    html.view-list .card-title { -webkit-line-clamp: 1; }
+    html.view-list .card { height: auto !important; min-height: 70px; flex-direction: row; justify-content: flex-start; align-items: center; text-align: left; padding: 12px 16px; gap: 15px; }
+    html.view-list .card-icon { margin-bottom: 0; font-size: 20px; }
+    html.view-list .card-title { -webkit-line-clamp: 1; font-size: 15px; }
+
+    /* Improved list view card sizing */
+    html.size-small.view-list .card { min-height: 60px; }
+    html.size-large.view-list .card { min-height: 90px; }
     
     /* MODAL SYSTEM - ROBUST FIX */
     .modal { 
@@ -138,6 +218,11 @@
     .modal.active .modal-box.fullscreen { transform: translate3d(0, 0, 0) scale(1); transition: transform 0.4s var(--ease-modern); }
     .modal-box.size-code { max-width: 700px; height: 75dvh; }
     
+    /* Better code editor modal transitions */
+    #codeEditorModal .modal-box {
+        transition: transform 0.4s var(--ease-modern);
+    }
+    
     /* Drag Handle - Bigger Touch Area & No Action */
     .drag-handle { width: 40px; height: 5px; background: var(--border); border-radius: 100px; margin: -10px auto 24px auto; opacity: .8; cursor: grab; flex-shrink: 0; padding: 20px 0; background-clip: content-box; pointer-events: auto; touch-action: none; position: relative; z-index: 10; }
     .drag-handle:active { opacity: 0.5; }
@@ -146,7 +231,6 @@
     #fileList { margin-bottom: 15px; padding-right: 5px; min-height: 150px; }
     
     #editor-container { height: 100%; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-    .ql-toolbar { border-top: none !important; border-left: none !important; border-right: none !important; border-bottom: 1px solid var(--border) !important; background: var(--bg-card) !important; z-index: 10; }
     .ql-container { border: none !important; font-family: Inter, sans-serif !important; font-size: 16px !important; background: var(--bg-card); flex: 1; overflow-y: hidden; }
     .ql-editor { color: var(--text-main); font-family: 'Fira Code', monospace; line-height: 1.6; padding: 20px; height: 100%; overflow-y: auto; }
     
@@ -203,12 +287,13 @@
     
     .quick-copy-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.3); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0.2s ease; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
     .quick-copy-modal.active { opacity: 1; visibility: visible; }
-    .quick-copy-box { background: var(--bg-card); border-radius: 20px; padding: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); max-width: 90%; width: 300px; text-align: center; transform: scale(0.9) translateY(20px); transition: transform 0.3s var(--ease-spring); }
+    .quick-copy-box { background: var(--bg-card); border-radius: 20px; padding: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); max-width: 90%; width: 320px; text-align: center; transform: scale(0.9) translateY(20px); transition: transform 0.3s var(--ease-spring); }
     .quick-copy-modal.active .quick-copy-box { transform: scale(1) translateY(0); }
     .quick-copy-options { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
     .quick-copy-btn { padding: 14px; border-radius: 14px; border: none; background: var(--input-bg); color: var(--text-main); font-weight: 600; cursor: pointer; transition: all 0.2s var(--ease-modern); display: flex; align-items: center; justify-content: center; gap: 10px; }
     .quick-copy-btn:active { transform: scale(0.96); background: var(--primary); color: white; }
     .quick-copy-btn.copy { background: rgba(37, 99, 235, 0.1); color: var(--primary); }
+    .quick-copy-btn.edit { background: rgba(16, 185, 129, 0.1); color: var(--success); }
     .quick-copy-btn.cancel { background: rgba(107, 114, 128, 0.1); color: var(--text-sub); }
     
     .copy-content-protected { -webkit-user-select: none !important; user-select: none !important; }
@@ -226,11 +311,14 @@
 
 <div class="quick-copy-modal" id="quickCopyModal">
     <div class="quick-copy-box">
-        <h3 style="margin:0 0 10px 0;color:var(--text-main);font-size:18px;">Copy Content</h3>
-        <p style="margin:0 0 20px 0;color:var(--text-sub);font-size:14px;">Select an option to copy</p>
-        <div class="quick-copy-options">
+        <h3 style="margin:0 0 10px 0;color:var(--text-main);font-size:18px;" id="quickCopyTitle">Copy Content</h3>
+        <p style="margin:0 0 20px 0;color:var(--text-sub);font-size:14px;">Select an option</p>
+        <div class="quick-copy-options" id="quickCopyOptions">
             <button class="quick-copy-btn copy" onclick="window.quickCopyContent()">
                 <i class="fas fa-copy"></i> Copy Content
+            </button>
+            <button class="quick-copy-btn edit" onclick="window.editCodeContent()" id="editCodeBtn" style="display:none">
+                <i class="fas fa-pen"></i> Edit Content
             </button>
             <button class="quick-copy-btn cancel" onclick="window.closeQuickCopyModal()">
                 <i class="fas fa-times"></i> Cancel
@@ -239,29 +327,192 @@
     </div>
 </div>
 
-<div id="authScreen" class="hidden"><div class="auth-box"><h1 style="margin:0;font-size:48px;letter-spacing:-2px;line-height:1"><span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></h1><p style="color:var(--text-sub);margin-bottom:30px">Pro Cloud Storage</p><input type="email" id="authEmail" placeholder="Email address" autocomplete="username"><div class="password-wrapper"><input type="password" id="authPassword" placeholder="Password" autocomplete="current-password"><i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("authPassword",this)'></i></div><div id="confirmPasswordWrapper" class="password-wrapper hidden"><input type="password" id="authConfirmPassword" placeholder="Confirm Password" autocomplete="new-password"><i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("authConfirmPassword",this)'></i></div><button id="mainAuthBtn" class="btn-primary" onclick="window.handleAuthAction()">Continue</button><div style="margin-top:20px;font-size:13px;color:var(--text-sub)"><span id="authSwitchText">New here?</span><b onclick="window.toggleAuthMode()" style="color:var(--primary);cursor:pointer">Create Account</b></div><div style="margin-top:15px;font-size:12px"><span onclick="window.openForgotPasswordModal()" style="color:var(--text-sub);cursor:pointer">Forgot Password?</span></div></div></div>
-<div id="appLoader"><div style="display:flex;align-items:center;gap:20px"><div style="font-weight:900;font-size:40px;letter-spacing:-2px"><span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></div><div class="spinner-ring"></div></div></div>
-<div id="mainApp" class="hidden"><header><div class="brand" style="font-weight:900;font-size:20px;letter-spacing:-1px"><span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></div><div onclick="window.openAuthModal()" style="padding:10px;cursor:pointer;color:var(--text-main);transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'"><i class="fas fa-shield-alt"></i></div><div style="flex:1;position:relative"><input type="text" class="search-input" id="searchInput" placeholder="Search" autocomplete="off" style="margin:0;padding:10px 15px 10px 15px;font-size:14px;padding-right:45px"><div id="deepSearchToggle" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;padding:5px;color:var(--text-sub);transition:color 0.2s"><i class="fas fa-search" title="Deep Search"></i></div></div><div onclick='window.openEditor(null,"main")' style="padding:10px;cursor:pointer;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'"><i class="fas fa-plus-circle" style="font-size:24px;color:var(--primary)"></i></div><div id="menuBtn" style="padding:10px;cursor:pointer;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'"><i class="fas fa-bars" style="font-size:22px;color:var(--text-main)"></i></div><div class="menu-dropdown" id="menuDropdown"><div class="menu-item" onclick='window.openManager("main")'>File Manager<i class="fas fa-folder"></i></div><div class="menu-item" onclick="window.toggleTheme()">Theme<i class="fas fa-adjust"></i></div><div class="menu-item" onclick="window.cycleCardSize()">Card Size<i class="fas fa-vector-square"></i></div><div class="menu-item" onclick="window.openChangePasswordModal()">Change Password<i class="fas fa-unlock-alt"></i></div><div style="height:1px;background:var(--border);margin:5px 0"></div><div style="font-size:10px;color:var(--text-sub);padding:4px 10px;font-weight:700;letter-spacing:1px">SORT</div><div class="menu-item" onclick='window.setSort("date")'>Newest First<i class="fas fa-clock"></i></div><div class="menu-item" onclick='window.setSort("oldest")'>Oldest First<i class="fas fa-history"></i></div><div class="menu-item" onclick='window.setSort("name")'>Name (A-Z)<i class="fas fa-font"></i></div><div style="height:1px;background:var(--border);margin:5px 0"></div><div class="menu-item" onclick='window.setView("grid")'>Grid<i class="fas fa-th-large"></i></div><div class="menu-item" onclick='window.setView("list")'>List<i class="fas fa-list"></i></div><div class="menu-item" onclick="window.logout()" style="color:var(--error)">Logout<i class="fas fa-power-off"></i></div></div></header><div class="container" style="padding:15px;max-width:1200px;margin:0 auto"><div class="grid" id="fileGrid"></div><div id="loadMoreSentinel"></div></div></div>
-<div id="vaultView" class="hidden"><header class="vault-header"><div class="brand" style="font-weight:900">VAULT</div><div style="margin-left:auto;display:flex;gap:15px"><i class="fas fa-key" onclick="window.changeVaultPin()" style="color:#fbbf24;cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i><i class="fas fa-plus" onclick='window.openEditor(null,"vault")' style="cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i><i class="fas fa-cog" onclick='window.openManager("vault")' style="cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i><i class="fas fa-sign-out-alt" onclick="window.exitVault()" style="color:#ef4444;cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i></div></header><div class="container" style="padding:15px"><div class="grid" id="vaultGrid"></div></div></div>
+<!-- Auth Screen -->
+<div id="authScreen" class="hidden">
+    <div class="auth-box">
+        <h1 style="margin:0;font-size:48px;letter-spacing:-2px;line-height:1">
+            <span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span>
+        </h1>
+        <p style="color:var(--text-sub);margin-bottom:30px">Pro Cloud Storage</p>
+        
+        <input type="email" id="authEmail" placeholder="Email address" autocomplete="username">
+        
+        <div class="password-wrapper">
+            <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password">
+            <i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("authPassword",this)'></i>
+        </div>
+        
+        <div id="confirmPasswordWrapper" class="password-wrapper hidden">
+            <input type="password" id="authConfirmPassword" placeholder="Confirm Password" autocomplete="new-password">
+            <i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("authConfirmPassword",this)'></i>
+        </div>
+        
+        <button id="mainAuthBtn" class="btn-primary" onclick="window.handleAuthAction()">Continue</button>
+        
+        <div style="margin-top:20px;font-size:13px;color:var(--text-sub)">
+            <span id="authSwitchText">New here?</span>
+            <b onclick="window.toggleAuthMode()" style="color:var(--primary);cursor:pointer">Create Account</b>
+        </div>
+        
+        <div style="margin-top:15px;font-size:12px">
+            <span onclick="window.openForgotPasswordModal()" style="color:var(--text-sub);cursor:pointer">Forgot Password?</span>
+        </div>
+    </div>
+</div>
 
-<div class="modal" id="editorModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="margin:0 0 20px 0;font-size:20px;color:var(--text-main)">New Item</h3><form id="fileForm" autocomplete="off"><input type="hidden" id="editId"> <input type="text" id="fileName" placeholder="File Name" required> <input type="hidden" id="fileType" value="link">
-<!-- CHANGED ORDER: Note first, Link second, Code third -->
-<div id="fileTypeSelection"><div class="type-btn active" data-type="note" onclick='window.setType("note")'><i class="fas fa-align-left"></i>Note</div><div class="type-btn" data-type="link" onclick='window.setType("link")'><i class="fas fa-link"></i>Link</div><div class="type-btn" data-type="code" onclick='window.setType("code")'><i class="fas fa-code"></i>Code</div></div>
-<input type="url" id="fileUrl" placeholder="https://example.com"><textarea id="fileContent" placeholder="Type something..." style="display:none;height:120px;font-family:monospace"></textarea><button type="submit" class="btn-primary">Save Item</button></form></div></div>
-<div class="modal" id="managerModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="margin:0 0 15px 0;color:var(--text-main)">Manage Files</h3><div id="fileList"></div><button onclick="window.closeManager()" class="btn-primary" style="background:var(--input-bg);color:var(--text-main)">Close</button></div></div>
+<div id="appLoader"><div style="display:flex;align-items:center;gap:20px"><div style="font-weight:900;font-size:40px;letter-spacing:-2px"><span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></div><div class="spinner-ring"></div></div></div>
+
+<div id="mainApp" class="hidden"><header><div class="brand" style="font-weight:900;font-size:20px;letter-spacing:-1px"><span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></div><div onclick="window.openVault()" style="padding:10px;cursor:pointer;color:var(--text-main);transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'"><i class="fas fa-shield-alt"></i></div><div style="flex:1;position:relative"><input type="text" class="search-input" id="searchInput" placeholder="Search" autocomplete="off" style="margin:0;padding:10px 15px 10px 15px;font-size:14px;padding-right:45px"><div id="deepSearchToggle" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;padding:5px;color:var(--text-sub);transition:color 0.2s"><i class="fas fa-search" title="Deep Search"></i></div></div><div onclick='window.openEditor(null,"main")' style="padding:10px;cursor:pointer;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'"><i class="fas fa-plus-circle" style="font-size:24px;color:var(--primary)"></i></div><div id="menuBtn" style="padding:10px;cursor:pointer;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'"><i class="fas fa-bars" style="font-size:22px;color:var(--text-main)"></i></div><div class="menu-dropdown" id="menuDropdown"><div class="menu-item" onclick='window.openManager("main")'>File Manager<i class="fas fa-folder"></i></div><div class="menu-item" onclick="window.toggleTheme()">Theme<i class="fas fa-adjust"></i></div><div class="menu-item" onclick="window.cycleCardSize()">Card Size<i class="fas fa-vector-square"></i></div><div class="menu-item" onclick="window.openChangePasswordModal()">Change Password<i class="fas fa-unlock-alt"></i></div><div style="height:1px;background:var(--border);margin:5px 0"></div><div style="font-size:10px;color:var(--text-sub);padding:4px 10px;font-weight:700;letter-spacing:1px">SORT</div><div class="menu-item" onclick='window.setSort("date")'>Newest First<i class="fas fa-clock"></i></div><div class="menu-item" onclick='window.setSort("oldest")'>Oldest First<i class="fas fa-history"></i></div><div class="menu-item" onclick='window.setSort("name")'>Name (A-Z)<i class="fas fa-font"></i></div><div style="height:1px;background:var(--border);margin:5px 0"></div><div class="menu-item" onclick='window.setView("grid")'>Grid<i class="fas fa-th-large"></i></div><div class="menu-item" onclick='window.setView("list")'>List<i class="fas fa-list"></i></div><div class="menu-item" onclick="window.logout()" style="color:var(--error)">Logout<i class="fas fa-power-off"></i></div></div></header><div class="container" style="padding:15px;max-width:1200px;margin:0 auto"><div class="grid" id="fileGrid"></div><div id="loadMoreSentinel"></div></div></div>
+
+<!-- Vault View Updated -->
+<div id="vaultView" class="hidden">
+    <header class="vault-header">
+        <div class="brand" style="font-weight:900">VAULT</div>
+        <div style="margin-left:auto;display:flex;gap:15px">
+            <i class="fas fa-key" onclick="window.changeVaultPin()" style="color:#fbbf24;cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i>
+            <i class="fas fa-plus" onclick='window.openEditor(null,"vault")' style="cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i>
+            <!-- Changed Cog to Folder Icon -->
+            <i class="fas fa-folder-open" onclick='window.openManager("vault")' style="cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i>
+            <i class="fas fa-sign-out-alt" onclick="window.exitVault()" style="color:#ef4444;cursor:pointer;font-size:18px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i>
+        </div>
+    </header>
+    <div class="container" style="padding:15px;max-width:1200px;margin:0 auto"><div class="grid" id="vaultGrid"></div></div>
+</div>
+
+<div class="modal" id="editorModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="margin:0 0 20px 0;font-size:20px;color:var(--text-main)" id="editorTitle">New Item</h3><form id="fileForm" autocomplete="off"><input type="hidden" id="editId"> <input type="text" id="fileName" placeholder="File Name" required> <input type="hidden" id="fileType" value="link">
+<div id="fileTypeSelection" class=""><div class="type-btn active" data-type="note" onclick='window.setType("note")'><i class="fas fa-align-left"></i>Note</div><div class="type-btn" data-type="link" onclick='window.setType("link")'><i class="fas fa-link"></i>Link</div><div class="type-btn" data-type="code" onclick='window.setType("code")'><i class="fas fa-code"></i>Code</div></div>
+<input type="url" id="fileUrl" placeholder="https://example.com" class=""><textarea id="fileContent" placeholder="Type something..." style="display:none;height:120px;font-family:monospace" class=""></textarea><button type="submit" class="btn-primary" id="saveButton">Save Item</button></form></div></div>
+
+<div class="modal" id="managerModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="margin:0 0 15px 0;color:var(--text-main)">Manage Files</h3><div id="fileList"></div><div id="vaultResetContainer" class="hidden" style="margin-top:10px"><button onclick="window.resetVaultConfig()" class="btn-primary" style="background:#ef4444;color:#fff">Reset Vault PIN</button></div><button onclick="window.closeManager()" class="btn-primary" style="background:var(--input-bg);color:var(--text-main)">Close</button></div></div>
+
 <div class="modal" id="confirmModal"><div class="modal-box" style="text-align:center"><p id="confirmText" style="margin-bottom:25px;font-weight:500;font-size:18px;color:var(--text-main)">Are you sure?</p><div style="display:flex;gap:10px"><button onclick="window.closeConfirmModal()" class="btn-primary" style="background:var(--input-bg);color:var(--text-main);flex:1">Cancel</button><button id="confirmYesBtn" class="btn-primary" style="flex:1">Yes</button></div></div></div>
-<div class="modal" id="noteModal"><div class="modal-box fullscreen" style="background:var(--bg-body);padding:0"><div style="padding:10px 15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg-card)"><div style="flex:1;display:flex;flex-direction:column;justify-content:center;overflow:hidden;margin-right:10px"><input type="text" id="noteViewTitle" style="border:none;background:0 0;font-inherit:true;font-size:24px;font-weight:800;padding:0;margin:0;width:100%;color:var(--text-main);letter-spacing:-.5px" placeholder="Untitled"><span id="noteViewDate" style="font-size:11px;color:var(--text-sub);margin-top:2px;font-weight:500"></span></div><div style="display:flex;align-items:center"><div style="display:flex;gap:12px;margin-left:15px;padding-left:10px"><i class="fas fa-check" onclick="window.saveAndExit()" style="font-size:20px;color:var(--primary);cursor:pointer;padding:5px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i><i class="fas fa-times" onclick="window.discardAndClose()" style="font-size:20px;color:var(--text-sub);cursor:pointer;padding:5px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i></div></div></div><div id="editor-container"></div> <input type="hidden" id="noteViewId"></div></div>
+
+<!-- Note Modal -->
+<div class="modal" id="noteModal">
+    <div class="modal-box fullscreen" style="background:var(--bg-body);padding:0">
+        <!-- Header Start -->
+        <div style="padding:10px 15px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:var(--bg-card); gap: 15px;">
+            <!-- Left Side: Cross (Cancel) Button -->
+            <div style="display:flex; align-items:center;">
+                <i class="fas fa-times" onclick="window.discardAndClose()" style="font-size:22px; color:var(--text-sub); cursor:pointer; padding:5px; transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i>
+            </div>
+            <!-- Middle: Title & Date -->
+            <div style="flex:1; display:flex; flex-direction:column; justify-content:center; overflow:hidden; text-align:center;">
+                <input type="text" id="noteViewTitle" style="border:none; background:0 0; font-inherit:true; font-size:18px; font-weight:700; padding:0; margin:0; width:100%; color:var(--text-main); text-align:center;" placeholder="Untitled">
+                <span id="noteViewDate" style="font-size:11px; color:var(--text-sub); margin-top:2px; font-weight:500;"></span>
+            </div>
+            <!-- Right Side: Check (Save) Button -->
+            <div style="display:flex; align-items:center;">
+                <i class="fas fa-check" onclick="window.saveAndExit()" style="font-size:22px; color:var(--primary); cursor:pointer; padding:5px; transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i>
+            </div>
+        </div>
+        <!-- Header End -->
+        <div id="editor-container"></div> 
+        <input type="hidden" id="noteViewId">
+    </div>
+</div>
+
 <div class="modal" id="runnerModal"><div class="modal-box fullscreen" style="background:var(--bg-card);padding:0"><iframe id="codeFrame" sandbox="allow-scripts allow-modals" style="width:100%;height:100%;border:none;display:block"></iframe></div></div>
-<div class="modal" id="authModal"><div class="modal-box" style="text-align:center"><div class="drag-handle"></div><div style="width:60px;height:60px;background:rgba(59,130,246,.1);border-radius:50%;display:flex;justify-content:center;align-items:center;margin:0 auto 15px auto"><i class="fas fa-fingerprint" style="font-size:30px;color:var(--primary)"></i></div><div id="setupView" class="hidden"><h3 style="margin-bottom:5px;color:var(--text-main)">Set PIN</h3><p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">Secure your Vault</p><div style="background:#fee2e2;color:#b91c1c;padding:10px;border-radius:8px;font-size:11px;text-align:left;margin-bottom:15px"><b>WARNING:</b>If you forget this PIN, data will be lost forever.</div><p style="margin:0 0 8px 0;font-size:14px;color:var(--text-main);font-weight:500">What is your favourite fruit?</p><input type="text" id="setupAnswer" placeholder="Answer" style="margin-bottom:10px"> <input type="tel" id="setupPin" maxlength="4" placeholder="••••" style="text-align:center;letter-spacing:8px;font-size:24px;font-weight:700"><button onclick="window.setupVault()" class="btn-primary">Save & Enable</button></div><div id="loginView" class="hidden"><h3 style="margin-bottom:5px;color:var(--text-main)">Enter PIN</h3><p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">Access your private files</p><input type="tel" id="loginPin" maxlength="4" placeholder="••••" style="text-align:center;letter-spacing:8px;font-size:24px;font-weight:700" oninput="4==this.value.length&&window.loginVault()"><button onclick="window.loginVault()" class="btn-primary">Unlock</button></div></div></div>
+<div class="modal" id="authModal"><div class="modal-box" style="text-align:center"><div class="drag-handle"></div><div style="width:60px;height:60px;background:rgba(59,130,246,.1);border-radius:50%;display:flex;justify-content:center;align-items:center;margin:0 auto 15px auto"><i class="fas fa-fingerprint" style="font-size:30px;color:var(--primary)"></i></div><div id="setupView" class="hidden"><h3 style="margin-bottom:5px;color:var(--text-main)">Set PIN</h3><p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">Secure your Vault</p><div style="background:#fee2e2;color:#b91c1c;padding:10px;border-radius:8px;font-size:11px;text-align:left;margin-bottom:15px"><b>WARNING:</b>If you forget this PIN, data will be lost forever.</div><p style="margin:0 0 8px 0;font-size:14px;color:var(--text-main);font-weight:500">What is your favourite fruit?</p><input type="text" id="setupAnswer1" placeholder="Answer" style="margin-bottom:10px">
+<p style="margin:0 0 8px 0;font-size:14px;color:var(--text-main);font-weight:500">What is your favourite color?</p><input type="text" id="setupAnswer2" placeholder="Answer" style="margin-bottom:10px"> <div class="password-wrapper"><input type="password" id="setupPin" maxlength="4" placeholder="••••" style="text-align:center;letter-spacing:8px;font-size:24px;font-weight:700" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.length===4) window.setupVault();"><i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("setupPin",this)'></i></div><button onclick="window.setupVault()" class="btn-primary">Save & Enable</button></div><div id="loginView" class="hidden"><h3 style="margin-bottom:5px;color:var(--text-main)">Enter PIN</h3><p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">Access your private files</p><div class="password-wrapper"><input type="password" id="loginPin" maxlength="4" placeholder="••••" style="text-align:center;letter-spacing:8px;font-size:24px;font-weight:700" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.length===4) window.loginVault();"><i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("loginPin",this)'></i></div><div style="margin-top:15px;font-size:12px;cursor:pointer;color:var(--text-sub)" onclick="window.openVaultRecovery()">Forgot PIN?</div></div></div></div>
 <div class="modal" id="copyModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="color:var(--text-main)">Copy Content</h3><div id="copyContentArea" contenteditable="true" class="rich-editor copy-modal-content" style="height:100px;border:1px solid var(--border);border-radius:8px;margin-top:10px;font-size:14px"></div><div style="display:flex;gap:10px;margin-top:10px"><button onclick="window.goBack()" class="btn-primary" style="background:var(--input-bg);color:var(--text-main)">Close</button><button onclick="window.performCopy()" class="btn-primary">Copy</button></div></div></div>
 <div class="modal" id="changePasswordModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="color:var(--text-main)">Change Password</h3><input type="password" id="cpOldPass" placeholder="Current Password"> <input type="password" id="cpNewPass" placeholder="New Password"> <input type="password" id="cpConfirmPass" placeholder="Confirm New Password"><button onclick="window.performChangePassword()" class="btn-primary">Update Password</button><button onclick="window.goBack()" class="btn-primary" style="margin-top:10px;background:0 0;color:var(--text-sub);border:1px solid var(--border)">Cancel</button></div></div>
 <div class="modal" id="forgotPasswordModal"><div class="modal-box"><div class="drag-handle"></div><h3 style="color:var(--text-main)">Reset Password</h3><p style="color:var(--text-sub);font-size:13px;margin-bottom:15px">We'll send a link to your email.</p><input type="email" id="resetEmail" placeholder="Enter Email"><button id="sendResetBtn" class="btn-primary" onclick="window.sendPasswordResetEmail()">Send Link</button><button onclick="window.goBack()" class="btn-primary" style="margin-top:10px;background:0 0;color:var(--text-sub);border:1px solid var(--border)">Cancel</button></div></div>
+
+<!-- Vault PIN Change Modal -->
+<div class="modal" id="changeVaultPinModal">
+    <div class="modal-box">
+        <div class="drag-handle"></div>
+        <div style="text-align:center;margin-bottom:20px">
+            <div style="width:70px;height:70px;background:rgba(59,130,246,.1);border-radius:50%;display:flex;justify-content:center;align-items:center;margin:0 auto 15px auto">
+                <i class="fas fa-key" style="font-size:32px;color:var(--primary)"></i>
+            </div>
+            <h3 style="color:var(--text-main);margin-bottom:5px">Change Vault PIN</h3>
+            <p style="color:var(--text-sub);font-size:13px;margin:0">Secure your private files with a new PIN</p>
+        </div>
+        
+        <div class="password-wrapper">
+            <input type="password" id="oldVaultPin" placeholder="Current PIN" maxlength="4" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" style="text-align:center;letter-spacing:8px;font-size:20px;font-weight:700">
+            <i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("oldVaultPin",this)'></i>
+        </div>
+        
+        <div class="password-wrapper">
+            <input type="password" id="newVaultPin" placeholder="New PIN" maxlength="4" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" style="text-align:center;letter-spacing:8px;font-size:20px;font-weight:700">
+            <i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("newVaultPin",this)'></i>
+        </div>
+        
+        <div class="password-wrapper">
+            <input type="password" id="confirmVaultPin" placeholder="Confirm New PIN" maxlength="4" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" style="text-align:center;letter-spacing:8px;font-size:20px;font-weight:700">
+            <i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("confirmVaultPin",this)'></i>
+        </div>
+        
+        <button onclick="window.performVaultPinChange()" class="btn-primary" style="margin-top:10px">
+            <i class="fas fa-save"></i> Update PIN
+        </button>
+        
+        <button onclick="window.goBack()" class="btn-primary" style="margin-top:10px;background:var(--input-bg);color:var(--text-sub);border:1px solid var(--border)">
+            <i class="fas fa-times"></i> Cancel
+        </button>
+    </div>
+</div>
+
+<!-- Code Editor Modal -->
+<div class="modal" id="codeEditorModal">
+    <div class="modal-box fullscreen" style="background:var(--bg-body);padding:0">
+        <div style="padding:10px 15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg-card)">
+            <div style="flex:1;display:flex;flex-direction:column;justify-content:center;overflow:hidden;margin-right:10px">
+                <input type="text" id="codeEditorTitle" style="border:none;background:0 0;font-inherit:true;font-size:24px;font-weight:800;padding:0;margin:0;width:100%;color:var(--text-main);letter-spacing:-.5px" placeholder="Code File">
+                <span id="codeEditorDate" style="font-size:11px;color:var(--text-sub);margin-top:2px;font-weight:500"></span>
+            </div>
+            <div style="display:flex;align-items:center">
+                <div style="display:flex;gap:12px;margin-left:15px;padding-left:10px">
+                    <i class="fas fa-check" onclick="window.saveCodeContent()" style="font-size:20px;color:var(--primary);cursor:pointer;padding:5px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i>
+                    <i class="fas fa-times" onclick="window.closeCodeEditor()" style="font-size:20px;color:var(--text-sub);cursor:pointer;padding:5px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.8)'" onmouseup="this.style.transform='scale(1)'"></i>
+                </div>
+            </div>
+        </div>
+        <textarea id="codeEditorContent" style="width:100%;height:100%;border:none;padding:20px;font-family:'Fira Code', monospace;font-size:14px;line-height:1.6;background:var(--bg-card);color:var(--text-main);resize:none"></textarea>
+        <input type="hidden" id="codeEditorId">
+        <input type="hidden" id="codeEditorCtx">
+    </div>
+</div>
+
+<!-- Vault PIN Recovery Modal -->
+<div class="modal" id="vaultRecoveryModal">
+    <div class="modal-box">
+        <div class="drag-handle"></div>
+        <h3 style="color:var(--text-main);margin-bottom:20px">Recover Vault PIN</h3>
+        
+        <p style="color:var(--text-sub);font-size:13px;margin-bottom:15px">Answer your security questions to recover your PIN</p>
+        
+        <p style="margin:0 0 8px 0;font-size:14px;color:var(--text-main);font-weight:500">What is your favourite fruit?</p>
+        <input type="text" id="recoveryAnswer1" placeholder="Your Answer" style="margin-bottom:15px">
+        
+        <p style="margin:0 0 8px 0;font-size:14px;color:var(--text-main);font-weight:500">What is your favourite color?</p>
+        <input type="text" id="recoveryAnswer2" placeholder="Your Answer" style="margin-bottom:15px">
+        
+        <div class="password-wrapper">
+            <input type="password" id="recoveryNewPin" placeholder="New PIN" maxlength="4" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" style="text-align:center;letter-spacing:8px;font-size:20px;font-weight:700;margin-bottom:10px">
+            <i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("recoveryNewPin",this)'></i>
+        </div>
+        
+        <div class="password-wrapper">
+            <input type="password" id="recoveryConfirmPin" placeholder="Confirm New PIN" maxlength="4" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" style="text-align:center;letter-spacing:8px;font-size:20px;font-weight:700">
+            <i class="fas fa-eye toggle-password" onclick='togglePasswordVisibility("recoveryConfirmPin",this)'></i>
+        </div>
+        
+        <button onclick="window.performVaultRecovery()" class="btn-primary">Recover PIN</button>
+        
+        <button onclick="window.goBack()" class="btn-primary" style="margin-top:10px;background:var(--input-bg);color:var(--text-sub);border:1px solid var(--border)">Cancel</button>
+    </div>
+</div>
+
 <div class="modal" id="guideModal"><div class="modal-box" style="max-height:80vh;overflow:auto"><div class="drag-handle"></div><h3 style="color:var(--text-main);margin-bottom:15px">Welcome to<span style="color:var(--logo-n)">N</span><span style="color:var(--logo-l)">L</span><span style="color:var(--logo-c)">C</span></h3><div style="font-size:14px;line-height:1.6;color:var(--text-sub)"><p><b>Cloud Storage:</b>Save links, notes, and code snippets securely in the cloud.</p><p><b>Secure Vault:</b>Protect sensitive data with a PIN. Includes a "Fake Vault" feature if the wrong PIN is entered.</p><p><b>Code Editor:</b>Built-in syntax highlighting and runner for quick coding.</p></div><div class="guide-footer">Created by Tamim</div></div></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, writeBatch, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, updatePassword, reauthenticateWithCredential, EmailAuthProvider, fetchSignInMethodsForEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = { apiKey: "AIzaSyCaxYd2TgiNhus3w676wgFzYwnHeYMHVCs", authDomain: "nlc-44777.firebaseapp.com", projectId: "nlc-44777", storageBucket: "nlc-44777.firebasestorage.app", messagingSenderId: "143310032996", appId: "1:143310032996:web:eed0e533f31c98a8becf71" };
 
@@ -285,7 +536,10 @@ class SurgeRenderer {
             const frag = document.createDocumentFragment();
             const oldNodes = new Map();
             Array.from(this.el.children).forEach(n => oldNodes.set(n.dataset.id, n));
-            if(items.length === 0) { this.el.innerHTML = `<div style='grid-column:1/-1;text-align:center;padding:40px;color:var(--text-sub)'>Empty</div>`; return; }
+            if(items.length === 0) { 
+                this.el.innerHTML = `<div style='grid-column:1/-1;text-align:center;padding:40px;color:var(--text-sub);display:flex;flex-direction:column;align-items:center;gap:15px'><i class="fas fa-inbox" style="font-size:48px;opacity:0.5"></i><div>No files yet</div><div style="font-size:12px">Tap + to create your first item</div></div>`; 
+                return; 
+            }
             items.forEach((item, i) => {
                 let node = oldNodes.get(String(item.id));
                 const safeName = (item.name||"").replace(/</g,"&lt;");
@@ -305,13 +559,50 @@ class Kernel {
         this.app = initializeApp(firebaseConfig);
         this.auth = getAuth(this.app);
         this.db = getFirestore(this.app);
-        try { enableIndexedDbPersistence(this.db).catch(()=>{}); } catch(e){}
-        this.state = { user: null, files: [], vault: [], fake: [], filter: "", sortBy: "date", vaultMode: "real", security: {}, deep: false };
+        
+        try { 
+            enableIndexedDbPersistence(this.db, { 
+                forceOwnership: true 
+            }).catch((err) => { 
+                console.log('Persistence optimized:', err.code); 
+            }); 
+        } catch(e){}
+        
+        this.state = { 
+            user: null, files: [], vault: [], fake: [], filter: "", sortBy: "date", vaultMode: "real", security: {}, deep: false, retryCount: 0, maxRetries: 3, isSignUpMode: false, isEditingFromManager: false
+        };
         this.ui = { main: new SurgeRenderer('fileGrid'), vault: new SurgeRenderer('vaultGrid') };
-        this.quill = new Quill('#editor-container', { theme: 'snow', placeholder: 'Start writing...', modules: { toolbar: [[{ 'header': [1, 2, false] }], ['bold', 'italic', 'underline', 'strike'], [{ 'list': 'ordered'}, { 'list': 'bullet' }], [{ 'color': [] }, { 'background': [] }], ['code-block', 'blockquote'], ['clean']] } });
+        
+        this.initQuill();
         this.isFirstLoad = true;
         this.asTimer = null;
         this.init();
+    }
+
+    initQuill() {
+        if(window.Quill) {
+            try {
+                this.quill = new Quill('#editor-container', { 
+                    theme: 'snow', 
+                    placeholder: 'Start writing...', 
+                    modules: { 
+                        toolbar: [
+                            [{ 'header': [1, 2, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'color': [] }, { 'background': [] }],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            ['code-block', 'blockquote'],
+                            ['clean']
+                        ]
+                    } 
+                });
+            } catch(e) {
+                console.log('Quill init error, retrying...');
+                setTimeout(() => this.initQuill(), 1000);
+            }
+        } else {
+            setTimeout(() => this.initQuill(), 500);
+        }
     }
 
     init() {
@@ -321,7 +612,11 @@ class Kernel {
                 document.getElementById('authScreen').classList.add('hidden'); 
                 document.getElementById('mainApp').classList.remove('hidden'); 
                 this.sync(u.uid); 
-                if(!localStorage.getItem('intro')) { setTimeout(()=>this.mod('guide'),500); localStorage.setItem('intro','1'); } 
+                this.initializeVaultState();
+                if(!localStorage.getItem('intro')) { 
+                    setTimeout(()=>this.mod('guide'),500); 
+                    localStorage.setItem('intro','1'); 
+                } 
             } 
             else { 
                 document.getElementById('appLoader').classList.add('hidden');
@@ -333,40 +628,104 @@ class Kernel {
     }
 
     sync(uid) {
-        const sub = (c, k, r) => onSnapshot(collection(this.db,"users",uid,c), s => { 
-            this.state[k] = s.docs.map(d=>d.data()); 
-            this.refresh(r).then(() => {
-                if (r === 'main' && this.isFirstLoad) {
-                    this.isFirstLoad = false;
-                    setTimeout(() => { document.getElementById('appLoader').classList.add('hidden'); }, 50);
-                }
-            }); 
-        });
-        sub("files","files","main"); sub("vault","vault","vault"); sub("fakeVault","fake","vault");
-        onSnapshot(doc(this.db,"users",uid,"settings","security"), s=>this.state.security=s.data()||{});
+        const sub = (c, k, r) => {
+            const retrySubscription = (attempt = 0) => {
+                try {
+                    onSnapshot(collection(this.db,"users",uid,c), 
+                        s => { 
+                            this.state[k] = s.docs.map(d => ({...d.data(), _loaded: true})); 
+                            this.state.retryCount = 0; 
+                            this.refresh(r).then(() => {
+                                if (r === 'main' && this.isFirstLoad) {
+                                    this.isFirstLoad = false;
+                                    setTimeout(() => { 
+                                        document.getElementById('appLoader').classList.add('hidden'); 
+                                    }, 50);
+                                }
+                            }); 
+                        },
+                        error => {
+                            if (attempt < this.state.maxRetries) {
+                                setTimeout(() => retrySubscription(attempt + 1), 1000 * (attempt + 1));
+                            } else {
+                                if (this.state[k].length > 0) this.refresh(r);
+                                if (r === 'main' && this.isFirstLoad) {
+                                    this.isFirstLoad = false;
+                                    document.getElementById('appLoader').classList.add('hidden');
+                                }
+                            }
+                        }
+                    );
+                } catch (e) {}
+            };
+            retrySubscription();
+        };
+
+        sub("files","files","main"); 
+        sub("vault","vault","vault"); 
+        sub("fakeVault","fake","vault");
+        
+        const securityRetry = (attempt = 0) => {
+            try {
+                onSnapshot(doc(this.db,"users",uid,"settings","security"), 
+                    s => {
+                        this.state.security = s.data() || {};
+                        this.initializeVaultState();
+                    },
+                    error => {
+                        if (attempt < 3) {
+                            setTimeout(() => securityRetry(attempt + 1), 1000 * (attempt + 1));
+                        }
+                    }
+                );
+            } catch(e) {}
+        };
+        securityRetry();
+    }
+
+    initializeVaultState() {
+        if (this.state.security && this.state.security.pinHash) {
+            this.state.vaultMode = 'real';
+        } else {
+            this.state.vaultMode = null;
+        }
     }
 
     async refresh(view) {
-        let list = view === 'main' ? this.state.files : (this.state.vaultMode==='real' ? this.state.vault : this.state.fake);
-        let result = [...list];
-        const filter = (this.state.filter||"").toLowerCase();
-        const sortBy = this.state.sortBy||"date";
-        const deep = this.state.deep||false;
-        if(filter){
-            result = result.filter(item=>{
-                const nameMatch=(item.name||"").toLowerCase().includes(filter);
-                if(nameMatch)return true;
-                if(deep)return(item.content||"").toLowerCase().includes(filter);
-                return false
-            })
+        try {
+            let list = view === 'main' ? this.state.files : (this.state.vaultMode==='real' ? this.state.vault : this.state.fake);
+            list = list.filter(item => item && item._loaded !== false);
+            let result = [...list];
+            const filter = (this.state.filter||"").toLowerCase();
+            const sortBy = this.state.sortBy||"date";
+            const deep = this.state.deep||false;
+            
+            if(filter){
+                result = result.filter(item=>{
+                    const nameMatch=(item.name||"").toLowerCase().includes(filter);
+                    if(nameMatch)return true;
+                    if(deep)return(item.content||"").toLowerCase().includes(filter);
+                    return false
+                })
+            }
+            
+            result.sort((a,b)=>{
+                if(sortBy==='name')return(a.name||"").localeCompare(b.name||"");
+                if(sortBy==='oldest')return a.id-b.id;
+                return b.id-a.id
+            });
+            
+            this.ui[view].render(result, view==='main'?'main':'vault');
+            
+            if(document.getElementById('managerModal').classList.contains('active')) {
+                this.renderManager(view==='main'?'main':'vault');
+            }
+        } catch(error) {
+            if (this.state.retryCount < this.state.maxRetries) {
+                this.state.retryCount++;
+                setTimeout(() => this.refresh(view), 500);
+            }
         }
-        result.sort((a,b)=>{
-            if(sortBy==='name')return(a.name||"").localeCompare(b.name||"");
-            if(sortBy==='oldest')return a.id-b.id;
-            return b.id-a.id
-        });
-        this.ui[view].render(result, view==='main'?'main':'vault');
-        if(document.getElementById('managerModal').classList.contains('active')) this.renderManager(view==='main'?'main':'vault');
     }
 
     async save(e) {
@@ -380,6 +739,16 @@ class Kernel {
         if(type === 'note') {
             document.getElementById('noteViewId').value = id;
             document.getElementById('noteViewTitle').value = name;
+            
+            // New items have no original content
+            this.originalNoteContent = '';
+            this.originalNoteTitle = name;
+            // Updated Date Logic for new files
+            this.originalNoteDate = new Date().toLocaleString('en-US', {
+                month:'short', day:'numeric', year:'numeric', 
+                hour: 'numeric', minute: 'numeric', hour12: true
+            });
+
             this.quill.setText('');
             this.updateHeaderTime();
             this.noteCtx = ctx;
@@ -388,18 +757,43 @@ class Kernel {
             return;
         }
 
-        btn.innerText = "Processing..."; btn.disabled = true;
+        btn.innerText = "Processing..."; 
+        btn.disabled = true;
+        
         try {
             let content = type==='link'?document.getElementById('fileUrl').value:document.getElementById('fileContent').value;
             if(type==='link' && !content.startsWith('http')) content = 'https://'+content;
+            
             let col = ctx==='main'?'files':(this.state.vaultMode==='real'?'vault':'fakeVault');
-            if(ctx==='vault' && this.state.vaultMode==='real') content = await postWorker('crypto', { op:'encrypt', data:content });
-            const date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-            await setDoc(doc(this.db,"users",this.state.user.uid,col,String(id)), { id:Number(id), name, type, content, date });
-            this.toast("Saved","success"); 
+            
+            if(ctx==='vault' && this.state.vaultMode==='real') {
+                try {
+                    content = await postWorker('crypto', { op:'encrypt', data:content });
+                } catch(encryptError) {
+                    this.toast("Encryption failed", "error");
+                    btn.innerText = "Save Item"; 
+                    btn.disabled = false;
+                    return;
+                }
+            }
+            
+            // Updated Date Logic for non-note files
+            const date = new Date().toLocaleString('en-US', {
+                month:'short', day:'numeric', year:'numeric', 
+                hour: 'numeric', minute: 'numeric', hour12: true
+            });
+            await setDoc(doc(this.db,"users",this.state.user.uid,col,String(id)), { 
+                id:Number(id), name, type, content, date, _loaded: true 
+            });
+            
+            this.toast("Saved successfully", "success"); 
             this.close();
-        } catch(e) { this.toast("Error: " + e,"error"); }
-        btn.innerText = "Save Item"; btn.disabled = false;
+        } catch(e) { 
+            this.toast("Error: " + e.message, "error"); 
+        }
+        
+        btn.innerText = "Save Item"; 
+        btn.disabled = false;
     }
 
     startAutoSave() {
@@ -408,43 +802,90 @@ class Kernel {
             clearTimeout(this.asTimer);
             this.asTimer = setTimeout(() => { window.manualSaveNote(true); }, 2000);
         };
-        this.quill.on('text-change', this.autoSaveHandler);
+        if (this.quill) {
+            this.quill.on('text-change', this.autoSaveHandler);
+        }
     }
     
     stopAutoSave() {
-        if(this.autoSaveHandler) this.quill.off('text-change', this.autoSaveHandler);
+        if(this.autoSaveHandler && this.quill) {
+            this.quill.off('text-change', this.autoSaveHandler);
+        }
         clearTimeout(this.asTimer);
     }
 
     updateHeaderTime() {
-        document.getElementById('noteViewDate').innerText = new Date().toLocaleString('en-US', {
-            month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'numeric', hour12:true
-        });
+        // Just displays current time, date logic handled in save
+        const now = new Date();
     }
 
     bind() {
         document.getElementById('fileForm').onsubmit = e => this.save(e);
-        let tm; document.getElementById('searchInput').oninput = e => { clearTimeout(tm); tm = setTimeout(() => { this.state.filter = e.target.value; this.refresh('main'); if(!document.getElementById('vaultView').classList.contains('hidden')) this.refresh('vault'); }, 300); };
+        
+        let tm; 
+        document.getElementById('searchInput').oninput = e => { 
+            clearTimeout(tm); 
+            tm = setTimeout(() => { 
+                this.state.filter = e.target.value; 
+                this.refresh('main'); 
+                if(!document.getElementById('vaultView').classList.contains('hidden')) {
+                    this.refresh('vault'); 
+                }
+            }, 300); 
+        };
         
         const click = async (e, ctx) => {
-            const c = e.target.closest('.card'); if(!c || this.lp) return; vibrate();
-            const id = Number(c.dataset.id); const list = ctx==='main'?this.state.files:(this.state.vaultMode==='real'?this.state.vault:this.state.fake); const item = list.find(x=>x.id===id); if(!item) return;
-            let content = item.content; if(ctx==='vault' && this.state.vaultMode==='real') { try { content = await postWorker('crypto', {op:'decrypt', data:content}); } catch(e) { return this.toast("Decryption Failed","error"); } }
-            if(item.type==='link') window.open(content,'_blank');
-            else if(item.type==='note') { 
+            if (document.getElementById('menuDropdown').classList.contains('active')) return;
+            
+            const c = e.target.closest('.card'); 
+            if(!c || this.lp) return; 
+            vibrate();
+            
+            const id = Number(c.dataset.id); 
+            const list = ctx==='main'?this.state.files:(this.state.vaultMode==='real'?this.state.vault:this.state.fake); 
+            const item = list.find(x=>x.id===id); 
+            
+            if(!item) { this.toast("Item not loaded yet", "error"); return; }
+            
+            let content = item.content; 
+            if(ctx==='vault' && this.state.vaultMode==='real') { 
+                try { 
+                    content = await postWorker('crypto', {op:'decrypt', data:content}); 
+                } catch(e) { 
+                    this.toast("Decryption failed","error"); return; 
+                } 
+            }
+            
+            if(item.type==='link') {
+                window.open(content,'_blank');
+            } else if(item.type==='note') { 
                 document.getElementById('noteViewId').value=item.id; 
                 document.getElementById('noteViewTitle').value=item.name; 
-                this.quill.root.innerHTML = content; 
-                this.updateHeaderTime();
+                
+                // Store original content and date
+                this.originalNoteContent = content;
+                this.originalNoteTitle = item.name;
+                this.originalNoteDate = item.date;
+
+                if (this.quill) {
+                    this.quill.root.innerHTML = content; 
+                }
+                
+                // Show the saved date initially
+                document.getElementById('noteViewDate').innerText = item.date;
+                
                 this.noteCtx=ctx; 
                 this.mod('note'); 
                 this.startAutoSave();
-            } 
-            else { document.getElementById('codeFrame').srcdoc=content; this.mod('runner'); }
+            } else { 
+                document.getElementById('codeFrame').srcdoc=content; 
+                this.mod('runner'); 
+            }
         };
-        document.getElementById('fileGrid').onclick = e => click(e,'main'); document.getElementById('vaultGrid').onclick = e => click(e,'vault');
+        
+        document.getElementById('fileGrid').onclick = e => click(e,'main'); 
+        document.getElementById('vaultGrid').onclick = e => click(e,'vault');
 
-        // --- GLOBAL DELEGATE FOR MODAL INTERACTIONS ---
         document.querySelectorAll('.modal').forEach(m => {
             const box = m.querySelector('.modal-box');
             m.addEventListener('click', (e) => { if(e.target === m && m.classList.contains('active')) this.close(); });
@@ -468,11 +909,78 @@ class Kernel {
         ['touchend','touchmove','mouseup','scroll'].forEach(ev=>window.addEventListener(ev,le,{passive:true}));
     }
 
-    async qCopy(id, ctx) { const list = ctx==='main'?this.state.files:(this.state.vaultMode==='real'?this.state.vault:this.state.fake); const item = list.find(x=>x.id===id); let c = item.content; if(ctx==='vault'&&this.state.vaultMode==='real') c = await postWorker('crypto',{op:'decrypt',data:c}); if(c){ this.tmp=c; document.getElementById('quickCopyModal').classList.add('active'); } }
-    renderManager(ctx) { const list = ctx==='main'?this.state.files:(this.state.vaultMode==='real'?this.state.vault:this.state.fake); document.getElementById('fileList').innerHTML = list.map(f=>`<div class="file-list-item"><div class="file-info"><div class="file-name">${(f.name||"").replace(/</g,"&lt;")}</div><div class="file-date">${f.date}</div></div><div class="file-actions"><button class="action-btn edit" onclick="window.openEditor(${f.id}, '${ctx}')"><i class="fas fa-pen"></i></button><button class="action-btn move" onclick="window.moveFile(${f.id}, '${ctx}')"><i class="fas ${ctx==='main'?'fa-lock':'fa-unlock'}"></i></button><button class="action-btn delete" onclick="window.deleteFile(${f.id}, '${ctx}')"><i class="fas fa-trash"></i></button></div></div>`).join('') || '<div style="text-align:center;padding:20px;color:var(--text-sub)">Empty</div>'; }
-    toast(m,t='info'){const c=document.getElementById('toast-container'),e=document.createElement('div');e.className=`toast ${t}`;e.innerHTML=`<i class="fas ${t==='success'?'fa-check-circle':(t==='error'?'fa-exclamation-circle':'fa-info-circle')}"></i> ${m}`;c.appendChild(e);requestAnimationFrame(()=>e.classList.add('show'));setTimeout(()=>{e.classList.remove('show');setTimeout(()=>e.remove(),500)},3000)}
+    async qCopy(id, ctx) { 
+        const list = ctx==='main'?this.state.files:(this.state.vaultMode==='real'?this.state.vault:this.state.fake); 
+        const item = list.find(x=>x.id===id); 
+        if (!item) {
+            this.toast("Item not available", "error");
+            return;
+        }
+        
+        let c = item.content; 
+        if(ctx==='vault'&&this.state.vaultMode==='real') {
+            c = await postWorker('crypto',{op:'decrypt',data:c});
+        }
+        
+        if(c){ 
+            this.tmp = c;
+            this.tmpItem = item;
+            this.tmpCtx = ctx;
+            const editBtn = document.getElementById('editCodeBtn');
+            if (item.type === 'code' && ctx === 'main') {
+                editBtn.style.display = 'flex';
+                document.getElementById('quickCopyTitle').innerText = 'Code File Options';
+            } else {
+                editBtn.style.display = 'none';
+                document.getElementById('quickCopyTitle').innerText = 'Copy Content';
+            }
+            document.getElementById('quickCopyModal').classList.add('active'); 
+        }
+    }
     
-    // --- STATE MANAGEMENT ---
+    renderManager(ctx) { 
+        const list = ctx==='main'?this.state.files:(this.state.vaultMode==='real'?this.state.vault:this.state.fake); 
+        
+        // Hide Reset Vault button completely as requested
+        const vaultResetContainer = document.getElementById('vaultResetContainer');
+        if (vaultResetContainer) {
+            vaultResetContainer.classList.add('hidden');
+        }
+
+        document.getElementById('fileList').innerHTML = list.filter(item => item && item._loaded !== false).map(f=>`
+            <div class="file-list-item">
+                <div class="file-info">
+                    <div class="file-name">${(f.name||"").replace(/</g,"&lt;")}</div>
+                    <div class="file-date">${f.date}</div>
+                </div>
+                <div class="file-actions">
+                    <button class="action-btn edit" onclick="window.openEditor(${f.id}, '${ctx}', true)">
+                        <i class="fas fa-pen"></i>
+                    </button>
+                    <button class="action-btn move" onclick="window.moveFile(${f.id}, '${ctx}')">
+                        <i class="fas ${ctx==='main'?'fa-lock':'fa-unlock'}"></i>
+                    </button>
+                    <button class="action-btn delete" onclick="window.deleteFile(${f.id}, '${ctx}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('') || '<div style="text-align:center;padding:20px;color:var(--text-sub)">Empty</div>'; 
+    }
+    
+    toast(m,t='info'){
+        const c=document.getElementById('toast-container'),
+        e=document.createElement('div');
+        e.className=`toast ${t}`;
+        e.innerHTML=`<i class="fas ${t==='success'?'fa-check-circle':(t==='error'?'fa-exclamation-circle':'fa-info-circle')}"></i> ${m}`;
+        c.appendChild(e);
+        requestAnimationFrame(()=>e.classList.add('show'));
+        setTimeout(()=>{
+            e.classList.remove('show');
+            setTimeout(()=>e.remove(),500)
+        },3000);
+    }
+    
     mod(id){ 
         vibrate(); 
         if(!history.state || history.state.m !== id) { 
@@ -499,19 +1007,16 @@ class Kernel {
     }
 }
 
-const kernel = new Kernel(); window.app = kernel;
+const kernel = new Kernel(); 
+window.app = kernel;
 
-// --- POPSTATE HANDLER ---
 window.addEventListener('popstate', (e) => {
-    // Stop autosave if note modal was active
     if(document.getElementById('noteModal').classList.contains('active')) kernel.stopAutoSave();
-    
     document.querySelectorAll('.modal.active').forEach(m => { 
         m.classList.remove('active'); 
         const b = m.querySelector('.modal-box'); 
         if(b) b.style.transform = ''; 
     });
-    
     if (e.state && e.state.m) { 
         const m = document.getElementById(e.state.m + 'Modal'); 
         if(m) m.classList.add('active'); 
@@ -519,83 +1024,430 @@ window.addEventListener('popstate', (e) => {
     document.getElementById('menuDropdown').classList.remove('active');
 });
 
-window.handleAuthAction=()=>{const e=document.getElementById('authEmail').value,p=document.getElementById('authPassword').value,l=document.getElementById('mainAuthBtn').innerText==="Login";const b=document.getElementById('mainAuthBtn');b.innerText="Processing...";b.disabled=true;(l?signInWithEmailAndPassword:createUserWithEmailAndPassword)(kernel.auth,e,p).catch(err=>{kernel.toast(err.message,"error");b.innerText=l?"Login":"Sign Up";b.disabled=false})};
-window.toggleAuthMode=()=>{const l=document.getElementById('mainAuthBtn').innerText==="Login";document.getElementById('mainAuthBtn').innerText=l?"Sign Up":"Login";document.getElementById('authSwitchText').innerText=l?"Have account?":"New here?";document.getElementById('confirmPasswordWrapper').classList.toggle('hidden',l)};
-window.openEditor=async(id,ctx)=>{vibrate();kernel.editCtx=ctx;document.getElementById('fileForm').reset();document.getElementById('managerModal').classList.remove('active');
-    if(id){ const l=ctx==='main'?kernel.state.files:(kernel.state.vaultMode==='real'?kernel.state.vault:kernel.state.fake); const f=l.find(x=>x.id===id); document.getElementById('editId').value=id;document.getElementById('fileName').value=f.name;window.setType(f.type); let c=f.content; if(ctx==='vault'&&kernel.state.vaultMode==='real') c=await postWorker('crypto',{op:'decrypt',data:c}); if(f.type==='link')document.getElementById('fileUrl').value=c;else document.getElementById('fileContent').value=c; }
-    else{document.getElementById('editId').value="";window.setType('note')} kernel.mod('editor');};
+window.openVault = () => {
+    vibrate();
+    if (kernel.state.security && kernel.state.security.pinHash) {
+        document.getElementById('setupView').classList.add('hidden');
+        document.getElementById('loginView').classList.remove('hidden');
+    } else {
+        document.getElementById('setupView').classList.remove('hidden');
+        document.getElementById('loginView').classList.add('hidden');
+    }
+    kernel.mod('auth');
+};
+
+window.openVaultRecovery = () => {
+    kernel.close();
+    setTimeout(() => {
+        document.getElementById('recoveryAnswer1').value = "";
+        document.getElementById('recoveryAnswer2').value = "";
+        document.getElementById('recoveryNewPin').value = "";
+        document.getElementById('recoveryConfirmPin').value = "";
+        kernel.mod('vaultRecovery');
+    }, 300);
+};
+
+window.setupVault = async () => { 
+    const p = document.getElementById('setupPin').value,
+          a1 = document.getElementById('setupAnswer1').value,
+          a2 = document.getElementById('setupAnswer2').value; 
+    
+    if(p.length !== 4) { kernel.toast("PIN must be 4 digits","error"); return; }
+    if(!a1 || !a2) { kernel.toast("Please answer both security questions","error"); return; }
+
+    try {
+        await postWorker('setKey', {pin: p});
+        const h = await postWorker('crypto', {op:'encrypt', data:'VERIFY'}); 
+        await setDoc(doc(kernel.db,"users",kernel.state.user.uid,"settings","security"),{
+            pinHash: h, answer1: a1, answer2: a2, setupDate: new Date().toISOString()
+        }); 
+        kernel.state.vaultMode = 'real'; 
+        kernel.state.security.pinHash = h;
+        kernel.state.security.answer1 = a1;
+        kernel.state.security.answer2 = a2;
+        document.getElementById('setupPin').value = ""; 
+        document.getElementById('setupAnswer1').value = "";
+        document.getElementById('setupAnswer2').value = "";
+        kernel.close(); 
+        kernel.toast("Vault setup successfully!", "success");
+        setTimeout(() => {
+            document.getElementById('mainApp').classList.add('hidden');
+            document.getElementById('vaultView').classList.remove('hidden');
+            kernel.refresh('vault');
+        }, 500);
+    } catch(e) { kernel.toast("Setup failed: " + e.message, "error"); }
+};
+
+window.loginVault = async () => { 
+    const p = document.getElementById('loginPin').value; 
+    if(p.length !== 4) { kernel.toast("PIN must be 4 digits", "error"); return; }
+    try {
+        await postWorker('setKey', {pin: p});
+        const verification = await postWorker('crypto', {op:'decrypt', data: kernel.state.security.pinHash});
+        if(verification === 'VERIFY') {
+            kernel.state.vaultMode = 'real';
+            kernel.toast("Vault unlocked", "success");
+        } else {
+            kernel.state.vaultMode = 'fake';
+            kernel.toast("Accessing vault", "info");
+        }
+        document.getElementById('loginPin').value = ""; 
+        kernel.close(); 
+        document.getElementById('mainApp').classList.add('hidden'); 
+        document.getElementById('vaultView').classList.remove('hidden'); 
+        const vaultHeader = document.querySelector('.vault-header');
+        if (kernel.state.vaultMode === 'real') {
+            vaultHeader.style.background = '';
+            vaultHeader.classList.remove('fake-vault');
+        } else {
+            vaultHeader.style.background = '#333';
+            vaultHeader.classList.add('fake-vault');
+        }
+        kernel.refresh('vault');
+    } catch(e) {
+        kernel.state.vaultMode = 'fake';
+        kernel.toast("Accessing vault", "info");
+        document.getElementById('loginPin').value = ""; 
+        kernel.close(); 
+        document.getElementById('mainApp').classList.add('hidden'); 
+        document.getElementById('vaultView').classList.remove('hidden'); 
+        const vaultHeader = document.querySelector('.vault-header');
+        vaultHeader.style.background = '#333';
+        vaultHeader.classList.add('fake-vault');
+        kernel.refresh('vault');
+    }
+};
+
+window.handleAuthAction = async () => {
+    const email = document.getElementById('authEmail').value;
+    const password = document.getElementById('authPassword').value;
+    const isLoginMode = !kernel.state.isSignUpMode;
+    const btn = document.getElementById('mainAuthBtn');
+
+    if (!email || !email.includes('@') || !email.includes('.')) { kernel.toast("Please enter a valid email address", "error"); return; }
+
+    if (isLoginMode) {
+        if (!password) { kernel.toast("Please enter your password", "error"); return; }
+        btn.innerText = "Signing in..."; btn.disabled = true;
+        try {
+            await signInWithEmailAndPassword(kernel.auth, email, password);
+            kernel.toast("Welcome back!", "success");
+        } catch (err) { kernel.toast(err.message, "error"); btn.innerText = "Continue"; btn.disabled = false; }
+    } else {
+        const confirmPassword = document.getElementById('authConfirmPassword').value;
+        if (!password || password.length < 6) { kernel.toast("Password must be at least 6 characters", "error"); return; }
+        if (password !== confirmPassword) { kernel.toast("Passwords do not match", "error"); return; }
+        btn.innerText = "Creating account..."; btn.disabled = true;
+        try {
+            const methods = await fetchSignInMethodsForEmail(kernel.auth, email);
+            if (methods && methods.length > 0) {
+                kernel.toast("An account with this email already exists", "error");
+                btn.innerText = "Create Account"; btn.disabled = false; return;
+            }
+            await createUserWithEmailAndPassword(kernel.auth, email, password);
+            kernel.toast("Account created successfully!", "success");
+        } catch (err) { kernel.toast(err.message, "error"); btn.innerText = "Create Account"; btn.disabled = false; }
+    }
+};
+
+window.toggleAuthMode = () => {
+    kernel.state.isSignUpMode = !kernel.state.isSignUpMode;
+    const isSignUp = kernel.state.isSignUpMode;
+    document.getElementById('mainAuthBtn').innerText = isSignUp ? "Create Account" : "Continue";
+    document.getElementById('authSwitchText').innerText = isSignUp ? "Have an account? " : "New here? ";
+    document.getElementById('confirmPasswordWrapper').classList.toggle('hidden', !isSignUp);
+    document.getElementById('authPassword').value = "";
+    if (isSignUp) document.getElementById('authConfirmPassword').value = "";
+};
+
+window.openEditor = async (id, ctx, fromManager = false) => {
+    vibrate();
+    kernel.editCtx = ctx;
+    kernel.state.isEditingFromManager = fromManager;
+    document.getElementById('fileForm').reset();
+    document.getElementById('managerModal').classList.remove('active');
+    const typeSelection = document.getElementById('fileTypeSelection');
+    const fileUrl = document.getElementById('fileUrl');
+    const fileContent = document.getElementById('fileContent');
+    const saveButton = document.getElementById('saveButton');
+    const editorTitle = document.getElementById('editorTitle');
+    
+    if(fromManager) {
+        typeSelection.classList.add('hidden');
+        fileUrl.classList.add('hidden');
+        fileContent.classList.add('hidden');
+        saveButton.innerText = "Update Name";
+        editorTitle.innerText = "Edit File Name";
+    } else {
+        typeSelection.classList.remove('hidden');
+        saveButton.innerText = "Save Item";
+        editorTitle.innerText = id ? "Edit Item" : "New Item";
+    }
+
+    if(id){ 
+        const l = ctx==='main'?kernel.state.files:(kernel.state.vaultMode==='real'?kernel.state.vault:kernel.state.fake); 
+        const f = l.find(x=>x.id===id); 
+        document.getElementById('editId').value=id;
+        document.getElementById('fileName').value=f.name;
+        if(!fromManager) {
+            window.setType(f.type); 
+            let c = f.content; 
+            if(ctx==='vault'&&kernel.state.vaultMode==='real') c = await postWorker('crypto',{op:'decrypt',data:c}); 
+            if(f.type==='link') { fileUrl.value = c; fileUrl.classList.remove('hidden'); } 
+            else { fileContent.value = c; fileContent.classList.remove('hidden'); }
+        }
+    } else {
+        document.getElementById('editId').value="";
+        if(!fromManager) window.setType('note');
+    } 
+    kernel.mod('editor');
+};
+
+window.changeVaultPin = () => {
+    if (kernel.state.vaultMode === 'real') { kernel.mod('changeVaultPin'); }
+};
+
+window.performVaultPinChange = async () => {
+    const oldPin = document.getElementById('oldVaultPin').value;
+    const newPin = document.getElementById('newVaultPin').value;
+    const confirmPin = document.getElementById('confirmVaultPin').value;
+    if (!oldPin || !newPin || !confirmPin) { kernel.toast("Please fill all fields", "error"); return; }
+    if (newPin.length !== 4) { kernel.toast("PIN must be 4 digits", "error"); return; }
+    if (newPin !== confirmPin) { kernel.toast("PINs do not match", "error"); return; }
+
+    try {
+        await postWorker('setKey', {pin: oldPin});
+        const verification = await postWorker('crypto', {op:'decrypt', data: kernel.state.security.pinHash});
+        if(verification !== 'VERIFY') { kernel.toast("Old PIN is incorrect", "error"); return; }
+        await postWorker('setKey', {pin: newPin});
+        const newHash = await postWorker('crypto', {op:'encrypt', data:'VERIFY'});
+        await setDoc(doc(kernel.db,"users",kernel.state.user.uid,"settings","security"), {
+            ...kernel.state.security, pinHash: newHash
+        });
+        kernel.state.security.pinHash = newHash;
+        kernel.toast("PIN changed successfully!", "success");
+        kernel.close();
+    } catch (e) { kernel.toast("Error changing PIN: " + e.message, "error"); }
+};
+
+window.editCodeContent = () => {
+    if (kernel.tmpItem && kernel.tmpItem.type === 'code') {
+        document.getElementById('codeEditorId').value = kernel.tmpItem.id;
+        document.getElementById('codeEditorTitle').value = kernel.tmpItem.name;
+        document.getElementById('codeEditorContent').value = kernel.tmp;
+        document.getElementById('codeEditorCtx').value = kernel.tmpCtx;
+        document.getElementById('codeEditorDate').innerText = kernel.tmpItem.date || 'No date';
+        document.getElementById('quickCopyModal').classList.remove('active');
+        setTimeout(() => { kernel.mod('codeEditor'); }, 300);
+    }
+};
+
+window.saveCodeContent = async () => {
+    const id = document.getElementById('codeEditorId').value;
+    const name = document.getElementById('codeEditorTitle').value;
+    const content = document.getElementById('codeEditorContent').value;
+    const ctx = document.getElementById('codeEditorCtx').value;
+    
+    if (!name || !content) { kernel.toast("Please fill all fields", "error"); return; }
+
+    try {
+        let col = ctx==='main'?'files':(kernel.state.vaultMode==='real'?'vault':'fakeVault');
+        let encryptedContent = content;
+        if(ctx==='vault' && kernel.state.vaultMode==='real') {
+            encryptedContent = await postWorker('crypto', { op:'encrypt', data:content });
+        }
+        // Updated Date Logic for code files
+        const date = new Date().toLocaleString('en-US', {
+            month:'short', day:'numeric', year:'numeric', 
+            hour: 'numeric', minute: 'numeric', hour12: true
+        });
+        await setDoc(doc(kernel.db,"users",kernel.state.user.uid,col,String(id)), { 
+            id:Number(id), name, type: 'code', content: encryptedContent, date, _loaded: true 
+        });
+        kernel.toast("Code updated successfully!", "success");
+        window.closeCodeEditor();
+        if (ctx === 'main') { kernel.refresh('main'); } else { kernel.refresh('vault'); }
+    } catch(e) { kernel.toast("Error updating code: " + e.message, "error"); }
+};
+
+window.closeCodeEditor = () => {
+    kernel.mod('codeEditor');
+    setTimeout(() => { document.getElementById('codeEditorModal').classList.remove('active'); }, 300);
+};
+
 window.setType=t=>{
     vibrate();
+    if (kernel.state.isEditingFromManager) return;
     document.getElementById('fileType').value=t;
     document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('active',b.dataset.type===t));
-    
     const m=document.querySelector('#editorModal .modal-box'),c=document.getElementById('fileContent'),u=document.getElementById('fileUrl'), b=document.querySelector('#fileForm .btn-primary');
     m.classList.remove('size-note','size-code'); 
-    
     if(t==='note'){
-        b.innerText = "Next"; 
-        c.style.display = 'none'; 
-        c.required = false;
-        u.style.display = 'none';
-        u.required = false;
+        b.innerText = "Next"; c.style.display = 'none'; c.required = false; u.style.display = 'none'; u.required = false;
     } else {
         b.innerText = "Save Item"; 
         if(t==='code'){
-            m.classList.add('size-code');
-            c.style.fontFamily='monospace';
-            c.style.display = 'block';
-            c.required = true;
-            u.style.display = 'none';
-            u.required = false;
+            m.classList.add('size-code'); c.style.fontFamily='monospace'; c.style.display = 'block'; c.required = true; u.style.display = 'none'; u.required = false;
         } else { 
-            c.style.fontFamily='inherit';
-            c.style.display = 'none';
-            c.required = false;
-            u.style.display = 'block';
-            u.required = true;
+            c.style.fontFamily='inherit'; c.style.display = 'none'; c.required = false; u.style.display = 'block'; u.required = true;
         }
     }
 };
+
+window.toggleTheme = () => {
+    initialSettings.dark = !initialSettings.dark;
+    document.documentElement.classList.toggle('dark-mode');
+    localStorage.setItem('ls_settings', JSON.stringify(initialSettings));
+    document.getElementById('menuDropdown').classList.remove('active');
+};
+
 window.deleteFile=(id,ctx)=>{vibrate();document.getElementById('confirmText').innerText="Delete?";kernel.mod('confirm');document.getElementById('confirmYesBtn').onclick=async()=>{kernel.close();const col=ctx==='main'?'files':(kernel.state.vaultMode==='real'?'vault':'fakeVault');await deleteDoc(doc(kernel.db,"users",kernel.state.user.uid,col,String(id)));kernel.toast("Deleted","success")}};
 window.moveFile=(id,ctx)=>{vibrate();document.getElementById('confirmText').innerText=ctx==='main'?"Move to Vault?":"Move to Cloud?";kernel.mod('confirm');document.getElementById('confirmYesBtn').onclick=async()=>{kernel.close();const sCol=ctx==='main'?'files':(kernel.state.vaultMode==='real'?'vault':'fakeVault'),dCol=ctx==='main'?(kernel.state.vaultMode==='real'?'vault':'fakeVault'):'files';const list=ctx==='main'?kernel.state.files:(kernel.state.vaultMode==='real'?kernel.state.vault:kernel.state.fake);const item=list.find(x=>x.id===id);let c=item.content; if(kernel.state.vaultMode==='real'){ if(ctx==='vault') c=await postWorker('crypto',{op:'decrypt',data:c}); else if(ctx==='main') c=await postWorker('crypto',{op:'encrypt',data:c}); } await setDoc(doc(kernel.db,"users",kernel.state.user.uid,dCol,String(id)),{...item,content:c});await deleteDoc(doc(kernel.db,"users",kernel.state.user.uid,sCol,String(id)));kernel.toast("Moved","success")}};
-window.setupVault=async()=>{ const p=document.getElementById('setupPin').value,a=document.getElementById('setupAnswer').value; if(p.length!==4)return kernel.toast("4 Digits","error"); const h=await postWorker('crypto',{op:'encrypt',data:'VERIFY',tempPin:p}); await setDoc(doc(kernel.db,"users",kernel.state.user.uid,"settings","security"),{pinHash:h,answer:a}); await postWorker('setKey', {pin: p}); kernel.state.vaultMode='real'; document.getElementById('setupPin').value = ""; kernel.close(); setTimeout(()=>{document.getElementById('mainApp').classList.add('hidden');document.getElementById('vaultView').classList.remove('hidden');kernel.refresh('vault')},200);};
-window.loginVault=async()=>{ const p=document.getElementById('loginPin').value; if(p.length!==4)return; const sessionHash = await postWorker('setKey', {pin: p}); const r = sessionHash === kernel.state.security.pinHash; kernel.state.vaultMode=r?'real':'fake'; document.getElementById('loginPin').value=""; kernel.close(); document.getElementById('mainApp').classList.add('hidden'); document.getElementById('vaultView').classList.remove('hidden'); document.querySelector('.vault-header').style.background=r?'':'#333'; kernel.refresh('vault');};
-window.manualSaveNote=async(isAuto=false)=>{
+
+window.performVaultRecovery = async () => {
+    const answer1 = document.getElementById('recoveryAnswer1').value;
+    const answer2 = document.getElementById('recoveryAnswer2').value;
+    const newPin = document.getElementById('recoveryNewPin').value;
+    const confirmPin = document.getElementById('recoveryConfirmPin').value;
+    if (!answer1 || !answer2 || !newPin || !confirmPin) { kernel.toast("Please fill all fields", "error"); return; }
+    if (newPin.length !== 4) { kernel.toast("PIN must be 4 digits", "error"); return; }
+    if (newPin !== confirmPin) { kernel.toast("PINs do not match", "error"); return; }
+    if (answer1.toLowerCase().trim() !== kernel.state.security.answer1.toLowerCase().trim() || 
+        answer2.toLowerCase().trim() !== kernel.state.security.answer2.toLowerCase().trim()) {
+        kernel.toast("Security answers are incorrect", "error"); return;
+    }
+    try {
+        await postWorker('setKey', {pin: newPin});
+        const newHash = await postWorker('crypto', {op:'encrypt', data:'VERIFY'});
+        await setDoc(doc(kernel.db,"users",kernel.state.user.uid,"settings","security"), {
+            ...kernel.state.security, pinHash: newHash
+        });
+        kernel.state.security.pinHash = newHash;
+        kernel.toast("PIN recovered successfully!", "success");
+        kernel.close();
+    } catch (e) { kernel.toast("Error recovering PIN: " + e.message, "error"); }
+};
+
+window.manualSaveNote = async(isAuto=false) => {
     if(!isAuto) vibrate();
-    const id=document.getElementById('noteViewId').value,c=kernel.quill.root.innerHTML;
-    const col=kernel.noteCtx==='main'?'files':(kernel.state.vaultMode==='real'?'vault':'fakeVault');
-    let f=c;if(kernel.noteCtx!=='main'&&kernel.state.vaultMode==='real')f=await postWorker('crypto',{op:'encrypt',data:f});
-    const date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    const name = document.getElementById('noteViewTitle').value;
-    await setDoc(doc(kernel.db,"users",kernel.state.user.uid,col,String(id)),{id:Number(id), name, type:'note', content:f, date},{merge:true});
+    
+    const id = document.getElementById('noteViewId').value;
+    const currentContent = kernel.quill.root.innerHTML;
+    const currentTitle = document.getElementById('noteViewTitle').value;
+    
+    const contentChanged = (currentContent !== kernel.originalNoteContent);
+    const titleChanged = (currentTitle !== kernel.originalNoteTitle);
+
+    // If nothing changed in manual save, show toast anyway for feedback
+    if (!isAuto && !contentChanged && !titleChanged) {
+        kernel.toast("Saved", "success");
+        return;
+    }
+    // If auto save and no change, do nothing
+    if (isAuto && !contentChanged && !titleChanged) {
+        return;
+    }
+
+    const col = kernel.noteCtx==='main'?'files':(kernel.state.vaultMode==='real'?'vault':'fakeVault');
+    let f = currentContent;
+    
+    if(kernel.noteCtx!=='main' && kernel.state.vaultMode==='real') {
+        f = await postWorker('crypto',{op:'encrypt',data:f});
+    }
+
+    // Only update date if changed, now includes TIME
+    const date = new Date().toLocaleString('en-US', {
+        month:'short', day:'numeric', year:'numeric', 
+        hour: 'numeric', minute: 'numeric', hour12: true
+    });
+    
+    await setDoc(doc(kernel.db,"users",kernel.state.user.uid,col,String(id)), {
+        id: Number(id), 
+        name: currentTitle, 
+        type: 'note', 
+        content: f, 
+        date: date 
+    }, {merge:true});
+
+    kernel.originalNoteContent = currentContent;
+    kernel.originalNoteTitle = currentTitle;
+    document.getElementById('noteViewDate').innerText = date;
+
     if(!isAuto) kernel.toast("Saved","success");
 };
+
 window.saveAndExit = async () => {
     await window.manualSaveNote(false);
     window.close();
 };
+
 window.discardAndClose=()=>{
     kernel.stopAutoSave(); 
     window.close();
 };
+
 window.openManager=c=>{vibrate();kernel.renderManager(c);kernel.mod('manager');document.getElementById('menuDropdown').classList.remove('active')};
 window.closeManager=()=>kernel.close();window.closeConfirmModal=()=>kernel.close();window.goBack=()=>history.back();
-window.toggleTheme=()=>{initialSettings.dark=!initialSettings.dark;document.documentElement.classList.toggle('dark-mode');localStorage.setItem('ls_settings',JSON.stringify(initialSettings));document.getElementById('menuDropdown').classList.remove('active')};
 window.cycleCardSize=()=>{const s=['medium','large','small'];initialSettings.size=s[(s.indexOf(initialSettings.size)+1)%3];document.documentElement.className=document.documentElement.className.replace(/size-\w+/,'size-'+initialSettings.size);localStorage.setItem('ls_settings',JSON.stringify(initialSettings));};
 window.setView=v=>{initialSettings.viewMode=v;document.documentElement.className=document.documentElement.className.replace(/view-\w+/,'view-'+v);localStorage.setItem('ls_settings',JSON.stringify(initialSettings));document.getElementById('menuDropdown').classList.remove('active')};
 window.setSort=s=>{kernel.state.sortBy=s;kernel.refresh('main');if(!document.getElementById('vaultView').classList.contains('hidden'))kernel.refresh('vault');document.getElementById('menuDropdown').classList.remove('active')};
 window.logout=()=>{document.getElementById('confirmText').innerText="Logout?";kernel.mod('confirm');document.getElementById('confirmYesBtn').onclick=()=>signOut(kernel.auth).then(()=>location.reload())};
 window.quickCopyContent=()=>{navigator.clipboard.writeText(kernel.tmp);kernel.toast("Copied","success");document.getElementById('quickCopyModal').classList.remove('active')};
 window.closeQuickCopyModal=()=>document.getElementById('quickCopyModal').classList.remove('active');
-window.openAuthModal=()=>{kernel.mod('auth');const s=!!kernel.state.security.pinHash;document.getElementById('setupView').classList.toggle('hidden',s);document.getElementById('loginView').classList.toggle('hidden',!s)};
-window.changeVaultPin=()=>alert("Update in V2");window.exitVault=()=>{document.getElementById('vaultView').classList.add('hidden');document.getElementById('mainApp').classList.remove('hidden')};
+window.exitVault=()=>{document.getElementById('vaultView').classList.add('hidden');document.getElementById('mainApp').classList.remove('hidden')};
 window.togglePasswordVisibility=(id,el)=>{const x=document.getElementById(id);x.type=x.type==='password'?'text':'password';el.classList.toggle('fa-eye');el.classList.toggle('fa-eye-slash')};
 window.openForgotPasswordModal=()=>{kernel.mod('forgotPassword');}; window.sendPasswordResetEmail=()=>{const e=document.getElementById('resetEmail').value;sendPasswordResetEmail(kernel.auth,e).then(()=>{kernel.toast("Check Email","success");kernel.close()}).catch(e=>kernel.toast(e.message,"error"));};
 window.openChangePasswordModal=()=>{kernel.mod('changePassword');}; window.performChangePassword=()=>{const o=document.getElementById('cpOldPass').value,n=document.getElementById('cpNewPass').value,c=document.getElementById('cpConfirmPass').value;if(n!==c)return kernel.toast("Mismatch","error");const cred=EmailAuthProvider.credential(kernel.state.user.email,o);reauthenticateWithCredential(kernel.state.user,cred).then(()=>{updatePassword(kernel.state.user,n).then(()=>{kernel.toast("Updated","success");kernel.close()})}).catch(e=>kernel.toast(e.message,"error"));};
 
+// Removed active reset button functionality
+window.resetVaultConfig = async () => {};
+
 document.getElementById('menuBtn').onclick=e=>{e.stopPropagation();vibrate();document.getElementById('menuDropdown').classList.toggle('active')};
 window.onclick=e=>{if(!e.target.closest('#menuDropdown')&&!e.target.closest('#menuBtn'))document.getElementById('menuDropdown').classList.remove('active')};
 document.getElementById('deepSearchToggle').onclick = function() { vibrate(); kernel.state.deep = !kernel.state.deep; this.classList.toggle('active'); kernel.refresh('main'); if(!document.getElementById('vaultView').classList.contains('hidden')) kernel.refresh('vault'); };
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+    const swCode = `
+    const CACHE_NAME = 'nlc-pwa-v1';
+    const ASSETS = [
+        './',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css',
+        'https://cdn.quilljs.com/1.3.6/quill.snow.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js',
+        'https://cdn.quilljs.com/1.3.6/quill.min.js'
+    ];
+    self.addEventListener('install', e => {
+        e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)));
+        self.skipWaiting();
+    });
+    self.addEventListener('activate', e => {
+        e.waitUntil(self.clients.claim());
+    });
+    self.addEventListener('fetch', e => {
+        if (e.request.url.includes('cdnjs') || e.request.url.includes('cdn.quilljs') || e.request.url.includes('gstatic') || e.request.mode === 'navigate') {
+            e.respondWith(
+                caches.match(e.request).then(res => {
+                    return res || fetch(e.request).then(nRes => {
+                        return caches.open(CACHE_NAME).then(c => {
+                            c.put(e.request, nRes.clone());
+                            return nRes;
+                        });
+                    }).catch(()=>caches.match('./'));
+                })
+            );
+        } else {
+            e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+        }
+    });`;
+
+    const blob = new Blob([swCode], {type: 'application/javascript'});
+    navigator.serviceWorker.register(URL.createObjectURL(blob))
+        .then(() => console.log('Service Worker Registered'))
+        .catch(e => console.log('SW Error:', e));
+}
 </script>
 </body>
     </html>
